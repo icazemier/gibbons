@@ -6,13 +6,13 @@
 
 _"Leaping from branch to branch gibbons decide which one to take in a split second"_
 
-Gibbons is a Node.js module which helps in managing user groups and user permissions with `bitwise` effiency. 
-In applying [ArrayBuffers](https://developer.mozilla.org/nl/docs/Web/JavaScript/Reference/Global_Objects/ArrayBuffer) and bitwise operaions it tries to use minimal resources.
+Gibbons is a Node.js module which helps in managing user groups and user permissions with `bitwise` efficiency. 
+In applying [ArrayBuffers](https://developer.mozilla.org/nl/docs/Web/JavaScript/Reference/Global_Objects/ArrayBuffer) and bitwise operations it tries to use minimal resources.
 
 
 ## API Documentation and tutorial
 
-See: [Gibbons Docs](https://gibbons.aerobatic.io/)
+See: [Gibbons Docs](https://kaasdude.github.io/gibbons/)
 
 ## How do I get set up? ##
 
@@ -71,8 +71,8 @@ h1. I ensured:
 # Meta data #
 
 * Maintainer: Ivo Cazemier
-* [Git Repository](https://bitbucket.org/ivocazemier/gibbons)
-* [API documentation and tutorial](https://gibbons.aerobatic.io/)
+* [Bitbucket](https://bitbucket.org/ivocazemier/gibbons) or [Github](https://github.com/kaasdude/gibbons)
+* [API documentation and tutorial](https://kaasdude.github.io/gibbons/)
 
 
 [![npm version](https://badge.fury.io/js/gibbons.svg)](https://badge.fury.io/js/gibbons)
