@@ -1,5 +1,5 @@
 {
-  "name": "gibbon",
+  "name": "gibbons",
   "private": false,
   "version": "1.0.0",
   "description": "Gibbons is a Node.js module which helps in managing user groups and user permissions with `bitwise` effiency.",
