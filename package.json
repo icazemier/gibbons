@@ -1,0 +1,56 @@
+{
+  "name": "gibbon",
+  "private": false,
+  "version": "1.0.0",
+  "description": "Gibbons is a Node.js module which helps in managing user groups and user permissions with `bitwise` effiency.",
+  "contributors": [
+    {
+      "name": "Ivo Cazemier",
+      "email": "npm@flashinnovations.nl",
+      "url": "http://flashinnovations.nl/"
+    }
+  ],
+  "keywords": [
+    "user permissions",
+    "user groups",
+    "bitwise"
+  ],
+  "main": "index.js",
+  "engines": {
+    "node": ">=6.0 <7.0"
+  },
+  "os": [
+    "darwin",
+    "linux"
+  ],
+  "scripts": {
+    "test": "gulp test",
+    "prepush": "gulp test"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://bitbucket.org/ivocazemier/gibbons"
+  },
+  "license": "MIT",
+  "dependencies": {
+    "lodash": "4.16.6",
+    "lokijs": "~1.4.2"
+  },
+  "devDependencies": {
+    "async": "2.1.2",
+    "chai": "3.5.0",
+    "eslint": "3.9.1",
+    "eslint-config-standard": "6.2.1",
+    "eslint-plugin-node": "3.0.5",
+    "eslint-plugin-promise": "3.3.1",
+    "eslint-plugin-standard": "2.0.1",
+    "gulp": "3.9.1",
+    "gulp-eslint": "3.0.1",
+    "gulp-istanbul": "1.1.1",
+    "gulp-jsdoc3": "1.0.0",
+    "gulp-mocha": "3.0.1",
+    "gulp-plumber": "1.1.0",
+    "husky": "0.12.0",
+    "mocha": "3.1.2"
+  }
+}
