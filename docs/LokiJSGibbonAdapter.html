@@ -4,7 +4,7 @@
 <head>
 	<meta charset="utf-8">
 	<meta name="viewport" content="width=device-width">
-	<title>Gibbons Class: Gibbons</title>
+	<title>Gibbons Class: LokiJSGibbonAdapter</title>
 
 	<!--[if lt IE 9]>
 	<script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
@@ -86,17 +86,16 @@
 		<div id="main">
 			
 
-	<h1 class="page-title">Class: Gibbons</h1>
+	<h1 class="page-title">Class: LokiJSGibbonAdapter</h1>
 <section>
 
 <header>
     
         <h2>
-        Gibbons
+        LokiJSGibbonAdapter
         </h2>
         
-            <div class="class-description"><p>This is the Gibbons class<br>
-It's the entry point for group- and permission handling</p></div>
+            <div class="class-description"><p>Representing an adapter class for LokiJS</p></div>
         
     
 </header>
@@ -108,7 +107,7 @@ It's the entry point for group- and permission handling</p></div>
         
 <hr>
 <dt>
-    <h4 class="name" id="Gibbons"><span class="type-signature"></span>new Gibbons(gibbonAdapter)</h4>
+    <h4 class="name" id="LokiJSGibbonAdapter"><span class="type-signature"></span>new LokiJSGibbonAdapter( [logger])</h4>
     
     
 </dt>
@@ -135,6 +134,8 @@ It's the entry point for group- and permission handling</p></div>
         <th>Type</th>
 
         
+        <th>Argument</th>
+        
 
         
 
@@ -147,13 +148,13 @@ It's the entry point for group- and permission handling</p></div>
 
         <tr>
             
-                <td class="name"><code>gibbonAdapter</code></td>
+                <td class="name"><code>logger</code></td>
             
 
             <td class="type">
             
                 
-<span class="param-type"><a href="GibbonAdapter.html">GibbonAdapter</a></span>
+<span class="param-type">object</span>
 
 
 
@@ -161,10 +162,20 @@ It's the entry point for group- and permission handling</p></div>
             </td>
 
             
+                <td class="attributes">
+                
+                    &lt;optional><br>
+                
+
+                
+
+                
+                </td>
+            
 
             
 
-            <td class="description last"><p>An instance of GibbonAdapter is required.</p></td>
+            <td class="description last"><p>Logger instance</p></td>
         </tr>
 
     
@@ -208,8 +219,8 @@ It's the entry point for group- and permission handling</p></div>
 	<dd class="tag-source">
 		<ul class="dummy">
 			<li>
-				<a href="gibbons.js.html">gibbons.js</a>,
-				 <a href="gibbons.js.html#sunlight-1-line-14">line 14</a>
+				<a href="adapters_lokijs-gibbon-adapter.js.html">adapters/lokijs-gibbon-adapter.js</a>,
+				 <a href="adapters_lokijs-gibbon-adapter.js.html#sunlight-1-line-23">line 23</a>
 			</li>
 		</ul>
 	</dd>
@@ -232,34 +243,6 @@ It's the entry point for group- and permission handling</p></div>
     
 
     
-    <h5>Throws:</h5>
-    
-            
-
-<dl>
-    <dt>
-        <div class="param-desc">
-        <p>When given argument is not an instance of GibbonAdapter</p>
-        </div>
-    </dt>
-    <dt>
-        <dl>
-            <dt>
-                Type
-            </dt>
-            <dd>
-                
-<span class="param-type">TypeError</span>
-
-
-
-            </dd>
-        </dl>
-    </dt>
-</dl>
-
-
-        
 
     
 
@@ -268,6 +251,17 @@ It's the entry point for group- and permission handling</p></div>
 
     
     </div>
+
+    
+        <h3 class="subsection-title">Extends</h3>
+
+        
+
+
+    <ul>
+        <li><a href="GibbonAdapter.html">GibbonAdapter</a></li>
+    </ul>
+
 
     
 
@@ -288,7 +282,7 @@ It's the entry point for group- and permission handling</p></div>
             
 <hr>
 <dt>
-    <h4 class="name" id="addGroup"><span class="type-signature"></span>addGroup(group, callback)</h4>
+    <h4 class="name" id="_findByName"><span class="type-signature">&lt;private> </span>_findByName(name, criteria, callback)</h4>
     
     
 </dt>
@@ -296,8 +290,7 @@ It's the entry point for group- and permission handling</p></div>
 
     
     <div class="description">
-        <p>Add a group<br>
-(Is delegated to a given adapter)</p>
+        <p>Generic private method to dynamically query the collection and fetch data</p>
     </div>
     
 
@@ -332,7 +325,31 @@ It's the entry point for group- and permission handling</p></div>
 
         <tr>
             
-                <td class="name"><code>group</code></td>
+                <td class="name"><code>name</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">string</span>
+
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last"><p>Collection name to query</p></td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>criteria</code></td>
             
 
             <td class="type">
@@ -349,7 +366,355 @@ It's the entry point for group- and permission handling</p></div>
 
             
 
-            <td class="description last"><p>Group to add</p></td>
+            <td class="description last"><p>Criteria for finding data</p></td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>callback</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type"><a href="global.html#_findByNameCallback">_findByNameCallback</a></span>
+
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last"></td>
+        </tr>
+
+    
+    </tbody>
+</table>
+
+    
+
+    
+<dl class="details">
+    
+
+	
+
+	
+
+	
+
+    
+
+    
+
+    
+
+    
+
+	
+
+	
+
+	
+
+	
+
+	
+
+
+
+	
+	<dt class="tag-source method-doc-label method-doc-details-label">Source:</dt>
+	<dd class="tag-source">
+		<ul class="dummy">
+			<li>
+				<a href="adapters_lokijs-gibbon-adapter.js.html">adapters/lokijs-gibbon-adapter.js</a>,
+				 <a href="adapters_lokijs-gibbon-adapter.js.html#sunlight-1-line-137">line 137</a>
+			</li>
+		</ul>
+	</dd>
+	
+
+	
+
+	
+
+	
+</dl>
+
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+</dd>
+
+        
+            
+<hr>
+<dt>
+    <h4 class="name" id="_initializeCollection"><span class="type-signature">&lt;private> </span>_initializeCollection(collectionName)</h4>
+    
+    
+</dt>
+<dd>
+
+    
+    <div class="description">
+        <p>This gets a collection when not set, it will be created</p>
+    </div>
+    
+
+    
+
+    
+
+    
+    
+        <h5>Parameters:</h5>
+        
+
+<table class="params table table-striped">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>collectionName</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">string</span>
+
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last"><p>document collection to be initialized</p></td>
+        </tr>
+
+    
+    </tbody>
+</table>
+
+    
+
+    
+<dl class="details">
+    
+
+	
+
+	
+
+	
+
+    
+
+    
+
+    
+
+    
+
+	
+
+	
+
+	
+
+	
+
+	
+
+
+
+	
+	<dt class="tag-source method-doc-label method-doc-details-label">Source:</dt>
+	<dd class="tag-source">
+		<ul class="dummy">
+			<li>
+				<a href="adapters_lokijs-gibbon-adapter.js.html">adapters/lokijs-gibbon-adapter.js</a>,
+				 <a href="adapters_lokijs-gibbon-adapter.js.html#sunlight-1-line-69">line 69</a>
+			</li>
+		</ul>
+	</dd>
+	
+
+	
+
+	
+
+	
+</dl>
+
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+</dd>
+
+        
+            
+<hr>
+<dt>
+    <h4 class="name" id="_upsertByName"><span class="type-signature">&lt;private> </span>_upsertByName(collection, criteria, data, callback)</h4>
+    
+    
+</dt>
+<dd>
+
+    
+    <div class="description">
+        <p>Generic Upsert method for user, group and permission collections</p>
+    </div>
+    
+
+    
+
+    
+
+    
+    
+        <h5>Parameters:</h5>
+        
+
+<table class="params table table-striped">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>collection</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">string</span>
+
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last"><p>Dynamic pointer to a collection</p></td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>criteria</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">object</span>
+
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last"><p>In this adapter name is our unique reference for all collections</p></td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>data</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">object</span>
+
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last"><p>Object to update or insert</p></td>
         </tr>
 
     
@@ -417,8 +782,175 @@ It's the entry point for group- and permission handling</p></div>
 	<dd class="tag-source">
 		<ul class="dummy">
 			<li>
-				<a href="gibbons.js.html">gibbons.js</a>,
-				 <a href="gibbons.js.html#sunlight-1-line-96">line 96</a>
+				<a href="adapters_lokijs-gibbon-adapter.js.html">adapters/lokijs-gibbon-adapter.js</a>,
+				 <a href="adapters_lokijs-gibbon-adapter.js.html#sunlight-1-line-107">line 107</a>
+			</li>
+		</ul>
+	</dd>
+	
+
+	
+
+	
+
+	
+</dl>
+
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+</dd>
+
+        
+            
+<hr>
+<dt>
+    <h4 class="name" id="addGroup"><span class="type-signature"></span>addGroup(group, callback)</h4>
+    
+    
+</dt>
+<dd>
+
+    
+    <div class="description">
+        <p>Add a group object to the group collection</p>
+    </div>
+    
+
+    
+
+    
+
+    
+    
+        <h5>Parameters:</h5>
+        
+
+<table class="params table table-striped">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>group</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">object</span>
+
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last"><p>The group object</p></td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>callback</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">function</span>
+
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last"></td>
+        </tr>
+
+    
+    </tbody>
+</table>
+
+    
+
+    
+<dl class="details">
+    
+
+	
+
+	
+
+	
+
+    
+    <dt class="tag-overrides">Overrides:</dt>
+    <dd class="tag-overrides"><ul class="dummy"><li>
+        <a href="GibbonAdapter.html#addGroup">GibbonAdapter#addGroup</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+
+	
+
+	
+
+	
+
+	
+
+	
+
+
+
+	
+	<dt class="tag-source method-doc-label method-doc-details-label">Source:</dt>
+	<dd class="tag-source">
+		<ul class="dummy">
+			<li>
+				<a href="adapters_lokijs-gibbon-adapter.js.html">adapters/lokijs-gibbon-adapter.js</a>,
+				 <a href="adapters_lokijs-gibbon-adapter.js.html#sunlight-1-line-216">line 216</a>
 			</li>
 		</ul>
 	</dd>
@@ -459,8 +991,7 @@ It's the entry point for group- and permission handling</p></div>
 
     
     <div class="description">
-        <p>Adds an array of groups<br>
-(Is delegated to a given adapter)</p>
+        <p>Add a groups from array to the group collection</p>
     </div>
     
 
@@ -501,7 +1032,7 @@ It's the entry point for group- and permission handling</p></div>
             <td class="type">
             
                 
-<span class="param-type">Array.&lt;object></span>
+<span class="param-type">Array</span>
 
 
 
@@ -512,7 +1043,7 @@ It's the entry point for group- and permission handling</p></div>
 
             
 
-            <td class="description last"><p>Collection of groups to add</p></td>
+            <td class="description last"><p>The group object</p></td>
         </tr>
 
     
@@ -556,6 +1087,11 @@ It's the entry point for group- and permission handling</p></div>
 	
 
     
+    <dt class="tag-overrides">Overrides:</dt>
+    <dd class="tag-overrides"><ul class="dummy"><li>
+        <a href="GibbonAdapter.html#addGroups">GibbonAdapter#addGroups</a>
+    </li></ul></dd>
+    
 
     
 
@@ -580,8 +1116,8 @@ It's the entry point for group- and permission handling</p></div>
 	<dd class="tag-source">
 		<ul class="dummy">
 			<li>
-				<a href="gibbons.js.html">gibbons.js</a>,
-				 <a href="gibbons.js.html#sunlight-1-line-107">line 107</a>
+				<a href="adapters_lokijs-gibbon-adapter.js.html">adapters/lokijs-gibbon-adapter.js</a>,
+				 <a href="adapters_lokijs-gibbon-adapter.js.html#sunlight-1-line-226">line 226</a>
 			</li>
 		</ul>
 	</dd>
@@ -622,8 +1158,7 @@ It's the entry point for group- and permission handling</p></div>
 
     
     <div class="description">
-        <p>Add a permission<br>
-(Is delegated to a given adapter)</p>
+        <p>Add a permission object to the permission collection</p>
     </div>
     
 
@@ -675,7 +1210,7 @@ It's the entry point for group- and permission handling</p></div>
 
             
 
-            <td class="description last"><p>Permission to add</p></td>
+            <td class="description last"><p>The permission object</p></td>
         </tr>
 
     
@@ -719,6 +1254,11 @@ It's the entry point for group- and permission handling</p></div>
 	
 
     
+    <dt class="tag-overrides">Overrides:</dt>
+    <dd class="tag-overrides"><ul class="dummy"><li>
+        <a href="GibbonAdapter.html#addPermission">GibbonAdapter#addPermission</a>
+    </li></ul></dd>
+    
 
     
 
@@ -743,8 +1283,8 @@ It's the entry point for group- and permission handling</p></div>
 	<dd class="tag-source">
 		<ul class="dummy">
 			<li>
-				<a href="gibbons.js.html">gibbons.js</a>,
-				 <a href="gibbons.js.html#sunlight-1-line-118">line 118</a>
+				<a href="adapters_lokijs-gibbon-adapter.js.html">adapters/lokijs-gibbon-adapter.js</a>,
+				 <a href="adapters_lokijs-gibbon-adapter.js.html#sunlight-1-line-245">line 245</a>
 			</li>
 		</ul>
 	</dd>
@@ -785,8 +1325,7 @@ It's the entry point for group- and permission handling</p></div>
 
     
     <div class="description">
-        <p>Adds an array of permissions<br>
-(Is delegated to a given adapter)</p>
+        <p>Add a permission from array to the permission collection</p>
     </div>
     
 
@@ -827,7 +1366,7 @@ It's the entry point for group- and permission handling</p></div>
             <td class="type">
             
                 
-<span class="param-type">Array.&lt;object></span>
+<span class="param-type">Array</span>
 
 
 
@@ -838,7 +1377,7 @@ It's the entry point for group- and permission handling</p></div>
 
             
 
-            <td class="description last"><p>Collection of permissions to add</p></td>
+            <td class="description last"><p>The permission object</p></td>
         </tr>
 
     
@@ -906,8 +1445,8 @@ It's the entry point for group- and permission handling</p></div>
 	<dd class="tag-source">
 		<ul class="dummy">
 			<li>
-				<a href="gibbons.js.html">gibbons.js</a>,
-				 <a href="gibbons.js.html#sunlight-1-line-129">line 129</a>
+				<a href="adapters_lokijs-gibbon-adapter.js.html">adapters/lokijs-gibbon-adapter.js</a>,
+				 <a href="adapters_lokijs-gibbon-adapter.js.html#sunlight-1-line-255">line 255</a>
 			</li>
 		</ul>
 	</dd>
@@ -948,8 +1487,7 @@ It's the entry point for group- and permission handling</p></div>
 
     
     <div class="description">
-        <p>Adds a user<br>
-(Is delegated to a given adapter)</p>
+        <p>Add a user object to the user collection</p>
     </div>
     
 
@@ -1001,7 +1539,7 @@ It's the entry point for group- and permission handling</p></div>
 
             
 
-            <td class="description last"><p>User to add</p></td>
+            <td class="description last"><p>The user object</p></td>
         </tr>
 
     
@@ -1069,8 +1607,8 @@ It's the entry point for group- and permission handling</p></div>
 	<dd class="tag-source">
 		<ul class="dummy">
 			<li>
-				<a href="gibbons.js.html">gibbons.js</a>,
-				 <a href="gibbons.js.html#sunlight-1-line-85">line 85</a>
+				<a href="adapters_lokijs-gibbon-adapter.js.html">adapters/lokijs-gibbon-adapter.js</a>,
+				 <a href="adapters_lokijs-gibbon-adapter.js.html#sunlight-1-line-206">line 206</a>
 			</li>
 		</ul>
 	</dd>
@@ -1111,8 +1649,7 @@ It's the entry point for group- and permission handling</p></div>
 
     
     <div class="description">
-        <p>Finds a group<br>
-(Is delegated to a given adapter)</p>
+        <p>Tries to fetch a group</p>
     </div>
     
 
@@ -1164,7 +1701,7 @@ It's the entry point for group- and permission handling</p></div>
 
             
 
-            <td class="description last"><p>Group to find</p></td>
+            <td class="description last"><p>LokiJS criteria</p></td>
         </tr>
 
     
@@ -1208,6 +1745,11 @@ It's the entry point for group- and permission handling</p></div>
 	
 
     
+    <dt class="tag-overrides">Overrides:</dt>
+    <dd class="tag-overrides"><ul class="dummy"><li>
+        <a href="GibbonAdapter.html#findGroup">GibbonAdapter#findGroup</a>
+    </li></ul></dd>
+    
 
     
 
@@ -1232,8 +1774,8 @@ It's the entry point for group- and permission handling</p></div>
 	<dd class="tag-source">
 		<ul class="dummy">
 			<li>
-				<a href="gibbons.js.html">gibbons.js</a>,
-				 <a href="gibbons.js.html#sunlight-1-line-62">line 62</a>
+				<a href="adapters_lokijs-gibbon-adapter.js.html">adapters/lokijs-gibbon-adapter.js</a>,
+				 <a href="adapters_lokijs-gibbon-adapter.js.html#sunlight-1-line-187">line 187</a>
 			</li>
 		</ul>
 	</dd>
@@ -1266,7 +1808,7 @@ It's the entry point for group- and permission handling</p></div>
             
 <hr>
 <dt>
-    <h4 class="name" id="findGroupsByUser"><span class="type-signature"></span>findGroupsByUser(user, callback)</h4>
+    <h4 class="name" id="findGroupsByUser"><span class="type-signature"></span>findGroupsByUser()</h4>
     
     
 </dt>
@@ -1274,8 +1816,7 @@ It's the entry point for group- and permission handling</p></div>
 
     
     <div class="description">
-        <p>Finds a group collection attached to this certain user<br>
-(Is delegated to a given adapter)</p>
+        <p>Find user groups</p>
     </div>
     
 
@@ -1284,80 +1825,6 @@ It's the entry point for group- and permission handling</p></div>
     
 
     
-    
-        <h5>Parameters:</h5>
-        
-
-<table class="params table table-striped">
-    <thead>
-    <tr>
-        
-        <th>Name</th>
-        
-
-        <th>Type</th>
-
-        
-
-        
-
-        <th class="last">Description</th>
-    </tr>
-    </thead>
-
-    <tbody>
-    
-
-        <tr>
-            
-                <td class="name"><code>user</code></td>
-            
-
-            <td class="type">
-            
-                
-<span class="param-type">object</span>
-
-
-
-            
-            </td>
-
-            
-
-            
-
-            <td class="description last"><p>User criteria to find the corresponding groups</p></td>
-        </tr>
-
-    
-
-        <tr>
-            
-                <td class="name"><code>callback</code></td>
-            
-
-            <td class="type">
-            
-                
-<span class="param-type">function</span>
-
-
-
-            
-            </td>
-
-            
-
-            
-
-            <td class="description last"></td>
-        </tr>
-
-    
-    </tbody>
-</table>
-
     
 
     
@@ -1369,7 +1836,21 @@ It's the entry point for group- and permission handling</p></div>
 	
 
 	
+	<dt class="inherited-from method-doc-label method-doc-details-label">Inherited From:</dt>
+	<dd class="inherited-from">
+		<ul class="dummy">
+			<li>
+				<a href="GibbonAdapter.html#findGroupsByUser">GibbonAdapter#findGroupsByUser</a>
+			</li>
+		</ul>
+	</dd>
+	
 
+    
+    <dt class="tag-overrides">Overrides:</dt>
+    <dd class="tag-overrides"><ul class="dummy"><li>
+        <a href="GibbonAdapter.html#findGroupsByUser">GibbonAdapter#findGroupsByUser</a>
+    </li></ul></dd>
     
 
     
@@ -1395,8 +1876,8 @@ It's the entry point for group- and permission handling</p></div>
 	<dd class="tag-source">
 		<ul class="dummy">
 			<li>
-				<a href="gibbons.js.html">gibbons.js</a>,
-				 <a href="gibbons.js.html#sunlight-1-line-210">line 210</a>
+				<a href="adapters_gibbon-adapter.js.html">adapters/gibbon-adapter.js</a>,
+				 <a href="adapters_gibbon-adapter.js.html#sunlight-1-line-116">line 116</a>
 			</li>
 		</ul>
 	</dd>
@@ -1437,8 +1918,7 @@ It's the entry point for group- and permission handling</p></div>
 
     
     <div class="description">
-        <p>Finds a permission<br>
-(Is delegated to a given adapter)</p>
+        <p>Tries to find a permission</p>
     </div>
     
 
@@ -1490,7 +1970,7 @@ It's the entry point for group- and permission handling</p></div>
 
             
 
-            <td class="description last"><p>Permission to find</p></td>
+            <td class="description last"><p>LokiJS criteria</p></td>
         </tr>
 
     
@@ -1534,6 +2014,11 @@ It's the entry point for group- and permission handling</p></div>
 	
 
     
+    <dt class="tag-overrides">Overrides:</dt>
+    <dd class="tag-overrides"><ul class="dummy"><li>
+        <a href="GibbonAdapter.html#findPermission">GibbonAdapter#findPermission</a>
+    </li></ul></dd>
+    
 
     
 
@@ -1558,8 +2043,8 @@ It's the entry point for group- and permission handling</p></div>
 	<dd class="tag-source">
 		<ul class="dummy">
 			<li>
-				<a href="gibbons.js.html">gibbons.js</a>,
-				 <a href="gibbons.js.html#sunlight-1-line-74">line 74</a>
+				<a href="adapters_lokijs-gibbon-adapter.js.html">adapters/lokijs-gibbon-adapter.js</a>,
+				 <a href="adapters_lokijs-gibbon-adapter.js.html#sunlight-1-line-196">line 196</a>
 			</li>
 		</ul>
 	</dd>
@@ -1600,8 +2085,7 @@ It's the entry point for group- and permission handling</p></div>
 
     
     <div class="description">
-        <p>Finds a permission collection attached to this certain user<br>
-(Is delegated to a given adapter)</p>
+        <p>Given a user, it tries to fetch it's permissions</p>
     </div>
     
 
@@ -1653,7 +2137,7 @@ It's the entry point for group- and permission handling</p></div>
 
             
 
-            <td class="description last"><p>User criteria to find the corresponding permissions</p></td>
+            <td class="description last"><p>Instance of a user object</p></td>
         </tr>
 
     
@@ -1697,6 +2181,11 @@ It's the entry point for group- and permission handling</p></div>
 	
 
     
+    <dt class="tag-overrides">Overrides:</dt>
+    <dd class="tag-overrides"><ul class="dummy"><li>
+        <a href="GibbonAdapter.html#findPermissionsByUser">GibbonAdapter#findPermissionsByUser</a>
+    </li></ul></dd>
+    
 
     
 
@@ -1721,8 +2210,8 @@ It's the entry point for group- and permission handling</p></div>
 	<dd class="tag-source">
 		<ul class="dummy">
 			<li>
-				<a href="gibbons.js.html">gibbons.js</a>,
-				 <a href="gibbons.js.html#sunlight-1-line-221">line 221</a>
+				<a href="adapters_lokijs-gibbon-adapter.js.html">adapters/lokijs-gibbon-adapter.js</a>,
+				 <a href="adapters_lokijs-gibbon-adapter.js.html#sunlight-1-line-377">line 377</a>
 			</li>
 		</ul>
 	</dd>
@@ -1763,8 +2252,7 @@ It's the entry point for group- and permission handling</p></div>
 
     
     <div class="description">
-        <p>Finds a user<br>
-(Is delegated to a given adapter)</p>
+        <p>Tries to fetch a user</p>
     </div>
     
 
@@ -1816,7 +2304,7 @@ It's the entry point for group- and permission handling</p></div>
 
             
 
-            <td class="description last"><p>User to find</p></td>
+            <td class="description last"><p>LokiJS criteria</p></td>
         </tr>
 
     
@@ -1860,6 +2348,11 @@ It's the entry point for group- and permission handling</p></div>
 	
 
     
+    <dt class="tag-overrides">Overrides:</dt>
+    <dd class="tag-overrides"><ul class="dummy"><li>
+        <a href="GibbonAdapter.html#findUser">GibbonAdapter#findUser</a>
+    </li></ul></dd>
+    
 
     
 
@@ -1884,8 +2377,8 @@ It's the entry point for group- and permission handling</p></div>
 	<dd class="tag-source">
 		<ul class="dummy">
 			<li>
-				<a href="gibbons.js.html">gibbons.js</a>,
-				 <a href="gibbons.js.html#sunlight-1-line-51">line 51</a>
+				<a href="adapters_lokijs-gibbon-adapter.js.html">adapters/lokijs-gibbon-adapter.js</a>,
+				 <a href="adapters_lokijs-gibbon-adapter.js.html#sunlight-1-line-178">line 178</a>
 			</li>
 		</ul>
 	</dd>
@@ -1926,8 +2419,7 @@ It's the entry point for group- and permission handling</p></div>
 
     
     <div class="description">
-        <p>Initializes Gibbons<br>
-(it initializes the given adapter)</p>
+        <p>Initialize persistence storage itself and it's collections</p>
     </div>
     
 
@@ -1968,7 +2460,7 @@ It's the entry point for group- and permission handling</p></div>
             <td class="type">
             
                 
-<span class="param-type">function</span>
+<span class="param-type"><a href="global.html#initializeCallback">initializeCallback</a></span>
 
 
 
@@ -1979,7 +2471,7 @@ It's the entry point for group- and permission handling</p></div>
 
             
 
-            <td class="description last"></td>
+            <td class="description last"><p>Callback when done</p></td>
         </tr>
 
     
@@ -1998,6 +2490,11 @@ It's the entry point for group- and permission handling</p></div>
 
 	
 
+    
+    <dt class="tag-overrides">Overrides:</dt>
+    <dd class="tag-overrides"><ul class="dummy"><li>
+        <a href="GibbonAdapter.html#initialize">GibbonAdapter#initialize</a>
+    </li></ul></dd>
     
 
     
@@ -2023,8 +2520,8 @@ It's the entry point for group- and permission handling</p></div>
 	<dd class="tag-source">
 		<ul class="dummy">
 			<li>
-				<a href="gibbons.js.html">gibbons.js</a>,
-				 <a href="gibbons.js.html#sunlight-1-line-40">line 40</a>
+				<a href="adapters_lokijs-gibbon-adapter.js.html">adapters/lokijs-gibbon-adapter.js</a>,
+				 <a href="adapters_lokijs-gibbon-adapter.js.html#sunlight-1-line-151">line 151</a>
 			</li>
 		</ul>
 	</dd>
@@ -2065,8 +2562,7 @@ It's the entry point for group- and permission handling</p></div>
 
     
     <div class="description">
-        <p>Removes a group<br>
-(Is delegated to a given adapter)</p>
+        <p>Remove a group from the group collection</p>
     </div>
     
 
@@ -2106,19 +2602,13 @@ It's the entry point for group- and permission handling</p></div>
 
             <td class="type">
             
-                
-<span class="param-type">object</span>
-
-
-
-            
             </td>
 
             
 
             
 
-            <td class="description last"><p>Group criteria for removal of a certain group</p></td>
+            <td class="description last"></td>
         </tr>
 
     
@@ -2129,12 +2619,6 @@ It's the entry point for group- and permission handling</p></div>
             
 
             <td class="type">
-            
-                
-<span class="param-type">function</span>
-
-
-
             
             </td>
 
@@ -2162,6 +2646,11 @@ It's the entry point for group- and permission handling</p></div>
 	
 
     
+    <dt class="tag-overrides">Overrides:</dt>
+    <dd class="tag-overrides"><ul class="dummy"><li>
+        <a href="GibbonAdapter.html#removeGroup">GibbonAdapter#removeGroup</a>
+    </li></ul></dd>
+    
 
     
 
@@ -2186,8 +2675,8 @@ It's the entry point for group- and permission handling</p></div>
 	<dd class="tag-source">
 		<ul class="dummy">
 			<li>
-				<a href="gibbons.js.html">gibbons.js</a>,
-				 <a href="gibbons.js.html#sunlight-1-line-151">line 151</a>
+				<a href="adapters_lokijs-gibbon-adapter.js.html">adapters/lokijs-gibbon-adapter.js</a>,
+				 <a href="adapters_lokijs-gibbon-adapter.js.html#sunlight-1-line-292">line 292</a>
 			</li>
 		</ul>
 	</dd>
@@ -2212,6 +2701,26 @@ It's the entry point for group- and permission handling</p></div>
     
 
     
+    <h5>Returns:</h5>
+    
+            
+
+
+<dl>
+    <dt>
+        Type
+    </dt>
+    <dd>
+        
+<span class="param-type">*</span>
+
+
+
+    </dd>
+</dl>
+
+
+        
 
     
 </dd>
@@ -2228,8 +2737,7 @@ It's the entry point for group- and permission handling</p></div>
 
     
     <div class="description">
-        <p>Removes a permission<br>
-(Is delegated to a given adapter)</p>
+        <p>Remove a permission from the permission collection</p>
     </div>
     
 
@@ -2269,19 +2777,13 @@ It's the entry point for group- and permission handling</p></div>
 
             <td class="type">
             
-                
-<span class="param-type">object</span>
-
-
-
-            
             </td>
 
             
 
             
 
-            <td class="description last"><p>Permission criteria for removal of a certain permission</p></td>
+            <td class="description last"></td>
         </tr>
 
     
@@ -2292,12 +2794,6 @@ It's the entry point for group- and permission handling</p></div>
             
 
             <td class="type">
-            
-                
-<span class="param-type">function</span>
-
-
-
             
             </td>
 
@@ -2325,6 +2821,11 @@ It's the entry point for group- and permission handling</p></div>
 	
 
     
+    <dt class="tag-overrides">Overrides:</dt>
+    <dd class="tag-overrides"><ul class="dummy"><li>
+        <a href="GibbonAdapter.html#removePermission">GibbonAdapter#removePermission</a>
+    </li></ul></dd>
+    
 
     
 
@@ -2349,8 +2850,8 @@ It's the entry point for group- and permission handling</p></div>
 	<dd class="tag-source">
 		<ul class="dummy">
 			<li>
-				<a href="gibbons.js.html">gibbons.js</a>,
-				 <a href="gibbons.js.html#sunlight-1-line-162">line 162</a>
+				<a href="adapters_lokijs-gibbon-adapter.js.html">adapters/lokijs-gibbon-adapter.js</a>,
+				 <a href="adapters_lokijs-gibbon-adapter.js.html#sunlight-1-line-307">line 307</a>
 			</li>
 		</ul>
 	</dd>
@@ -2375,6 +2876,26 @@ It's the entry point for group- and permission handling</p></div>
     
 
     
+    <h5>Returns:</h5>
+    
+            
+
+
+<dl>
+    <dt>
+        Type
+    </dt>
+    <dd>
+        
+<span class="param-type">*</span>
+
+
+
+    </dd>
+</dl>
+
+
+        
 
     
 </dd>
@@ -2391,8 +2912,7 @@ It's the entry point for group- and permission handling</p></div>
 
     
     <div class="description">
-        <p>Removes a user<br>
-(Is delegated to a given adapter)</p>
+        <p>Remove a user from the user collection</p>
     </div>
     
 
@@ -2432,19 +2952,13 @@ It's the entry point for group- and permission handling</p></div>
 
             <td class="type">
             
-                
-<span class="param-type">object</span>
-
-
-
-            
             </td>
 
             
 
             
 
-            <td class="description last"><p>User criteria for removal of a certain user</p></td>
+            <td class="description last"></td>
         </tr>
 
     
@@ -2455,12 +2969,6 @@ It's the entry point for group- and permission handling</p></div>
             
 
             <td class="type">
-            
-                
-<span class="param-type">function</span>
-
-
-
             
             </td>
 
@@ -2488,6 +2996,11 @@ It's the entry point for group- and permission handling</p></div>
 	
 
     
+    <dt class="tag-overrides">Overrides:</dt>
+    <dd class="tag-overrides"><ul class="dummy"><li>
+        <a href="GibbonAdapter.html#removeUser">GibbonAdapter#removeUser</a>
+    </li></ul></dd>
+    
 
     
 
@@ -2512,8 +3025,130 @@ It's the entry point for group- and permission handling</p></div>
 	<dd class="tag-source">
 		<ul class="dummy">
 			<li>
-				<a href="gibbons.js.html">gibbons.js</a>,
-				 <a href="gibbons.js.html#sunlight-1-line-140">line 140</a>
+				<a href="adapters_lokijs-gibbon-adapter.js.html">adapters/lokijs-gibbon-adapter.js</a>,
+				 <a href="adapters_lokijs-gibbon-adapter.js.html#sunlight-1-line-277">line 277</a>
+			</li>
+		</ul>
+	</dd>
+	
+
+	
+
+	
+
+	
+</dl>
+
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <h5>Returns:</h5>
+    
+            
+
+
+<dl>
+    <dt>
+        Type
+    </dt>
+    <dd>
+        
+<span class="param-type">*</span>
+
+
+
+    </dd>
+</dl>
+
+
+        
+
+    
+</dd>
+
+        
+            
+<hr>
+<dt>
+    <h4 class="name" id="upsertGroup"><span class="type-signature"></span>upsertGroup()</h4>
+    
+    
+</dt>
+<dd>
+
+    
+    <div class="description">
+        <p>Update or insert group (if not exists)</p>
+    </div>
+    
+
+    
+
+    
+
+    
+    
+
+    
+<dl class="details">
+    
+
+	
+
+	
+
+	
+	<dt class="inherited-from method-doc-label method-doc-details-label">Inherited From:</dt>
+	<dd class="inherited-from">
+		<ul class="dummy">
+			<li>
+				<a href="GibbonAdapter.html#upsertGroup">GibbonAdapter#upsertGroup</a>
+			</li>
+		</ul>
+	</dd>
+	
+
+    
+    <dt class="tag-overrides">Overrides:</dt>
+    <dd class="tag-overrides"><ul class="dummy"><li>
+        <a href="GibbonAdapter.html#upsertGroup">GibbonAdapter#upsertGroup</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+
+	
+
+	
+
+	
+
+	
+
+	
+
+
+
+	
+	<dt class="tag-source method-doc-label method-doc-details-label">Source:</dt>
+	<dd class="tag-source">
+		<ul class="dummy">
+			<li>
+				<a href="adapters_gibbon-adapter.js.html">adapters/gibbon-adapter.js</a>,
+				 <a href="adapters_gibbon-adapter.js.html#sunlight-1-line-100">line 100</a>
 			</li>
 		</ul>
 	</dd>
@@ -2546,7 +3181,7 @@ It's the entry point for group- and permission handling</p></div>
             
 <hr>
 <dt>
-    <h4 class="name" id="upsertGroup"><span class="type-signature"></span>upsertGroup(criteria, group, callback)</h4>
+    <h4 class="name" id="upsertPermission"><span class="type-signature"></span>upsertPermission()</h4>
     
     
 </dt>
@@ -2554,8 +3189,7 @@ It's the entry point for group- and permission handling</p></div>
 
     
     <div class="description">
-        <p>Updates an existing group, and if not found inserts the group<br>
-(Is delegated to a given adapter)</p>
+        <p>Update or insert permission (if not exists)</p>
     </div>
     
 
@@ -2564,104 +3198,6 @@ It's the entry point for group- and permission handling</p></div>
     
 
     
-    
-        <h5>Parameters:</h5>
-        
-
-<table class="params table table-striped">
-    <thead>
-    <tr>
-        
-        <th>Name</th>
-        
-
-        <th>Type</th>
-
-        
-
-        
-
-        <th class="last">Description</th>
-    </tr>
-    </thead>
-
-    <tbody>
-    
-
-        <tr>
-            
-                <td class="name"><code>criteria</code></td>
-            
-
-            <td class="type">
-            
-                
-<span class="param-type">object</span>
-
-
-
-            
-            </td>
-
-            
-
-            
-
-            <td class="description last"><p>Group criteria to update when found</p></td>
-        </tr>
-
-    
-
-        <tr>
-            
-                <td class="name"><code>group</code></td>
-            
-
-            <td class="type">
-            
-                
-<span class="param-type">object</span>
-
-
-
-            
-            </td>
-
-            
-
-            
-
-            <td class="description last"><p>Data to merge with existing group, or to insert</p></td>
-        </tr>
-
-    
-
-        <tr>
-            
-                <td class="name"><code>callback</code></td>
-            
-
-            <td class="type">
-            
-                
-<span class="param-type">function</span>
-
-
-
-            
-            </td>
-
-            
-
-            
-
-            <td class="description last"></td>
-        </tr>
-
-    
-    </tbody>
-</table>
-
     
 
     
@@ -2673,7 +3209,21 @@ It's the entry point for group- and permission handling</p></div>
 	
 
 	
+	<dt class="inherited-from method-doc-label method-doc-details-label">Inherited From:</dt>
+	<dd class="inherited-from">
+		<ul class="dummy">
+			<li>
+				<a href="GibbonAdapter.html#upsertPermission">GibbonAdapter#upsertPermission</a>
+			</li>
+		</ul>
+	</dd>
+	
 
+    
+    <dt class="tag-overrides">Overrides:</dt>
+    <dd class="tag-overrides"><ul class="dummy"><li>
+        <a href="GibbonAdapter.html#upsertPermission">GibbonAdapter#upsertPermission</a>
+    </li></ul></dd>
     
 
     
@@ -2699,8 +3249,8 @@ It's the entry point for group- and permission handling</p></div>
 	<dd class="tag-source">
 		<ul class="dummy">
 			<li>
-				<a href="gibbons.js.html">gibbons.js</a>,
-				 <a href="gibbons.js.html#sunlight-1-line-187">line 187</a>
+				<a href="adapters_gibbon-adapter.js.html">adapters/gibbon-adapter.js</a>,
+				 <a href="adapters_gibbon-adapter.js.html#sunlight-1-line-108">line 108</a>
 			</li>
 		</ul>
 	</dd>
@@ -2733,7 +3283,7 @@ It's the entry point for group- and permission handling</p></div>
             
 <hr>
 <dt>
-    <h4 class="name" id="upsertPermission"><span class="type-signature"></span>upsertPermission(criteria, permission, callback)</h4>
+    <h4 class="name" id="upsertUser"><span class="type-signature"></span>upsertUser()</h4>
     
     
 </dt>
@@ -2741,8 +3291,7 @@ It's the entry point for group- and permission handling</p></div>
 
     
     <div class="description">
-        <p>Updates an existing permission, and if not found inserts the permission<br>
-(Is delegated to a given adapter)</p>
+        <p>Update or insert user (if not exists)</p>
     </div>
     
 
@@ -2751,104 +3300,6 @@ It's the entry point for group- and permission handling</p></div>
     
 
     
-    
-        <h5>Parameters:</h5>
-        
-
-<table class="params table table-striped">
-    <thead>
-    <tr>
-        
-        <th>Name</th>
-        
-
-        <th>Type</th>
-
-        
-
-        
-
-        <th class="last">Description</th>
-    </tr>
-    </thead>
-
-    <tbody>
-    
-
-        <tr>
-            
-                <td class="name"><code>criteria</code></td>
-            
-
-            <td class="type">
-            
-                
-<span class="param-type">object</span>
-
-
-
-            
-            </td>
-
-            
-
-            
-
-            <td class="description last"><p>Permission criteria to update when found</p></td>
-        </tr>
-
-    
-
-        <tr>
-            
-                <td class="name"><code>permission</code></td>
-            
-
-            <td class="type">
-            
-                
-<span class="param-type">object</span>
-
-
-
-            
-            </td>
-
-            
-
-            
-
-            <td class="description last"><p>Data to merge with existing permission, or to insert</p></td>
-        </tr>
-
-    
-
-        <tr>
-            
-                <td class="name"><code>callback</code></td>
-            
-
-            <td class="type">
-            
-                
-<span class="param-type">function</span>
-
-
-
-            
-            </td>
-
-            
-
-            
-
-            <td class="description last"></td>
-        </tr>
-
-    
-    </tbody>
-</table>
-
     
 
     
@@ -2860,194 +3311,21 @@ It's the entry point for group- and permission handling</p></div>
 	
 
 	
-
-    
-
-    
-
-    
-
-    
-
-	
-
-	
-
-	
-
-	
-
-	
-
-
-
-	
-	<dt class="tag-source method-doc-label method-doc-details-label">Source:</dt>
-	<dd class="tag-source">
+	<dt class="inherited-from method-doc-label method-doc-details-label">Inherited From:</dt>
+	<dd class="inherited-from">
 		<ul class="dummy">
 			<li>
-				<a href="gibbons.js.html">gibbons.js</a>,
-				 <a href="gibbons.js.html#sunlight-1-line-199">line 199</a>
+				<a href="GibbonAdapter.html#upsertUser">GibbonAdapter#upsertUser</a>
 			</li>
 		</ul>
 	</dd>
 	
 
-	
-
-	
-
-	
-</dl>
-
-
     
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-</dd>
-
-        
-            
-<hr>
-<dt>
-    <h4 class="name" id="upsertUser"><span class="type-signature"></span>upsertUser(criteria, user, callback)</h4>
-    
-    
-</dt>
-<dd>
-
-    
-    <div class="description">
-        <p>Updates an existing user, and if not found inserts the user<br>
-(Is delegated to a given adapter)</p>
-    </div>
-    
-
-    
-
-    
-
-    
-    
-        <h5>Parameters:</h5>
-        
-
-<table class="params table table-striped">
-    <thead>
-    <tr>
-        
-        <th>Name</th>
-        
-
-        <th>Type</th>
-
-        
-
-        
-
-        <th class="last">Description</th>
-    </tr>
-    </thead>
-
-    <tbody>
-    
-
-        <tr>
-            
-                <td class="name"><code>criteria</code></td>
-            
-
-            <td class="type">
-            
-                
-<span class="param-type">object</span>
-
-
-
-            
-            </td>
-
-            
-
-            
-
-            <td class="description last"><p>User criteria to update when found</p></td>
-        </tr>
-
-    
-
-        <tr>
-            
-                <td class="name"><code>user</code></td>
-            
-
-            <td class="type">
-            
-                
-<span class="param-type">object</span>
-
-
-
-            
-            </td>
-
-            
-
-            
-
-            <td class="description last"><p>Data to merge with existing user, or to insert</p></td>
-        </tr>
-
-    
-
-        <tr>
-            
-                <td class="name"><code>callback</code></td>
-            
-
-            <td class="type">
-            
-                
-<span class="param-type">function</span>
-
-
-
-            
-            </td>
-
-            
-
-            
-
-            <td class="description last"></td>
-        </tr>
-
-    
-    </tbody>
-</table>
-
-    
-
-    
-<dl class="details">
-    
-
-	
-
-	
-
-	
-
+    <dt class="tag-overrides">Overrides:</dt>
+    <dd class="tag-overrides"><ul class="dummy"><li>
+        <a href="GibbonAdapter.html#upsertUser">GibbonAdapter#upsertUser</a>
+    </li></ul></dd>
     
 
     
@@ -3073,8 +3351,8 @@ It's the entry point for group- and permission handling</p></div>
 	<dd class="tag-source">
 		<ul class="dummy">
 			<li>
-				<a href="gibbons.js.html">gibbons.js</a>,
-				 <a href="gibbons.js.html#sunlight-1-line-174">line 174</a>
+				<a href="adapters_gibbon-adapter.js.html">adapters/gibbon-adapter.js</a>,
+				 <a href="adapters_gibbon-adapter.js.html#sunlight-1-line-92">line 92</a>
 			</li>
 		</ul>
 	</dd>
@@ -3115,9 +3393,9 @@ It's the entry point for group- and permission handling</p></div>
 
     
     <div class="description">
-        <p>Validates given user against given array of permission positions.
-<b>All</b> given permissions need to be found at this given user<br>
-(Is delegated to a given adapter)</p>
+        <p>Validate a user against all given permissions <br>
+When one of the given permissions is missing for the given user,<br>
+given user is not valid.</p>
     </div>
     
 
@@ -3169,7 +3447,7 @@ It's the entry point for group- and permission handling</p></div>
 
             
 
-            <td class="description last"><p>User as criteria to validate</p></td>
+            <td class="description last"><p>User to validate</p></td>
         </tr>
 
     
@@ -3193,7 +3471,7 @@ It's the entry point for group- and permission handling</p></div>
 
             
 
-            <td class="description last"></td>
+            <td class="description last"><p>Array with unsigned integers with permissions (positions starting at 1)</p></td>
         </tr>
 
     
@@ -3237,6 +3515,11 @@ It's the entry point for group- and permission handling</p></div>
 	
 
     
+    <dt class="tag-overrides">Overrides:</dt>
+    <dd class="tag-overrides"><ul class="dummy"><li>
+        <a href="GibbonAdapter.html#validateUserWithAllPermissions">GibbonAdapter#validateUserWithAllPermissions</a>
+    </li></ul></dd>
+    
 
     
 
@@ -3261,8 +3544,8 @@ It's the entry point for group- and permission handling</p></div>
 	<dd class="tag-source">
 		<ul class="dummy">
 			<li>
-				<a href="gibbons.js.html">gibbons.js</a>,
-				 <a href="gibbons.js.html#sunlight-1-line-234">line 234</a>
+				<a href="adapters_lokijs-gibbon-adapter.js.html">adapters/lokijs-gibbon-adapter.js</a>,
+				 <a href="adapters_lokijs-gibbon-adapter.js.html#sunlight-1-line-417">line 417</a>
 			</li>
 		</ul>
 	</dd>
@@ -3303,9 +3586,9 @@ It's the entry point for group- and permission handling</p></div>
 
     
     <div class="description">
-        <p>Validates given user against given array of permission positions.
-<b>If any</b> given permission is found attached to this given user<br>
-(Is delegated to a given adapter)</p>
+        <p>Validate a user against any given permissions <br>
+When one of the given permissions is found for the given user,<br>
+the outcome is valid.</p>
     </div>
     
 
@@ -3357,7 +3640,7 @@ It's the entry point for group- and permission handling</p></div>
 
             
 
-            <td class="description last"><p>User to validate permissions against</p></td>
+            <td class="description last"><p>User to validate</p></td>
         </tr>
 
     
@@ -3381,7 +3664,7 @@ It's the entry point for group- and permission handling</p></div>
 
             
 
-            <td class="description last"><p>Permission collection of integers</p></td>
+            <td class="description last"><p>Array with unsigned integers with permissions (positions starting at 1)</p></td>
         </tr>
 
     
@@ -3425,6 +3708,11 @@ It's the entry point for group- and permission handling</p></div>
 	
 
     
+    <dt class="tag-overrides">Overrides:</dt>
+    <dd class="tag-overrides"><ul class="dummy"><li>
+        <a href="GibbonAdapter.html#validateUserWithAnyPermissions">GibbonAdapter#validateUserWithAnyPermissions</a>
+    </li></ul></dd>
+    
 
     
 
@@ -3449,8 +3737,8 @@ It's the entry point for group- and permission handling</p></div>
 	<dd class="tag-source">
 		<ul class="dummy">
 			<li>
-				<a href="gibbons.js.html">gibbons.js</a>,
-				 <a href="gibbons.js.html#sunlight-1-line-247">line 247</a>
+				<a href="adapters_lokijs-gibbon-adapter.js.html">adapters/lokijs-gibbon-adapter.js</a>,
+				 <a href="adapters_lokijs-gibbon-adapter.js.html#sunlight-1-line-443">line 443</a>
 			</li>
 		</ul>
 	</dd>

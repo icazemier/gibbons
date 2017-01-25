@@ -40,7 +40,7 @@
 			<li class="dropdown">
 				<a href="classes.list.html" class="dropdown-toggle" data-toggle="dropdown">Classes<b class="caret"></b></a>
 				<ul class="dropdown-menu inline">
-					<li><a href="BitByte.html">BitByte</a></li><li><a href="Gibbon.html">Gibbon</a></li><li><a href="GibbonAdapter.html">GibbonAdapter</a></li><li><a href="Gibbons.html">Gibbons</a></li>
+					<li><a href="BitByte.html">BitByte</a></li><li><a href="Gibbon.html">Gibbon</a></li><li><a href="GibbonAdapter.html">GibbonAdapter</a></li><li><a href="Gibbons.html">Gibbons</a></li><li><a href="LokiJSGibbonAdapter.html">LokiJSGibbonAdapter</a></li>
 				</ul>
 			</li>
 			
@@ -54,7 +54,7 @@
 			<li class="dropdown">
 				<a href="global.html" class="dropdown-toggle" data-toggle="dropdown">Global<b class="caret"></b></a>
 				<ul class="dropdown-menu inline">
-					<li><a href="global.html#LokiJSGibbonAdapter">LokiJSGibbonAdapter</a></li>
+					<li><a href="global.html">Global</a></li>
 				</ul>
 			</li>
 			
@@ -95,19 +95,19 @@
 const GibbonAdapter = require('./adapters/gibbon-adapter');
 
 /**
- * @classdesc
+ * @class
  *
- * This is the Gibbons class
+ * This is the Gibbons class&lt;br>
  * It's the entry point for group- and permission handling
  *
- * @param {GibbonAdapter} gibbonAdapter - an instance of GibbonAdapter is required.
+ * @param {GibbonAdapter} gibbonAdapter - An instance of GibbonAdapter is required.
  * @throws {TypeError} When given argument is not an instance of GibbonAdapter
- * @class
+ *
  */
 function Gibbons(gibbonAdapter) {
 
     if (!(gibbonAdapter instanceof GibbonAdapter)) {
-        throw new TypeError('adapter and/or processor not of expected type');
+        throw new TypeError('adapter processor not of expected type');
     }
     const adapter = gibbonAdapter;
 
@@ -125,7 +125,7 @@ function Gibbons(gibbonAdapter) {
 }
 
 /**
- * Initializes Gibbons
+ * Initializes Gibbons&lt;br>
  * (it initializes the given adapter)
  *
  * @param {function} callback
@@ -135,7 +135,7 @@ Gibbons.prototype.initialize = function (callback) {
 };
 
 /**
- * Finds a user
+ * Finds a user&lt;br>
  * (Is delegated to a given adapter)
  *
  * @param {object} criteria - User to find
@@ -146,7 +146,7 @@ Gibbons.prototype.findUser = function (criteria, callback) {
 };
 
 /**
- * Finds a group
+ * Finds a group&lt;br>
  * (Is delegated to a given adapter)
  *
  * @param {object} criteria - Group to find
@@ -158,7 +158,7 @@ Gibbons.prototype.findGroup = function (criteria, callback) {
 
 
 /**
- * Finds a permission
+ * Finds a permission&lt;br>
  * (Is delegated to a given adapter)
  *
  * @param {object} criteria - Permission to find
@@ -169,7 +169,7 @@ Gibbons.prototype.findPermission = function (criteria, callback) {
 };
 
 /**
- * Adds a user
+ * Adds a user&lt;br>
  * (Is delegated to a given adapter)
  *
  * @param {object} user - User to add
@@ -180,7 +180,7 @@ Gibbons.prototype.addUser = function (user, callback) {
 };
 
 /**
- * Add a group
+ * Add a group&lt;br>
  * (Is delegated to a given adapter)
  *
  * @param {object} group - Group to add
@@ -191,7 +191,7 @@ Gibbons.prototype.addGroup = function (group, callback) {
 };
 
 /**
- * Adds an array of groups
+ * Adds an array of groups&lt;br>
  * (Is delegated to a given adapter)
  *
  * @param {Array&lt;object>} groups - Collection of groups to add
@@ -202,7 +202,7 @@ Gibbons.prototype.addGroups = function (groups, callback) {
 };
 
 /**
- * Add a permission
+ * Add a permission&lt;br>
  * (Is delegated to a given adapter)
  *
  * @param {object} permission - Permission to add
@@ -213,7 +213,7 @@ Gibbons.prototype.addPermission = function (permission, callback) {
 };
 
 /**
- * Adds an array of permissions to the initialized adapter
+ * Adds an array of permissions&lt;br>
  * (Is delegated to a given adapter)
  *
  * @param {Array&lt;object>} permissions - Collection of permissions to add
@@ -224,7 +224,7 @@ Gibbons.prototype.addPermissions = function (permissions, callback) {
 };
 
 /**
- * Removes a user
+ * Removes a user&lt;br>
  * (Is delegated to a given adapter)
  *
  * @param {object} user - User criteria for removal of a certain user
@@ -235,7 +235,7 @@ Gibbons.prototype.removeUser = function (user, callback) {
 };
 
 /**
- * Removes a group
+ * Removes a group&lt;br>
  * (Is delegated to a given adapter)
  *
  * @param {object} group - Group criteria for removal of a certain group
@@ -246,7 +246,7 @@ Gibbons.prototype.removeGroup = function (group, callback) {
 };
 
 /**
- * Removes a permission
+ * Removes a permission&lt;br>
  * (Is delegated to a given adapter)
  *
  * @param {object} permission - Permission criteria for removal of a certain permission
@@ -257,7 +257,7 @@ Gibbons.prototype.removePermission = function (permission, callback) {
 };
 
 /**
- * Updates an existing user, and if not found inserts the user
+ * Updates an existing user, and if not found inserts the user&lt;br>
  * (Is delegated to a given adapter)
  *
  * @param {object} criteria - User criteria to update when found
@@ -270,7 +270,7 @@ Gibbons.prototype.upsertUser = function (criteria, user, callback) {
 
 
 /**
- * Updates an existing group, and if not found inserts the group
+ * Updates an existing group, and if not found inserts the group&lt;br>
  * (Is delegated to a given adapter)
  *
  * @param {object} criteria - Group criteria to update when found
@@ -282,7 +282,7 @@ Gibbons.prototype.upsertGroup = function (criteria, group, callback) {
 };
 
 /**
- * Updates an existing permission, and if not found inserts the permission
+ * Updates an existing permission, and if not found inserts the permission&lt;br>
  * (Is delegated to a given adapter)
  *
  * @param {object} criteria - Permission criteria to update when found
@@ -294,7 +294,7 @@ Gibbons.prototype.upsertPermission = function (criteria, permission, callback) {
 };
 
 /**
- * Finds a group collection attached to this certain user
+ * Finds a group collection attached to this certain user&lt;br>
  * (Is delegated to a given adapter)
  *
  * @param {object} user - User criteria to find the corresponding groups
@@ -305,7 +305,7 @@ Gibbons.prototype.findGroupsByUser = function (user, callback) {
 };
 
 /**
- * Finds a permission collection attached to this certain user
+ * Finds a permission collection attached to this certain user&lt;br>
  * (Is delegated to a given adapter)
  *
  * @param {object} user - User criteria to find the corresponding permissions
@@ -317,7 +317,7 @@ Gibbons.prototype.findPermissionsByUser = function (user, callback) {
 
 /**
  * Validates given user against given array of permission positions.
- * &lt;b>All&lt;/b> given permissions need to be found at this given user
+ * &lt;b>All&lt;/b> given permissions need to be found at this given user&lt;br>
  * (Is delegated to a given adapter)
  *
  * @param {object} user - User as criteria to validate
@@ -330,7 +330,7 @@ Gibbons.prototype.validateUserWithAllPermissions = function (user, permissions, 
 
 /**
  * Validates given user against given array of permission positions.
- * &lt;b>If any&lt;/b> given permission is found attached to this given user
+ * &lt;b>If any&lt;/b> given permission is found attached to this given user&lt;br>
  * (Is delegated to a given adapter)
  *
  * @param {object} user - User to validate permissions against
@@ -386,7 +386,7 @@ module.exports = Gibbons;
 <span class="jsdoc-message">
 	Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.4.3</a>
 	
-		on 2017-01-24T20:45:14+01:00
+		on 2017-01-25T14:56:14+01:00
 	
 	using the <a href="https://github.com/docstrap/docstrap">DocStrap template</a>.
 </span>
