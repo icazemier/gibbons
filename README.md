@@ -1,6 +1,6 @@
 
+<img src="https://raw.githubusercontent.com/kaasdude/gibbons/feature/docs/gibbons.svg" width="100">
 
-![Gibbons logo](https://raw.githubusercontent.com/kaasdude/gibbons/feature/docs/gibbons.svg | 100)
 
 # Gibbons
 
