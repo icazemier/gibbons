@@ -1,6 +1,6 @@
 
 
-![](./gibbons.svg =100x100)
+![Gibbons logo](https://raw.githubusercontent.com/kaasdude/gibbons/feature/docs/gibbons.svg | 100)
 
 # Gibbons
 
