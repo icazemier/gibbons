@@ -1,6 +1,5 @@
 
 
-[TOC]
 
 # Gibbons
 
