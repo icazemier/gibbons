@@ -1,6 +1,8 @@
 
+<object data="https://raw.githubusercontent.com/kaasdude/gibbons/feature/docs/gibbons.svg" type="image/svg+xml" width="100">
+  <img src="gibbons.png" />
+</object>
 
-[TOC]
 
 # Gibbons
 

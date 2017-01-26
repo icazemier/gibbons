@@ -1,5 +1,6 @@
 module.exports = {
     opts: {
+        access: 'all',
         destination: './docs',
         tutorials: './tutorials',
         recurse: true
