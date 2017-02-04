@@ -1,7 +1,7 @@
 
-<object data="https://raw.githubusercontent.com/kaasdude/gibbons/feature/docs/gibbons.svg" type="image/svg+xml" width="200">
-  <img src="https://raw.githubusercontent.com/kaasdude/gibbons/feature/docs/gibbons.png" width="200" />
-</object>
+<img src="https://raw.githubusercontent.com/kaasdude/gibbons/feature/docs/gibbons.png" width="200" />
+
+
 
 
 # Gibbons
@@ -77,6 +77,11 @@ h1. I ensured:
 * [API documentation and tutorial](https://kaasdude.github.io/gibbons/)
 
 
-[![npm version](https://badge.fury.io/js/gibbons.svg)](https://badge.fury.io/js/gibbons)
+[![npm version](https://badge.fury.io/js/gibbons.svg)](https://www.npmjs.com/package/gibbons)
+[![David](https://david-dm.org/kaasdude/gibbons.svg)](https://david-dm.org/kaasdude/gibbons)
+[![David](https://david-dm.org/kaasdude/gibbons/dev-status.svg)](https://david-dm.org/kaasdude/gibbons#info=devDependencies)
+[![Travis CI](https://travis-ci.org/kaasdude/gibbons.svg?branch=master)](https://travis-ci.org/kaasdude/gibbons)
+
+
 
 (License: MIT, See the LICENSE file)
