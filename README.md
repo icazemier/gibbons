@@ -70,6 +70,9 @@ h1. I ensured:
 * [ ] I've updated the API documentation within the code and generated a fresh export (`gulp docs`)
 ```
 
+# Changes
+[See: Changelog](https://github.com/kaasdude/gibbons/blob/master/CHANGELOG.md)
+
 # Meta data #
 
 * Maintainer: Ivo Cazemier

@@ -394,7 +394,7 @@
 		<ul class="dummy">
 			<li>
 				<a href="gibbon.js.html">gibbon.js</a>,
-				 <a href="gibbon.js.html#sunlight-1-line-355">line 355</a>
+				 <a href="gibbon.js.html#sunlight-1-line-356">line 356</a>
 			</li>
 		</ul>
 	</dd>
@@ -461,8 +461,8 @@
 
     
     <div class="description">
-        <p>Class method to create a new Gibbon from a string
-(Could be used to retrieve from persistent storage)</p>
+        <p>Class method to create a new Gibbon from a string<br>
+(Hint: Could be used to retrieve from persistent storage)</p>
     </div>
     
 
@@ -559,7 +559,7 @@
 		<ul class="dummy">
 			<li>
 				<a href="gibbon.js.html">gibbon.js</a>,
-				 <a href="gibbon.js.html#sunlight-1-line-337">line 337</a>
+				 <a href="gibbon.js.html#sunlight-1-line-338">line 338</a>
 			</li>
 		</ul>
 	</dd>
@@ -795,7 +795,7 @@
 		<ul class="dummy">
 			<li>
 				<a href="gibbon.js.html">gibbon.js</a>,
-				 <a href="gibbon.js.html#sunlight-1-line-168">line 168</a>
+				 <a href="gibbon.js.html#sunlight-1-line-167">line 167</a>
 			</li>
 		</ul>
 	</dd>
@@ -850,7 +850,7 @@
     
         <h5>Example</h5>
         
-    <pre class="sunlight-highlight-javascript">const gibbon = new Gibbon(ArrayBuffer(2));
+    <pre class="sunlight-highlight-javascript">const gibbon = Gibbon.create(2);
 gibbon.changePosition(1, true);
 
 gibbon.isPosition(1); // returns true</pre>
@@ -969,7 +969,7 @@ Note: Starting from 1</p>
 		<ul class="dummy">
 			<li>
 				<a href="gibbon.js.html">gibbon.js</a>,
-				 <a href="gibbon.js.html#sunlight-1-line-125">line 125</a>
+				 <a href="gibbon.js.html#sunlight-1-line-124">line 124</a>
 			</li>
 		</ul>
 	</dd>
@@ -1268,7 +1268,7 @@ Note: Starting from 1</p>
 		<ul class="dummy">
 			<li>
 				<a href="gibbon.js.html">gibbon.js</a>,
-				 <a href="gibbon.js.html#sunlight-1-line-81">line 81</a>
+				 <a href="gibbon.js.html#sunlight-1-line-80">line 80</a>
 			</li>
 		</ul>
 	</dd>
@@ -1321,9 +1321,8 @@ Note: Starting from 1</p>
     
         <h5>Example</h5>
         
-    <pre class="sunlight-highlight-javascript">// Initialize a Gibbon with ArrayBuffer (size = 2 bytes)
-  const ab = new ArrayBuffer(2);
-  const gibbon = new Gibbon(ab);
+    <pre class="sunlight-highlight-javascript">// Initialize a Gibbon (2 bytes)
+  const gibbon = Gibbon.create(2);
 
   // Pre set some bit positions
   gibbon.setPosition(1)
@@ -1539,14 +1538,15 @@ method wil return early with falsy result</p>
     
         <h5>Examples</h5>
         
-    <pre class="sunlight-highlight-javascript">// Set 2 bit positions to logical &#x27;1&#x27;
- const gibbon = new Gibbon(new ArrayBuffer(2));
+    <pre class="sunlight-highlight-javascript">// Initialize a gibbon with 2 bytes
+ const gibbon = Gibbon.create(2);
+ // Set 2 bit positions to logical &#x27;1&#x27;
  gibbon.setPosition(1).setPosition(2);
 
  gibbon.hasAllFromPositions([1, 2]); // true</pre>
 
     <pre class="sunlight-highlight-javascript">// Set 2 bit positions to logical &#x27;1&#x27; then the first bit position back to &#x27;0&#x27;
- const gibbon = new Gibbon(new ArrayBuffer(2));
+ const gibbon = Gibbon.create(2);
  gibbon.setPosition(1).setPosition(2),togglePosition(1);
 
  gibbon.hasAllFromPositions([-1, 2]); // true</pre>
@@ -1664,7 +1664,7 @@ method wil return early with falsy result</p>
 		<ul class="dummy">
 			<li>
 				<a href="gibbon.js.html">gibbon.js</a>,
-				 <a href="gibbon.js.html#sunlight-1-line-190">line 190</a>
+				 <a href="gibbon.js.html#sunlight-1-line-189">line 189</a>
 			</li>
 		</ul>
 	</dd>
@@ -1717,7 +1717,7 @@ method wil return early with falsy result</p>
     
         <h5>Example</h5>
         
-    <pre class="sunlight-highlight-javascript">const gibbon = new Gibbon(ArrayBuffer(2));
+    <pre class="sunlight-highlight-javascript">const gibbon = Gibbon.create(2);
 gibbon.setPosition(1);
 
 gibbon.isPosition(1); // returns true</pre>
@@ -2042,7 +2042,7 @@ gibbon.isPosition(1); // returns true</pre>
 		<ul class="dummy">
 			<li>
 				<a href="gibbon.js.html">gibbon.js</a>,
-				 <a href="gibbon.js.html#sunlight-1-line-104">line 104</a>
+				 <a href="gibbon.js.html#sunlight-1-line-103">line 103</a>
 			</li>
 		</ul>
 	</dd>
@@ -2234,7 +2234,7 @@ gibbon.isPosition(1); // returns true</pre>
 		<ul class="dummy">
 			<li>
 				<a href="gibbon.js.html">gibbon.js</a>,
-				 <a href="gibbon.js.html#sunlight-1-line-145">line 145</a>
+				 <a href="gibbon.js.html#sunlight-1-line-144">line 144</a>
 			</li>
 		</ul>
 	</dd>
@@ -2283,7 +2283,7 @@ gibbon.isPosition(1); // returns true</pre>
     
         <h5>Example</h5>
         
-    <pre class="sunlight-highlight-javascript">const gibbon = new Gibbon(ArrayBuffer(2));
+    <pre class="sunlight-highlight-javascript">const gibbon = Gibbon.create(2);
 gibbon.changePosition(1, true);
 
 gibbon.isPosition(1); // true</pre>
@@ -2304,7 +2304,7 @@ gibbon.isPosition(1); // true</pre>
 
     
     <div class="description">
-        <p>Convert the whole ArrayBuffer to a string
+        <p>Convert the whole ArrayBuffer to a string<br>
 (Hint: Could be used to store a gibbon in persistent storage as a encoded string)</p>
     </div>
     
@@ -2459,7 +2459,7 @@ gibbon.isPosition(1); // true</pre>
 <span class="jsdoc-message">
 	Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.4.3</a>
 	
-		on 2017-02-04T11:09:41+01:00
+		on 2017-02-04T13:11:00+01:00
 	
 	using the <a href="https://github.com/docstrap/docstrap">DocStrap template</a>.
 </span>
