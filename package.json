@@ -29,7 +29,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "https://bitbucket.org/ivocazemier/gibbons"
+    "url": "https://github.com/kaasdude/gibbons"
   },
   "license": "MIT",
   "dependencies": {
