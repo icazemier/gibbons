@@ -81,7 +81,7 @@ h1. I ensured:
 [![David](https://david-dm.org/kaasdude/gibbons.svg)](https://david-dm.org/kaasdude/gibbons)
 [![David](https://david-dm.org/kaasdude/gibbons/dev-status.svg)](https://david-dm.org/kaasdude/gibbons#info=devDependencies)
 [![Travis CI](https://travis-ci.org/kaasdude/gibbons.svg?branch=master)](https://travis-ci.org/kaasdude/gibbons)
-
+[![Coverage Status](https://coveralls.io/repos/github/kaasdude/gibbons/badge.svg?branch=master)](https://coveralls.io/github/kaasdude/gibbons?branch=master)
 
 
 (License: MIT, See the LICENSE file)
