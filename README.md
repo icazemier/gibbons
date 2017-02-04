@@ -80,6 +80,7 @@ h1. I ensured:
 [![npm version](https://badge.fury.io/js/gibbons.svg)](https://www.npmjs.com/package/gibbons)
 [![David](https://david-dm.org/kaasdude/gibbons.svg)](https://david-dm.org/kaasdude/gibbons)
 [![David](https://david-dm.org/kaasdude/gibbons/dev-status.svg)](https://david-dm.org/kaasdude/gibbons#info=devDependencies)
+[![Travis CI](https://travis-ci.org/kaasdude/gibbons.svg?branch=master)](https://travis-ci.org/kaasdude/gibbons)
 
 
 
