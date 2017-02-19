@@ -34,8 +34,8 @@
   },
   "license": "MIT",
   "dependencies": {
-    "lodash": "4.16.6",
-    "lokijs": "~1.4.2"
+    "lodash": "4.17.4",
+    "lokijs": "1.4.3"
   },
   "devDependencies": {
     "async": "2.1.2",
