@@ -13,7 +13,9 @@ test
 
 #others
 .nvmrc
+.vscode
 gulpfile.js
 docs
 tutorials
 config
+jsconfig.json
