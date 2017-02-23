@@ -1,0 +1,19 @@
+#tests
+test
+
+#build tools
+.travis.yml
+
+#linters
+.eslintrc*
+
+#editor settings
+.idea
+.editorconfig
+
+#others
+.nvmrc
+gulpfile.js
+docs
+tutorials
+config
