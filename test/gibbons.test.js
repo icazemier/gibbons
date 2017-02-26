@@ -484,6 +484,157 @@ describe('Gibbons', () => {
         });
     });
 
+
+    describe('Find things by permissions', () => {
+
+        let gibbonAdapter;
+        let gibbons;
+        let groupPositionsAdded;
+        let permissionPositionsAdded;
+
+        beforeEach('Initialize a Gibbon with some data to be able to query afterward', (done) => {
+
+            groupPositionsAdded = [];
+            permissionPositionsAdded = [];
+            gibbonAdapter = new LokiJSGibbonAdapter();
+            gibbons = new Gibbons(gibbonAdapter);
+
+            // Prepare some permissions for an user group
+            const permissionGibbon1 = Gibbon.create(256).setPosition(1);
+            const permissionGibbon2 = Gibbon.create(256).setAllFromPositions([2, 4]);
+            const permissionGibbon3 = Gibbon.create(256).setPosition(3);
+
+            const users = [{
+                name: 'Klaas',
+                groups: ''
+            }, {
+                name: 'Bob',
+                groups: ''
+            }, {
+                name: 'Hank',
+                groups: ''
+            }, {
+                name: 'Joan',
+                groups: ''
+            }];
+
+            const permissions = [{
+                name: 'Do this',
+                description: 'You are granted to do this'
+            }, {
+                name: 'Do that',
+                description: 'You are also granted to do this'
+            }, {
+                name: 'Change it',
+                description: 'You too are granted to do this'
+            }, {
+                name: 'View it',
+                description: 'Yes you also are granted to do this'
+            }];
+
+            const groups = [{
+                name: 'user',
+                description: 'Just regular People with an account',
+                permissions: permissionGibbon1.toString()
+            }, {
+                name: 'admin',
+                description: 'VIPS',
+                permissions: permissionGibbon2.toString()
+            }, {
+                name: 'operator',
+                description: 'User who can operate certain things',
+                permissions: permissionGibbon3.toString()
+            }];
+
+
+            async.series([
+                (callback) => {
+                    gibbons.initialize(() => {
+                        callback();
+                    });
+                },
+                (callback) => {
+                    gibbons.addGroups(groups, (error, groupsAdded) => {
+                        groupPositionsAdded = _.map(groupsAdded, '$loki');
+                        groupPositionsAdded = groupPositionsAdded.sort();
+                        callback(error);
+                    });
+                },
+                (callback) => {
+                    gibbons.addPermissions(permissions, (error, permissionsAdded) => {
+                        permissionPositionsAdded = _.map(permissionsAdded, '$loki');
+                        permissionPositionsAdded = permissionPositionsAdded.sort();
+                        callback(error);
+                    });
+                },
+                (callback) => {
+
+                    // Attach user `Klaas` to group `user`
+                    let gibbonGroups = Gibbon.create(2).setPosition(1);
+                    users[0].groups = gibbonGroups.toString();
+
+                    // Attach user `Bob` to group `admin`
+                    gibbonGroups = Gibbon.create(2).setPosition(2);
+                    users[1].groups = gibbonGroups.toString();
+
+                    // Attach user `Hank` to group `user`
+                    gibbonGroups = Gibbon.create(2).setPosition(1);
+                    users[2].groups = gibbonGroups.toString();
+
+                    // Attach user `Joan` to group `operator`
+                    gibbonGroups = Gibbon.create(2).setPosition(3);
+                    users[3].groups = gibbonGroups.toString();
+
+                    // Save users
+                    async.eachLimit(users, 2, (user, callback) => {
+                        gibbons.addUser(user, (error) => {
+                            callback(error);
+                        });
+                    }, (error) => {
+                        callback(error);
+                    });
+
+
+                }
+            ], (error) => {
+                done(error);
+            });
+        });
+
+        it(`Test ${helper.testNumber++}: Find users by permission`, (done) => {
+            gibbons.findUsersByPermission({name: 'Change it'}, (error, usersFound) => {
+
+                expect(usersFound).to.be.a.array;
+                expect(usersFound[0].name).to.equal('Joan');
+                done(error);
+            });
+        });
+
+        // TODO: to another section
+        it(`Test ${helper.testNumber++}: Find users by group`, (done) => {
+            gibbons.findUsersByGroup({name: 'user'}, (error, usersFound) => {
+
+                expect(usersFound).to.be.a.array;
+                expect(usersFound[0].name).to.equal('Hank');
+                expect(usersFound[1].name).to.equal('Klaas');
+                done(error);
+            });
+        });
+
+
+        it(`Test ${helper.testNumber++}: Find groups by permission`, (done) => {
+            gibbons.findGroupsByPermission({name: 'Do this'}, (error, groupsFound) => {
+
+                expect(groupsFound).to.be.a.array;
+                expect(groupsFound[0].name).to.equal('user');
+                done(error);
+            });
+        });
+
+
+    });
+
+
     describe('Validate a user', () => {
         let gibbonAdapter;
         let gibbons;
