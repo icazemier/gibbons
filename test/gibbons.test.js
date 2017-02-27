@@ -615,15 +615,17 @@ describe('Gibbons', () => {
 
     });
 
-    describe('Find things by permissions', () => {
+    describe('Do things by permissions', () => {
 
         let gibbonAdapter;
         let gibbons;
         let groupPositionsAdded;
         let permissionPositionsAdded;
+        let groups;
 
         beforeEach('Initialize a Gibbon with some data to be able to query afterward', (done) => {
 
+            groups = [];
             groupPositionsAdded = [];
             permissionPositionsAdded = [];
             gibbonAdapter = new LokiJSGibbonAdapter();
@@ -662,7 +664,7 @@ describe('Gibbons', () => {
                 description: 'Yes you also are granted to do this'
             }];
 
-            const groups = [{
+            const grs = [{
                 name: 'user',
                 description: 'Just regular People with an account',
                 permissions: permissionGibbon1.toString()
@@ -675,6 +677,7 @@ describe('Gibbons', () => {
                 description: 'User who can operate certain things',
                 permissions: permissionGibbon3.toString()
             }];
+            groups = groups.concat(grs);
 
 
             async.series([
@@ -748,6 +751,43 @@ describe('Gibbons', () => {
                 done(error);
             });
         });
+
+        it(`Test ${helper.testNumber++}: Removes permission which should remove them from the groups also`, (done) => {
+
+            gibbons.removePermission({name: 'Do this'}, (error) => {
+
+                if (error) {
+                    return done(error);
+                }
+                const gibbonFromGroupsArray = [];
+                for (let i = 0; i < groups.length; i++) {
+                    const gibbon = Gibbon.fromString(groups[i].permissions);
+                    gibbonFromGroupsArray.push(gibbon);
+                }
+
+                // Should be removed:
+                gibbons.findPermission({name: 'Do this'}, (error, permission) => {
+
+
+                    expect(!!error).to.be.false;
+                    expect(!!permission).to.be.false;
+
+                    // user (Permission `Do this` should be removed from this )
+                    expect(gibbonFromGroupsArray[0].hasAllFromPositions([-1])).to.be.equal(true);
+
+                    // admin
+                    expect(gibbonFromGroupsArray[1].hasAllFromPositions([2, 4])).to.be.equal(true);
+
+                    // operator
+                    expect(gibbonFromGroupsArray[2].hasAllFromPositions([3])).to.be.equal(true);
+
+                    done(error);
+                });
+
+
+            });
+        });
+
 
         it(`Test ${helper.testNumber++}: Find groups by a funny permission`, (done) => {
             gibbons.findGroupsByPermission({name: 'not allowed'}, (error, groupsFound) => {
