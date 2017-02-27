@@ -35,12 +35,12 @@ describe('Gibbons', () => {
                 groups: gibbon.toString()
             };
 
-            gibbons.addUser(user, (err, userAdded) => {
+            gibbons.addUser(user, (error, userAdded) => {
                 expect(userAdded).to.have.property('name');
                 expect(userAdded).to.have.property('groups');
                 expect(userAdded.name).to.equal(user.name);
                 expect(userAdded.groups).to.equal(user.groups);
-                done();
+                done(error);
             });
 
         });
@@ -57,14 +57,14 @@ describe('Gibbons', () => {
                 permissions: gibbon.toString()
             };
 
-            gibbons.addGroup(group, (err, groupAdded) => {
+            gibbons.addGroup(group, (error, groupAdded) => {
                 expect(groupAdded).to.have.property('name');
                 expect(groupAdded).to.have.property('description');
                 expect(groupAdded).to.have.property('permissions');
                 expect(groupAdded.name).to.equal(group.name);
                 expect(groupAdded.description).to.equal(group.description);
                 expect(groupAdded.permissions).to.equal(group.permissions);
-                done();
+                done(error);
             });
         });
 
@@ -75,12 +75,12 @@ describe('Gibbons', () => {
                 description: 'You\'ve got the power now!'
             };
 
-            gibbons.addPermission(permission, (err, permissionAdded) => {
+            gibbons.addPermission(permission, (error, permissionAdded) => {
                 expect(permissionAdded).to.have.property('name');
                 expect(permissionAdded).to.have.property('description');
                 expect(permissionAdded.name).to.equal(permission.name);
                 expect(permissionAdded.description).to.equal(permission.description);
-                done();
+                done(error);
             });
         });
 
@@ -95,8 +95,8 @@ describe('Gibbons', () => {
         beforeEach('Initialize Gibbons to be able to upsert data', (done) => {
             gibbonAdapter = new LokiJSGibbonAdapter();
             gibbons = new Gibbons(gibbonAdapter);
-            gibbons.initialize(() => {
-                done();
+            gibbons.initialize((error) => {
+                done(error);
             });
         });
 
@@ -111,12 +111,12 @@ describe('Gibbons', () => {
                 groups: gibbon.toString()
             };
 
-            gibbons.upsertUser(user, user, (err, userUpserted) => {
+            gibbons.upsertUser(user, user, (error, userUpserted) => {
                 expect(userUpserted).to.have.property('name');
                 expect(userUpserted).to.have.property('groups');
                 expect(userUpserted.name).to.equal(user.name);
                 expect(userUpserted.groups).to.equal(user.groups);
-                done();
+                done(error);
             });
 
         });
@@ -135,12 +135,12 @@ describe('Gibbons', () => {
                     groups: gibbon.toString()
                 };
 
-                gibbons.upsertUser(user, user, (err, userUpserted) => {
+                gibbons.upsertUser(user, user, (error, userUpserted) => {
                     expect(userUpserted).to.have.property('name');
                     expect(userUpserted).to.have.property('groups');
                     expect(userUpserted.name).to.equal(user.name);
                     expect(userUpserted.groups).to.equal(user.groups);
-                    callback(err);
+                    callback(error);
                 });
             }, (callback) => {
 
@@ -152,16 +152,16 @@ describe('Gibbons', () => {
                     groups: gibbon.toString()
                 };
 
-                gibbons.upsertUser(user, user, (err, userUpserted) => {
+                gibbons.upsertUser(user, user, (error, userUpserted) => {
 
                     expect(userUpserted).to.have.property('name');
                     expect(userUpserted).to.have.property('groups');
                     expect(userUpserted.name).to.equal(user.name);
                     expect(userUpserted.groups).to.equal(user.groups);
-                    callback(err);
+                    callback(error);
                 });
-            }], (err) => {
-                done(err);
+            }], (error) => {
+                done(error);
             });
 
 
@@ -179,14 +179,14 @@ describe('Gibbons', () => {
                 permissions: gibbon.toString()
             };
 
-            gibbons.upsertGroup(group, group, (err, groupUpserted) => {
+            gibbons.upsertGroup(group, group, (error, groupUpserted) => {
                 expect(groupUpserted).to.have.property('name');
                 expect(groupUpserted).to.have.property('description');
                 expect(groupUpserted).to.have.property('permissions');
                 expect(groupUpserted.name).to.equal(group.name);
                 expect(groupUpserted.description).to.equal(group.description);
                 expect(groupUpserted.permissions).to.equal(group.permissions);
-                done(err);
+                done(error);
             });
         });
 
@@ -197,12 +197,12 @@ describe('Gibbons', () => {
                 description: 'You\'ve got the power now!'
             };
 
-            gibbons.upsertPermission(permission, permission, (err, permissionUpserted) => {
+            gibbons.upsertPermission(permission, permission, (error, permissionUpserted) => {
                 expect(permissionUpserted).to.have.property('name');
                 expect(permissionUpserted).to.have.property('description');
                 expect(permissionUpserted.name).to.equal(permission.name);
                 expect(permissionUpserted.description).to.equal(permission.description);
-                done(err);
+                done(error);
             });
         });
 
@@ -216,8 +216,8 @@ describe('Gibbons', () => {
         beforeEach('Initialize a Sorting Gibbon to be able to remove data', (done) => {
             gibbonAdapter = new LokiJSGibbonAdapter();
             gibbons = new Gibbons(gibbonAdapter);
-            gibbons.initialize(() => {
-                done();
+            gibbons.initialize((error) => {
+                done(error);
             });
         });
 
@@ -401,8 +401,8 @@ describe('Gibbons', () => {
 
             async.series([
                 (callback) => {
-                    gibbons.initialize(() => {
-                        callback();
+                    gibbons.initialize((error) => {
+                        callback(error);
                     });
                 },
                 (callback) => {
@@ -484,6 +484,136 @@ describe('Gibbons', () => {
         });
     });
 
+    describe('Find things by group', () => {
+
+        let gibbonAdapter;
+        let gibbons;
+        let groupPositionsAdded;
+        let permissionPositionsAdded;
+
+        beforeEach('Initialize a Gibbon with some data to be able to query afterward', (done) => {
+
+            groupPositionsAdded = [];
+            permissionPositionsAdded = [];
+            gibbonAdapter = new LokiJSGibbonAdapter();
+            gibbons = new Gibbons(gibbonAdapter);
+
+            // Prepare some permissions for an user group
+            const gibbon1 = Gibbon.create(256).setAllFromPositions([1, 3]);
+            const gibbon2 = Gibbon.create(256).setAllFromPositions([2, 4]);
+
+            const users = [{
+                name: 'Klaas',
+                groups: ''
+            }, {
+                name: 'Bob',
+                groups: ''
+            }, {
+                name: 'Hank',
+                groups: ''
+            }, {
+                name: 'Joan',
+                groups: ''
+            }];
+
+            const permissions = [{
+                name: 'Do this',
+                description: 'You are granted to do this'
+            }, {
+                name: 'Do that',
+                description: 'You are also granted to do this'
+            }, {
+                name: 'Change it',
+                description: 'You too are granted to do this'
+            }, {
+                name: 'View it',
+                description: 'Yes you also are granted to do this'
+            }];
+
+            const groups = [{
+                name: 'user',
+                description: 'Just regular People with an account',
+                permissions: gibbon1.toString()
+            }, {
+                name: 'admin',
+                description: 'VIPS',
+                permissions: gibbon2.toString()
+            }];
+
+
+            async.series([
+                (callback) => {
+                    gibbons.initialize((error) => {
+                        callback(error);
+                    });
+                },
+                (callback) => {
+                    gibbons.addGroups(groups, (error, groupsAdded) => {
+                        groupPositionsAdded = _.map(groupsAdded, '$loki');
+                        groupPositionsAdded = groupPositionsAdded.sort();
+                        callback(error);
+                    });
+                },
+                (callback) => {
+                    gibbons.addPermissions(permissions, (error, permissionsAdded) => {
+                        permissionPositionsAdded = _.map(permissionsAdded, '$loki');
+                        permissionPositionsAdded = permissionPositionsAdded.sort();
+                        callback(error);
+                    });
+                },
+                (callback) => {
+
+                    // Attach user `Klaas` to group `user`
+                    let gibbonGroups = Gibbon.create(2).setPosition(1);
+                    users[0].groups = gibbonGroups.toString();
+
+                    // Attach user `Bob` to group `admin`
+                    gibbonGroups = Gibbon.create(2).setPosition(2);
+                    users[1].groups = gibbonGroups.toString();
+
+                    // Attach user `Hank` to group `user`
+                    gibbonGroups = Gibbon.create(2).setPosition(1);
+                    users[2].groups = gibbonGroups.toString();
+
+                    // Attach user `Joan` to group `operator`
+                    gibbonGroups = Gibbon.create(2).setPosition(2);
+                    users[3].groups = gibbonGroups.toString();
+
+                    // Save users
+                    async.eachLimit(users, 2, (user, callback) => {
+                        gibbons.addUser(user, (error) => {
+                            callback(error);
+                        });
+                    }, (error) => {
+                        callback(error);
+                    });
+
+                }
+            ], (error) => {
+                done(error);
+            });
+        });
+
+
+        it(`Test ${helper.testNumber++}: Find users by group`, (done) => {
+            gibbons.findUsersByGroup({name: 'user'}, (error, usersFound) => {
+                expect(usersFound).to.be.a.array;
+                expect(usersFound[0].name).to.equal('Hank');
+                expect(usersFound[1].name).to.equal('Klaas');
+                done(error);
+            });
+        });
+
+        it(`Test ${helper.testNumber++}: Find users by a funny group`, (done) => {
+            gibbons.findUsersByGroup({name: 'usersssss'}, (error, usersFound) => {
+                expect(error).to.be.an.error;
+                expect(error.message).to.equal('Group not found');
+                expect(usersFound).to.be.undefined;
+                done();
+            });
+        });
+
+    });
 
     describe('Find things by permissions', () => {
 
@@ -610,18 +740,6 @@ describe('Gibbons', () => {
             });
         });
 
-        // TODO: to another section
-        it(`Test ${helper.testNumber++}: Find users by group`, (done) => {
-            gibbons.findUsersByGroup({name: 'user'}, (error, usersFound) => {
-
-                expect(usersFound).to.be.a.array;
-                expect(usersFound[0].name).to.equal('Hank');
-                expect(usersFound[1].name).to.equal('Klaas');
-                done(error);
-            });
-        });
-
-
         it(`Test ${helper.testNumber++}: Find groups by permission`, (done) => {
             gibbons.findGroupsByPermission({name: 'Do this'}, (error, groupsFound) => {
 
@@ -631,12 +749,21 @@ describe('Gibbons', () => {
             });
         });
 
-
         it(`Test ${helper.testNumber++}: Find groups by a funny permission`, (done) => {
-            gibbons.findGroupsByPermission({name: 'Do nothing;)'}, (error, groupsFound) => {
+            gibbons.findGroupsByPermission({name: 'not allowed'}, (error, groupsFound) => {
 
                 expect(error).to.be.an.error;
-                expect(error.message).to.equal('permission not found');
+                expect(error.message).to.equal('Permission not found');
+                expect(groupsFound).to.be.undefined;
+                done();
+            });
+        });
+
+        it(`Test ${helper.testNumber++}: Find users by a funny permission`, (done) => {
+            gibbons.findUsersByPermission({name: 'Do nothing;)'}, (error, groupsFound) => {
+
+                expect(error).to.be.an.error;
+                expect(error.message).to.equal('Permission not found');
                 expect(groupsFound).to.be.undefined;
                 done();
             });
