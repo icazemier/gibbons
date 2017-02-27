@@ -202,6 +202,37 @@ describe('Gibbon Adapter tests', function () {
                 expect(throwTypeError).to.throw(Error);
                 done();
             });
+
+            it(`Test ${helper.testNumber++}: Try to call the abstract method findUsersByPermission from adapter instance)`, function (done) {
+                function throwTypeError() {
+                    const adapter = new HatAdapter();
+                    adapter.findUsersByPermission();
+                }
+
+                expect(throwTypeError).to.throw(Error);
+                done();
+            });
+
+            it(`Test ${helper.testNumber++}: Try to call the abstract method findUsersByGroup from adapter instance)`, function (done) {
+                function throwTypeError() {
+                    const adapter = new HatAdapter();
+                    adapter.findUsersByGroup();
+                }
+
+                expect(throwTypeError).to.throw(Error);
+                done();
+            });
+
+            it(`Test ${helper.testNumber++}: Try to call the abstract method findGroupsByPermission from adapter instance)`, function (done) {
+                function throwTypeError() {
+                    const adapter = new HatAdapter();
+                    adapter.findGroupsByPermission();
+                }
+
+                expect(throwTypeError).to.throw(Error);
+                done();
+            });
+
         });
     });
 });

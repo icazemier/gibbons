@@ -632,6 +632,17 @@ describe('Gibbons', () => {
         });
 
 
+        it(`Test ${helper.testNumber++}: Find groups by a funny permission`, (done) => {
+            gibbons.findGroupsByPermission({name: 'Do nothing;)'}, (error, groupsFound) => {
+
+                expect(error).to.be.an.error;
+                expect(error.message).to.equal('permission not found');
+                expect(groupsFound).to.be.undefined;
+                done();
+            });
+        });
+
+
     });
 
 
