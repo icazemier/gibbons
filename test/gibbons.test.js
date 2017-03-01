@@ -768,8 +768,6 @@ describe('Gibbons', () => {
                 // Should be removed:
                 gibbons.findPermission({name: 'Do this'}, (error, permission) => {
 
-
-                    expect(!!error).to.be.false;
                     expect(!!permission).to.be.false;
 
                     // user (Permission `Do this` should be removed from this )
