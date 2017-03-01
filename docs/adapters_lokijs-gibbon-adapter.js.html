@@ -163,30 +163,32 @@ util.inherits(LokiJSGibbonAdapter, GibbonAdapter);
 LokiJSGibbonAdapter.prototype._initializeCollection = function (collectionName) {
 
     const self = this;
-    self.dbCollection[collectionName] = this.db.getCollection(collectionName);
+    this.dbCollection[collectionName] = this.db.getCollection(collectionName);
+
     if (!this.dbCollection[collectionName]) {
         this.dbCollection[collectionName] = this.db.addCollection(collectionName, {
-            unique: ['name'],
-            indices: ['name']
+            unique: ['name']
+        });
+
+        // Receive events from lokiJS and pass them along:
+        this.dbCollection[collectionName].on('warning', (warning) => {
+            self.logger.warn(warning);
+            self.emit(this.EVENT.WARNING, warning);
+        });
+
+        this.dbCollection[collectionName].on('error', (errDoc) => {
+            self.logger.error(errDoc);
+            self.emit(this.EVENT.ERROR, errDoc);
+        });
+
+        this.dbCollection[collectionName].on('close', () => {
+            self.emit(this.EVENT.CLOSE);
+        });
+
+        this.dbCollection[collectionName].on('loaded', (loaded) => {
+            self.emit(this.EVENT.LOADED, loaded);
         });
     }
-
-    // Receive events from lokiJS and pass them along:
-    this.dbCollection[collectionName].on('warning', (warning) => {
-        self.logger.warn(warning);
-        self.emit(this.EVENT.WARNING, warning);
-    });
-    this.dbCollection[collectionName].on('error', (errDoc) => {
-        self.logger.error(errDoc);
-        self.emit(this.EVENT.ERROR, errDoc);
-    });
-    this.dbCollection[collectionName].on('close', () => {
-        self.emit(this.EVENT.CLOSE);
-    });
-    this.dbCollection[collectionName].on('loaded', (loaded) => {
-        self.emit(this.EVENT.LOADED, loaded);
-    });
-
 };
 
 
@@ -272,6 +274,99 @@ LokiJSGibbonAdapter.prototype.initialize = function (callback) {
  */
 LokiJSGibbonAdapter.prototype.findUser = function (criteria, callback) {
     this._findByName(COLLECTION.USER, criteria, callback);
+};
+
+
+/**
+ * Tries to fetch users by a permission
+ * @param {object} criteria - LokiJS criteria
+ * @param {function} callback
+ */
+LokiJSGibbonAdapter.prototype.findUsersByPermission = function (criteria, callback) {
+
+    const self = this;
+    self.findPermission(criteria, (error, permission) => {
+
+        if (error) {
+            return callback(error);
+        }
+        if (!permission) {
+            return callback(new Error('Permission not found'));
+        }
+
+        const permissionPosition = permission['$loki'];
+        const groups = self.dbCollection[COLLECTION.GROUP].where((group) => {
+            const gibbon = Gibbon.fromString(group.permissions);
+            return gibbon.isPosition(permissionPosition);
+        });
+
+        const groupPositions = _.map(groups, '$loki');
+        const users = self.dbCollection[COLLECTION.USER].where((user) => {
+            const gibbon = Gibbon.fromString(user.groups);
+            return gibbon.hasAnyFromPositions(groupPositions);
+        });
+
+        callback(null, users);
+    });
+};
+
+
+/**
+ * Tries to fetch users by a group
+ * @param {object} criteria - LokiJS criteria
+ * @param {function} callback
+ */
+LokiJSGibbonAdapter.prototype.findUsersByGroup = function (criteria, callback) {
+    const self = this;
+
+    self.findGroup(criteria, (error, group) => {
+
+        if (error) {
+            return callback(error);
+        }
+        if (!group) {
+            return callback(new Error('Group not found'));
+        }
+
+        const groupPosition = group['$loki'];
+        const users = self.dbCollection[COLLECTION.USER].where((user) => {
+            const gibbon = Gibbon.fromString(user.groups);
+            return gibbon.isPosition(groupPosition);
+        });
+
+        callback(null, users);
+    });
+
+
+};
+
+
+/**
+ * Tries to fetch groups by a permission
+ * @param {object} criteria - LokiJS criteria
+ * @param {function} callback
+ */
+LokiJSGibbonAdapter.prototype.findGroupsByPermission = function (criteria, callback) {
+
+    const self = this;
+    self.findPermission(criteria, (error, permission) => {
+
+        if (error) {
+            return callback(error);
+        }
+        if (!permission) {
+            return callback(new Error('Permission not found'));
+        }
+
+        const permissionPosition = permission['$loki'];
+        const groups = self.dbCollection[COLLECTION.GROUP].where((group) => {
+            const gibbon = Gibbon.fromString(group.permissions);
+            return gibbon.isPosition(permissionPosition);
+        });
+
+        callback(null, groups);
+    });
+
 };
 
 /**
@@ -364,14 +459,19 @@ LokiJSGibbonAdapter.prototype.addPermissions = function (permissions, callback) 
 
 
 /**
+ * This callback with an optional LokiJS error?
+ * @callback LokiJSGibbonAdapter~removeUser
+ * @param {Error} [error] - This could contain an error emitted by LokiJS
+ */
+
+/**
  * Remove a user from the user collection
- * @param user
- * @param callback
- * @returns {*}
+ * @param {object} user
+ * @param {LokiJSGibbonAdapter~removeUser} callback
  */
 LokiJSGibbonAdapter.prototype.removeUser = function (user, callback) {
     try {
-        this.dbCollection[COLLECTION.USER].removeWhere({name: user.name});
+        this.dbCollection[COLLECTION.USER].findAndRemove({name: user.name});
     } catch (error) {
         return callback(error);
     }
@@ -380,13 +480,12 @@ LokiJSGibbonAdapter.prototype.removeUser = function (user, callback) {
 
 /**
  * Remove a group from the group collection
- * @param group
- * @param callback
- * @returns {*}
+ * @param {object} group
+ * @param {function} callback
  */
 LokiJSGibbonAdapter.prototype.removeGroup = function (group, callback) {
     try {
-        this.dbCollection[COLLECTION.GROUP].removeWhere({name: group.name});
+        this.dbCollection[COLLECTION.GROUP].findAndRemove({name: group.name});
     } catch (error) {
         return callback(error);
     }
@@ -401,7 +500,21 @@ LokiJSGibbonAdapter.prototype.removeGroup = function (group, callback) {
  */
 LokiJSGibbonAdapter.prototype.removePermission = function (permission, callback) {
     try {
-        this.dbCollection[COLLECTION.PERMISSION].removeWhere({name: permission.name});
+        const permissionFound = this.dbCollection[COLLECTION.PERMISSION].findOne({name: permission.name});
+        const permissionFoundPosition = permissionFound['$loki'];
+        if (permissionFoundPosition !== undefined) {
+            // Remove all associated permissions stored at groups
+
+            this.dbCollection[COLLECTION.GROUP].findAndUpdate({'$loki': {'$gt': 0}}, (group) => {
+                if (typeof group.permissions === 'string') {
+                    const gibbon = Gibbon.fromString(group.permissions);
+                    gibbon.clearPosition(permissionFoundPosition);
+                    group.permissions = gibbon.toString();
+                }
+            });
+        }
+        // Last step, to remove the record itself.
+        this.dbCollection[COLLECTION.PERMISSION].findAndRemove({'$loki': permissionFoundPosition});
     } catch (error) {
         return callback(error);
     }
@@ -601,7 +714,7 @@ module.exports = LokiJSGibbonAdapter;
 <span class="jsdoc-message">
 	Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.4.3</a>
 	
-		on 2017-02-04T13:11:00+01:00
+		on 2017-03-01T20:26:53+01:00
 	
 	using the <a href="https://github.com/docstrap/docstrap">DocStrap template</a>.
 </span>
