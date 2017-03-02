@@ -108,7 +108,7 @@ describe('Gibbons', () => {
 
             gibbons.addPermission(null, (error, permissionAdded) => {
                 expect(error).to.be.an.error;
-                expect(error.message).to.have.property('Object cannot be null');
+                expect(error.message).to.equal('Object cannot be null');
                 expect(permissionAdded).to.be.undefined;
                 done();
             });
