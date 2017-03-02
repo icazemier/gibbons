@@ -45,6 +45,16 @@ describe('Gibbons', () => {
 
         });
 
+        it(`Test ${helper.testNumber++}: Add a user with funny data`, (done) => {
+
+            gibbons.addUser(null, (error, userAdded) => {
+                expect(error).to.be.an.error;
+                expect(error.message).to.equal('Object cannot be null');
+                expect(userAdded).to.be.undefined;
+                done();
+            });
+
+        });
 
         it(`Test ${helper.testNumber++}: Add a group with permissions`, (done) => {
 
@@ -68,6 +78,16 @@ describe('Gibbons', () => {
             });
         });
 
+        it(`Test ${helper.testNumber++}: Add a funny group`, (done) => {
+
+            gibbons.addGroup(undefined, (error, groupAdded) => {
+                expect(error).to.be.an.error;
+                expect(error.message).to.equal('Document needs to be an object');
+                expect(groupAdded).to.be.undefined;
+                done();
+            });
+        });
+
         it(`Test ${helper.testNumber++}: Add a permission`, (done) => {
 
             const permission = {
@@ -84,7 +104,15 @@ describe('Gibbons', () => {
             });
         });
 
+        it(`Test ${helper.testNumber++}: Add a funny permission`, (done) => {
 
+            gibbons.addPermission(null, (error, permissionAdded) => {
+                expect(error).to.be.an.error;
+                expect(error.message).to.have.property('Object cannot be null');
+                expect(permissionAdded).to.be.undefined;
+                done();
+            });
+        });
     });
 
     describe('Upserts', () => {
