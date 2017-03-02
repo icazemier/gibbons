@@ -475,12 +475,14 @@ describe('Gibbons', () => {
         });
 
         it(`Test ${helper.testNumber++}: Try to add funny groups`, (done) => {
+
             gibbons.addGroups(undefined, (error, groupsAdded) => {
                 expect(error).to.be.a.error;
-                expect(error.message).to.equal('groups not an instance of array');
+                expect(error.message).to.equal('Document needs to be an object');
                 expect(groupsAdded).to.be.undefined;
                 done();
             });
+
         });
     });
 
@@ -989,7 +991,7 @@ describe('Gibbons', () => {
         it(`Test ${helper.testNumber++}: Try to add funny value as permissions`, (done) => {
             gibbons.addPermissions(undefined, (error, permissionsAdded) => {
                 expect(error).to.be.a.error;
-                expect(error.message).to.equal('permissions not an instance of array');
+                expect(error.message).to.equal('Document needs to be an object');
                 expect(permissionsAdded).to.equal(undefined);
                 done();
             });
