@@ -40,7 +40,7 @@ gulp.task('test', ['pre-test'], () => {
         // Enforce coverage
         .pipe(istanbul.enforceThresholds({
             thresholds: {
-                global: 93
+                global: 80
                 // {
                 //     statements: 90,
                 //     branches: 90,
