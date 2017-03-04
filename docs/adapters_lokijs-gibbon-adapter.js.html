@@ -54,7 +54,7 @@
 			<li class="dropdown">
 				<a href="global.html" class="dropdown-toggle" data-toggle="dropdown">Global<b class="caret"></b></a>
 				<ul class="dropdown-menu inline">
-					<li><a href="global.html">Global</a></li>
+					<li><a href="global.html#COLLECTION">COLLECTION</a></li>
 				</ul>
 			</li>
 			
@@ -98,7 +98,10 @@ const Loki = require('lokijs');
 const GibbonAdapter = require('./gibbon-adapter');
 const Gibbon = require('../gibbon');
 
-
+/**
+ *
+ * @type {{USER: string, GROUP: string, PERMISSION: string}}
+ */
 const COLLECTION = {
     USER: 'user',
     GROUP: 'group',
@@ -112,30 +115,9 @@ const COLLECTION = {
  *
  * @class
  * @augments GibbonAdapter
- * @param {object} [logger] - Logger instance
  */
-function LokiJSGibbonAdapter(logger) {
+function LokiJSGibbonAdapter() {
     GibbonAdapter.call(this);
-
-    Object.defineProperty(this, 'EVENT', {
-        writable: true,
-        enumerable: true,
-        configurable: true,
-        value: {
-            ERROR: 'error',
-            EVENT: 'event',
-            WARNING: 'warning',
-            CLOSE: 'close',
-            LOADED: 'loaded'
-        }
-    });
-
-    Object.defineProperty(this, 'logger', {
-        writable: true,
-        enumerable: true,
-        configurable: false,
-        value: logger || console
-    });
 
     Object.defineProperty(this, 'dbCollection', {
         writable: true,
@@ -162,35 +144,22 @@ util.inherits(LokiJSGibbonAdapter, GibbonAdapter);
  */
 LokiJSGibbonAdapter.prototype._initializeCollection = function (collectionName) {
 
-    const self = this;
     this.dbCollection[collectionName] = this.db.getCollection(collectionName);
 
     if (!this.dbCollection[collectionName]) {
         this.dbCollection[collectionName] = this.db.addCollection(collectionName, {
             unique: ['name']
         });
-
-        // Receive events from lokiJS and pass them along:
-        this.dbCollection[collectionName].on('warning', (warning) => {
-            self.logger.warn(warning);
-            self.emit(this.EVENT.WARNING, warning);
-        });
-
-        this.dbCollection[collectionName].on('error', (errDoc) => {
-            self.logger.error(errDoc);
-            self.emit(this.EVENT.ERROR, errDoc);
-        });
-
-        this.dbCollection[collectionName].on('close', () => {
-            self.emit(this.EVENT.CLOSE);
-        });
-
-        this.dbCollection[collectionName].on('loaded', (loaded) => {
-            self.emit(this.EVENT.LOADED, loaded);
-        });
     }
 };
 
+/**
+ * Callback when upsert is done (insert new or update is exists).
+ * @callback LokiJSGibbonAdapter~_upsertByName
+ * @param {Error} [error=null] - Error is omitted
+ * @param {object} [dataFound] - One instance of a fetched record
+ *
+ */
 
 /**
  * Generic Upsert method for user, group and permission collections
@@ -198,29 +167,29 @@ LokiJSGibbonAdapter.prototype._initializeCollection = function (collectionName) 
  * @param {string} collection - Dynamic pointer to a collection
  * @param {object} criteria - In this adapter name is our unique reference for all collections
  * @param {object} data - Object to update or insert
- * @param {function} callback
+ * @param {LokiJSGibbonAdapter~_upsertByName} callback
  * @private
  */
 LokiJSGibbonAdapter.prototype._upsertByName = function (collection, criteria, data, callback) {
-    let dataFound = this.dbCollection[collection].findOne({name: criteria.name});
-    if (!dataFound) {
-        dataFound = this.dbCollection[collection].insert(data);
-    } else {
-        dataFound = _.merge(dataFound, data);
-        try {
+    try {
+        let dataFound = this.dbCollection[collection].findOne({name: criteria.name});
+        if (!dataFound) {
+            dataFound = this.dbCollection[collection].insert(data);
+        } else {
+            dataFound = _.merge(dataFound, data);
             this.dbCollection[collection].update(dataFound);
-        } catch (error) {
-            return callback(error);
         }
+        callback(null, dataFound);
+    } catch (error) {
+        return callback(error);
     }
-    callback(null, dataFound);
 };
 
 /**
- * Callback when initializing is done.
- * @callback _findByNameCallback
- * @param {Error} [error=null] - Error is omitted
- * @param {(object|null)} userObject - One instance of a fetched record
+ * Callback when document fetching is done
+ * @callback LokiJSGibbonAdapter~findByNameCallback
+ * @param {Error} [error=null] - Error is thrown by LokiJS
+ * @param {object} [userObject] - Instance of a fetched record
  *
  */
 
@@ -228,22 +197,28 @@ LokiJSGibbonAdapter.prototype._upsertByName = function (collection, criteria, da
  * Generic private method to dynamically query the collection and fetch data
  * @param {string} name - Collection name to query
  * @param {object} criteria - Criteria for finding data
- * @param {_findByNameCallback} callback
+ * @param {LokiJSGibbonAdapter~findByNameCallback} callback
  * @private
  */
 LokiJSGibbonAdapter.prototype._findByName = function (name, criteria, callback) {
-    const found = this.dbCollection[name].findOne(criteria);
-    callback(null, found);
+    try {
+        const found = this.dbCollection[name].findOne(criteria);
+        callback(null, found);
+    } catch (error) {
+        callback(error);
+    }
 };
 
 /**
  * Callback when initializing is done.
- * @callback initializeCallback
+ * @callback LokiJSGibbonAdapter~initializeCallback
  */
 
 /**
  * Initialize persistence storage itself and it's collections
- * @param {initializeCallback} callback - Callback when done
+ *
+ * @override
+ * @param {LokiJSGibbonAdapter~initializeCallback} callback - Callback when done
  */
 LokiJSGibbonAdapter.prototype.initialize = function (callback) {
     const self = this;
@@ -266,21 +241,36 @@ LokiJSGibbonAdapter.prototype.initialize = function (callback) {
     }
 };
 
+/**
+ * Callback when fetching is done.
+ * @callback LokiJSGibbonAdapter~findUser
+ * @see {@link _findByName}
+ */
 
 /**
  * Tries to fetch a user
+ *
+ * @override
  * @param {object} criteria - LokiJS criteria
- * @param {function} callback
+ * @param {LokiJSGibbonAdapter~findUser} callback
  */
 LokiJSGibbonAdapter.prototype.findUser = function (criteria, callback) {
     this._findByName(COLLECTION.USER, criteria, callback);
 };
 
+/**
+ * Callback when fetching is done.
+ * @callback LokiJSGibbonAdapter~findUsersByPermission
+ * @param {Error} [error=null] - Error when Loki throws an error
+ * @param {object} [users] - Collection of found users
+ */
 
 /**
  * Tries to fetch users by a permission
+ *
+ * @override
  * @param {object} criteria - LokiJS criteria
- * @param {function} callback
+ * @param {LokiJSGibbonAdapter~findUsersByPermission} callback
  */
 LokiJSGibbonAdapter.prototype.findUsersByPermission = function (criteria, callback) {
 
@@ -294,27 +284,40 @@ LokiJSGibbonAdapter.prototype.findUsersByPermission = function (criteria, callba
             return callback(new Error('Permission not found'));
         }
 
-        const permissionPosition = permission['$loki'];
-        const groups = self.dbCollection[COLLECTION.GROUP].where((group) => {
-            const gibbon = Gibbon.fromString(group.permissions);
-            return gibbon.isPosition(permissionPosition);
-        });
+        try {
+            const permissionPosition = permission['$loki'];
+            const groups = self.dbCollection[COLLECTION.GROUP].where((group) => {
+                const gibbon = Gibbon.fromString(group.permissions);
+                return gibbon.isPosition(permissionPosition);
+            });
 
-        const groupPositions = _.map(groups, '$loki');
-        const users = self.dbCollection[COLLECTION.USER].where((user) => {
-            const gibbon = Gibbon.fromString(user.groups);
-            return gibbon.hasAnyFromPositions(groupPositions);
-        });
+            const groupPositions = _.map(groups, '$loki');
+            const users = self.dbCollection[COLLECTION.USER].where((user) => {
+                const gibbon = Gibbon.fromString(user.groups);
+                return gibbon.hasAnyFromPositions(groupPositions);
+            });
+            callback(null, users);
+        } catch (error) {
+            callback(error);
+        }
 
-        callback(null, users);
     });
 };
 
 
 /**
+ * Callback when fetching is done.
+ * @callback LokiJSGibbonAdapter~findUsersByGroup
+ * @param {Error} [error=null] - Error when Loki throws an error
+ * @param {object} [users] - Collection of found users
+ */
+
+/**
  * Tries to fetch users by a group
+ *
+ * @override
  * @param {object} criteria - LokiJS criteria
- * @param {function} callback
+ * @param {LokiJSGibbonAdapter~findUsersByGroup} callback
  */
 LokiJSGibbonAdapter.prototype.findUsersByGroup = function (criteria, callback) {
     const self = this;
@@ -328,23 +331,35 @@ LokiJSGibbonAdapter.prototype.findUsersByGroup = function (criteria, callback) {
             return callback(new Error('Group not found'));
         }
 
-        const groupPosition = group['$loki'];
-        const users = self.dbCollection[COLLECTION.USER].where((user) => {
-            const gibbon = Gibbon.fromString(user.groups);
-            return gibbon.isPosition(groupPosition);
-        });
+        try {
+            const groupPosition = group['$loki'];
+            const users = self.dbCollection[COLLECTION.USER].where((user) => {
+                const gibbon = Gibbon.fromString(user.groups);
+                return gibbon.isPosition(groupPosition);
+            });
+            callback(null, users);
+        } catch (error) {
+            callback(error);
+        }
 
-        callback(null, users);
     });
 
 
 };
 
+/**
+ * Callback when fetching is done.
+ * @callback LokiJSGibbonAdapter~findGroupsByPermission
+ * @param {Error} [error=null] - Error when Loki throws an error
+ * @param {object} [users] - Collection of found groups
+ */
 
 /**
  * Tries to fetch groups by a permission
+ *
+ * @override
  * @param {object} criteria - LokiJS criteria
- * @param {function} callback
+ * @param {LokiJSGibbonAdapter~findGroupsByPermission} callback
  */
 LokiJSGibbonAdapter.prototype.findGroupsByPermission = function (criteria, callback) {
 
@@ -358,153 +373,255 @@ LokiJSGibbonAdapter.prototype.findGroupsByPermission = function (criteria, callb
             return callback(new Error('Permission not found'));
         }
 
-        const permissionPosition = permission['$loki'];
-        const groups = self.dbCollection[COLLECTION.GROUP].where((group) => {
-            const gibbon = Gibbon.fromString(group.permissions);
-            return gibbon.isPosition(permissionPosition);
-        });
+        try {
+            const permissionPosition = permission['$loki'];
+            const groups = self.dbCollection[COLLECTION.GROUP].where((group) => {
+                const gibbon = Gibbon.fromString(group.permissions);
+                return gibbon.isPosition(permissionPosition);
+            });
+            callback(null, groups);
+        } catch (error) {
+            callback(error);
+        }
 
-        callback(null, groups);
     });
 
 };
 
+
+/**
+ * Callback when fetching is done.
+ * @callback LokiJSGibbonAdapter~findGroup
+ * @see {@link _findByName}
+ */
+
 /**
  * Tries to fetch a group
+ *
+ * @override
  * @param {object} criteria - LokiJS criteria
- * @param {function} callback
+ * @param {LokiJSGibbonAdapter~findGroup} callback
  */
 LokiJSGibbonAdapter.prototype.findGroup = function (criteria, callback) {
     this._findByName(COLLECTION.GROUP, criteria, callback);
 };
 
+
+/**
+ * Callback when fetching is done.
+ * @callback LokiJSGibbonAdapter~findPermission
+ * @see {@link _findByName}
+ */
+
 /**
  * Tries to find a permission
+ *
+ * @override
  * @param {object} criteria - LokiJS criteria
- * @param {function} callback
+ * @param {LokiJSGibbonAdapter~findPermission} callback
  */
 LokiJSGibbonAdapter.prototype.findPermission = function (criteria, callback) {
     this._findByName(COLLECTION.PERMISSION, criteria, callback);
 };
 
+/**
+ * Callback when add is done.
+ * @callback LokiJSGibbonAdapter~addUser
+ * @param {Error} [error] - Error thrown by LokiJS
+ * @param {object} [user] - Added user
+ */
 
 /**
  * Add a user object to the user collection
+ *
+ * @override
  * @param {object} user - The user object
- * @param {function} callback
+ * @param {LokiJSGibbonAdapter~addUser} callback
  */
 LokiJSGibbonAdapter.prototype.addUser = function (user, callback) {
-    this.dbCollection[COLLECTION.USER].insert(user);
-    callback(null, user);
+    try {
+        this.dbCollection[COLLECTION.USER].insert(user);
+        callback(null, user);
+    } catch (error) {
+        callback(error);
+    }
+
 };
+
+/**
+ * Callback when add is done.
+ * @callback LokiJSGibbonAdapter~addGroup
+ * @param {Error} [error] - Error thrown by LokiJS
+ * @param {object} [user] - Added group
+ */
 
 /**
  * Add a group object to the group collection
+ *
+ * @override
  * @param {object} group - The group object
- * @param {function} callback
+ * @param {LokiJSGibbonAdapter~addGroup} callback
  */
 LokiJSGibbonAdapter.prototype.addGroup = function (group, callback) {
-    this.dbCollection[COLLECTION.GROUP].insert(group);
-    callback(null, group);
+    try {
+        this.dbCollection[COLLECTION.GROUP].insert(group);
+        callback(null, group);
+    } catch (error) {
+        callback(error);
+    }
 };
+
+/**
+ * Callback when add is done.
+ * @callback LokiJSGibbonAdapter~addGroups
+ * @param {Error} [error] - Error thrown by LokiJS
+ * @param {Array} [groups] - Added groups
+ */
 
 /**
  * Add a groups from array to the group collection
+ *
+ * @override
  * @param {Array} groups - The group object
- * @param {function} callback
+ * @param {LokiJSGibbonAdapter~addGroups} callback
  */
 LokiJSGibbonAdapter.prototype.addGroups = function (groups, callback) {
-    if (!(Array.isArray(groups))) {
-        return callback(new TypeError('groups not an instance of array'));
+    try {
+        this.dbCollection[COLLECTION.GROUP].insert(groups);
+        callback(null, groups);
+    } catch (error) {
+        callback(error);
     }
-    const groupsAdded = [];
-    for (let i = 0; i &lt; groups.length; i++) {
-        const group = groups[i];
-        const groupAdded = this.dbCollection[COLLECTION.GROUP].insert(group);
-        groupsAdded.push(groupAdded);
-    }
-    callback(null, groupsAdded);
 };
 
+/**
+ * Callback when add is done.
+ * @callback LokiJSGibbonAdapter~addPermission
+ * @param {Error} [error] - Error thrown by LokiJS
+ * @param {object} [permission] - Added permissions
+ */
 
 /**
  * Add a permission object to the permission collection
+ *
+ * @override
  * @param {object} permission - The permission object
- * @param {function} callback
+ * @param {LokiJSGibbonAdapter~addPermission} callback
  */
 LokiJSGibbonAdapter.prototype.addPermission = function (permission, callback) {
-    this.dbCollection[COLLECTION.PERMISSION].insert(permission);
-    callback(null, permission);
+    try {
+        this.dbCollection[COLLECTION.PERMISSION].insert(permission);
+        callback(null, permission);
+    } catch (error) {
+        callback(error);
+    }
 };
+
+/**
+ * Callback when add is done.
+ * @callback LokiJSGibbonAdapter~addPermissions
+ * @param {Error} [error] - This could contain an error emitted by LokiJS
+ * @param {Array} [permissions] - Inserted permissions
+ */
 
 /**
  * Add a permission from array to the permission collection
+ *
+ * @override
  * @param {Array} permissions - The permission object
- * @param {function} callback
+ * @param {LokiJSGibbonAdapter~addPermissions} callback
  */
 LokiJSGibbonAdapter.prototype.addPermissions = function (permissions, callback) {
-
-    if (!(Array.isArray(permissions))) {
-        return callback(new TypeError('permissions not an instance of array'));
+    try {
+        this.dbCollection[COLLECTION.PERMISSION].insert(permissions);
+        callback(null, permissions);
+    } catch (error) {
+        callback(error);
     }
-    const permissionsAdded = [];
-    for (let i = 0; i &lt; permissions.length; i++) {
-        const permission = permissions[i];
-        const permissionAdded = this.dbCollection[COLLECTION.PERMISSION].insert(permission);
-        permissionsAdded.push(permissionAdded);
-    }
-
-    callback(null, permissionsAdded);
 };
 
 
 /**
- * This callback with an optional LokiJS error?
+ * Callback when removal is done.
  * @callback LokiJSGibbonAdapter~removeUser
- * @param {Error} [error] - This could contain an error emitted by LokiJS
+ * @param {Error} [error] - This could contain an error thrown by LokiJS
  */
 
 /**
  * Remove a user from the user collection
+ *
+ * @override
  * @param {object} user
  * @param {LokiJSGibbonAdapter~removeUser} callback
  */
 LokiJSGibbonAdapter.prototype.removeUser = function (user, callback) {
     try {
         this.dbCollection[COLLECTION.USER].findAndRemove({name: user.name});
+        callback();
     } catch (error) {
-        return callback(error);
+        callback(error);
     }
-    callback();
 };
 
+
 /**
- * Remove a group from the group collection
+ * Callback when removal is done.
+ * @callback LokiJSGibbonAdapter~removeGroup
+ * @param {Error} [error] - This could contain an error thrown by LokiJS
+ */
+
+/**
+ * Tries to fetch the given group, if found it does a cascaded removal of the groups stored in all users
+ * Then removes the mentioned group from the group collection itself
+ *
+ * @override
  * @param {object} group
- * @param {function} callback
+ * @param {LokiJSGibbonAdapter~removeGroup} callback
  */
 LokiJSGibbonAdapter.prototype.removeGroup = function (group, callback) {
     try {
-        this.dbCollection[COLLECTION.GROUP].findAndRemove({name: group.name});
+        const groupFound = this.dbCollection[COLLECTION.GROUP].findOne({name: group.name});
+        const groupFoundPosition = groupFound['$loki'];
+        if (groupFoundPosition !== undefined) {
+
+            // Remove all associated permissions stored at users
+            this.dbCollection[COLLECTION.USER].findAndUpdate({'$loki': {'$gt': 0}}, (user) => {
+                if (typeof user.groups === 'string') {
+                    const gibbon = Gibbon.fromString(user.groups);
+                    gibbon.clearPosition(groupFoundPosition);
+                    user.groups = gibbon.toString();
+                }
+            });
+        }
+        // Last step, to remove the record itself.
+        this.dbCollection[COLLECTION.GROUP].findAndRemove({'$loki': groupFoundPosition});
+        callback();
     } catch (error) {
-        return callback(error);
+        callback(error);
     }
-    callback();
 };
 
 /**
- * Remove a permission from the permission collection
- * @param permission
- * @param callback
- * @returns {*}
+ * Callback when removal is done.
+ * @callback LokiJSGibbonAdapter~removePermission
+ * @param {Error} [error] - This could contain an error thrown by LokiJS
+ */
+
+/**
+ * Tries to fetch the given permission, if found it does a cascaded removal of the permissions stored in all groups
+ * Then removes the mentioned permission from the permission collection itself
+ *
+ * @override
+ * @param {object} permission
+ * @param {LokiJSGibbonAdapter~removePermission} callback
  */
 LokiJSGibbonAdapter.prototype.removePermission = function (permission, callback) {
     try {
         const permissionFound = this.dbCollection[COLLECTION.PERMISSION].findOne({name: permission.name});
         const permissionFoundPosition = permissionFound['$loki'];
         if (permissionFoundPosition !== undefined) {
-            // Remove all associated permissions stored at groups
 
+            // Remove all associated permissions stored at groups
             this.dbCollection[COLLECTION.GROUP].findAndUpdate({'$loki': {'$gt': 0}}, (group) => {
                 if (typeof group.permissions === 'string') {
                     const gibbon = Gibbon.fromString(group.permissions);
@@ -515,72 +632,113 @@ LokiJSGibbonAdapter.prototype.removePermission = function (permission, callback)
         }
         // Last step, to remove the record itself.
         this.dbCollection[COLLECTION.PERMISSION].findAndRemove({'$loki': permissionFoundPosition});
+        callback();
     } catch (error) {
-        return callback(error);
+        callback(error);
     }
-    callback();
-
 };
 
 /**
+ * Callback when update is done.
+ * @callback LokiJSGibbonAdapter~upsertUser
+ * @see {@link _upsertByName}
+ */
+
+/**
  * Insert or update a user (if not exists)
+ *
  * @override
  * @param {object} criteria - Where to find in case of update
  * @param {object} user - The user to update or insert
- * @param {function} callback
+ * @param {LokiJSGibbonAdapter~upsertUser} callback
  */
 LokiJSGibbonAdapter.prototype.upsertUser = function (criteria, user, callback) {
     this._upsertByName(COLLECTION.USER, criteria, user, callback);
 };
 
 /**
+ * Callback when update is done.
+ * @callback LokiJSGibbonAdapter~upsertGroup
+ * @see {@link _upsertByName}
+ */
+
+/**
  * Insert or update group (if not exists)
+ *
  * @override
  * @param {object} criteria - LokiJS criteria
- * @param {Gibbon} group
- * @param callback
+ * @param {object} group - Group object
+ * @param {LokiJSGibbonAdapter~upsertGroup} callback
  */
 LokiJSGibbonAdapter.prototype.upsertGroup = function (criteria, group, callback) {
     this._upsertByName(COLLECTION.GROUP, criteria, group, callback);
 };
 
 /**
- * Insert or update permissions (if not exists)
+ * Callback when update is done.
+ * @callback LokiJSGibbonAdapter~upsertPermission
+ * @see {@link _upsertByName}
+ */
+
+/**
+ * Insert or update a permission (if not exists)
+ *
  * @override
  * @param {object} criteria - LokiJS criteria
- * @param permission
- * @param callback
+ * @param {object} permission - Permission object
+ * @param {LokiJSGibbonAdapter~upsertPermission} callback
  */
 LokiJSGibbonAdapter.prototype.upsertPermission = function (criteria, permission, callback) {
     this._upsertByName(COLLECTION.PERMISSION, criteria, permission, callback);
 };
 
+/**
+ * Callback when fetching is done.
+ * @callback LokiJSGibbonAdapter~findGroupsByUser
+ * @param {Error} [error] - If user not found or an error thrown by LokiJS
+ * @param {Array} [groups] - Fetched groups from one given user
+ */
 
 /**
- * Tries to fetch a collection of Hats representing groups
+ * Tries to fetch a collection of groups
+ *
  * @override
  * @param {object} user - user object
- * @param callback
+ * @param {LokiJSGibbonAdapter~findGroupsByUser} callback
  */
 LokiJSGibbonAdapter.prototype.findGroupsByUser = function (user, callback) {
-    // Fetch user from lokijs
-    const userFound = this.dbCollection[COLLECTION.USER].findOne({name: user.name});
-    if (!userFound) {
-        return callback(new Error('user not found'));
+    try {
+        // Fetch user from lokijs
+        const userFound = this.dbCollection[COLLECTION.USER].findOne({name: user.name});
+        if (!userFound) {
+            return callback(new Error('user not found'));
+        }
+        // construct a new Gibbon instance from encoded groups
+        const gibbon = Gibbon.fromString(userFound.groups);
+        // Fetch lokijs groups from group collection
+        const positions = gibbon.getPositionsArray();
+        const criteria = {'$loki': {'$in': positions}};
+        const groups = this.dbCollection[COLLECTION.GROUP].find(criteria);
+        callback(null, groups);
+    } catch (error) {
+        callback(error);
     }
-    // construct a new Gibbon instance from encoded groups
-    const gibbon = Gibbon.fromString(userFound.groups);
-    // Fetch lokijs groups from group collection
-    const positions = gibbon.getPositionsArray();
-    const criteria = {'$loki': {'$in': positions}};
-    const groups = this.dbCollection[COLLECTION.GROUP].find(criteria);
-    return callback(null, groups);
+
 };
 
 /**
+ * Callback when fetching is done.
+ * @callback LokiJSGibbonAdapter~findPermissionsByUser
+ * @param {Error} [error] - If user not found or an error thrown by LokiJS
+ * @param {Array} [permissions] - Fetched permissions from one given user
+ */
+
+/**
  * Given a user, it tries to fetch it's permissions
+ *
+ * @override
  * @param {object} user - Instance of a user object
- * @param {function} callback
+ * @param {LokiJSGibbonAdapter~findPermissionsByUser} callback
  */
 LokiJSGibbonAdapter.prototype.findPermissionsByUser = function (user, callback) {
     const self = this;
@@ -601,7 +759,7 @@ LokiJSGibbonAdapter.prototype.findPermissionsByUser = function (user, callback) 
             permissions = _.uniq(permissions);
         }
 
-        permissions = permissions.sort(function sortNumber(a, b) {
+        permissions = permissions.sort((a, b) => {
             return a - b;
         });
 
@@ -612,15 +770,22 @@ LokiJSGibbonAdapter.prototype.findPermissionsByUser = function (user, callback) 
     });
 };
 
+/**
+ * Callback when validating is done.
+ * @callback LokiJSGibbonAdapter~validateUserWithAllPermissions
+ * @param {Error} [error] - If user not found or an error thrown by LokiJS
+ * @param {boolean} valid - When valid or not
+ */
 
 /**
  * Validate a user against all given permissions &lt;br>
  * When one of the given permissions is missing for the given user,&lt;br>
  * given user is not valid.
  *
+ * @override
  * @param {object} user - User to validate
  * @param {Array&lt;Number>} permissions - Array with unsigned integers with permissions (positions starting at 1)
- * @param {function} callback
+ * @param {LokiJSGibbonAdapter~validateUserWithAllPermissions} callback
  */
 LokiJSGibbonAdapter.prototype.validateUserWithAllPermissions = function (user, permissions, callback) {
     let valid = false;
@@ -640,13 +805,20 @@ LokiJSGibbonAdapter.prototype.validateUserWithAllPermissions = function (user, p
 };
 
 /**
+ * Callback when validating is done.
+ * @callback LokiJSGibbonAdapter~validateUserWithAnyPermissions
+ * @param {Error} [error] - If user not found or an error thrown by LokiJS
+ * @param {boolean} valid - When valid or not
+ */
+
+/**
  * Validate a user against any given permissions &lt;br>
  * When one of the given permissions is found for the given user,&lt;br>
  * the outcome is valid.
- *
+ * @override
  * @param {object} user - User to validate
  * @param {Array&lt;Number>} permissions - Array with unsigned integers with permissions (positions starting at 1)
- * @param {function} callback
+ * @param {LokiJSGibbonAdapter~validateUserWithAnyPermissions} callback
  */
 LokiJSGibbonAdapter.prototype.validateUserWithAnyPermissions = function (user, permissions, callback) {
     let valid = false;
@@ -714,7 +886,7 @@ module.exports = LokiJSGibbonAdapter;
 <span class="jsdoc-message">
 	Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.4.3</a>
 	
-		on 2017-03-01T20:26:53+01:00
+		on 2017-03-04T11:26:10+01:00
 	
 	using the <a href="https://github.com/docstrap/docstrap">DocStrap template</a>.
 </span>
