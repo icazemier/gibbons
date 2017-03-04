@@ -64,6 +64,15 @@ describe('Gibbon Adapter tests', function () {
                 done();
             });
 
+            it(`Test ${helper.testNumber++}: Try to call the abstract method addPermissions from adapter instance)`, function (done) {
+                function throwTypeError() {
+                    const adapter = new HatAdapter();
+                    adapter.addPermissions();
+                }
+
+                expect(throwTypeError).to.throw(Error);
+                done();
+            });
 
             it(`Test ${helper.testNumber++}: Try to call the abstract method removeUser from adapter instance)`, function (done) {
                 function throwTypeError() {
