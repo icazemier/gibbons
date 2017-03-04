@@ -18,7 +18,7 @@ gulp.task('default', ['lint', 'test', 'docs']);
 
 
 gulp.task('pre-test', () => {
-    return gulp.src('lib/**/*.js')
+    return gulp.src(['lib/**/*.js'])
     // Covering files
         .pipe(istanbul({includeUntested: true}))
         // Force `require` to return covered files

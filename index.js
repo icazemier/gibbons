@@ -5,5 +5,5 @@ module.exports = {
     GibbonAdapter: require('./lib/adapters/gibbon-adapter'),
     Gibbon: require('./lib/gibbon'),
     GibbonProcessor: require('./lib/gibbon-processor').GibbonProcessor,
-    LokiJSGibbonAdapter: require('./lib/adapters/lokijs-gibbon-adapter')
+    LokiJSGibbonAdapter: require('./test/adapters/lokijs-gibbon-adapter')
 };

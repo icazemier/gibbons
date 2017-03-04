@@ -113,6 +113,17 @@ describe('Gibbons', () => {
                 done();
             });
         });
+
+        it(`Test ${helper.testNumber++}: Try to add funny groups`, (done) => {
+
+            gibbons.addGroups(undefined, (error, groupsAdded) => {
+                expect(error).to.be.a.error;
+                expect(error.message).to.equal('Document needs to be an object');
+                expect(groupsAdded).to.be.undefined;
+                done();
+            });
+
+        });
     });
 
     describe('Upserts', () => {
@@ -234,6 +245,18 @@ describe('Gibbons', () => {
             });
         });
 
+
+        it(`Test ${helper.testNumber++}: Upsert a permission`, (done) => {
+            const user = {
+                name: 'Ivo',
+                groups: ''
+            };
+            gibbons.upsertUser(null, user, (error, userUpserted) => {
+                expect(error).to.be.an.error;
+                expect(userUpserted).to.be.undefined;
+                done();
+            });
+        });
     });
 
     describe('Removals', () => {
@@ -499,19 +522,8 @@ describe('Gibbons', () => {
                 expect(permissionsFound).to.be.undefined;
                 done();
             });
-
         });
 
-        it(`Test ${helper.testNumber++}: Try to add funny groups`, (done) => {
-
-            gibbons.addGroups(undefined, (error, groupsAdded) => {
-                expect(error).to.be.a.error;
-                expect(error.message).to.equal('Document needs to be an object');
-                expect(groupsAdded).to.be.undefined;
-                done();
-            });
-
-        });
     });
 
     describe('Find things by group', () => {
@@ -766,7 +778,6 @@ describe('Gibbons', () => {
 
         it(`Test ${helper.testNumber++}: Find users by permission`, (done) => {
             gibbons.findUsersByPermission({name: 'Change it'}, (error, usersFound) => {
-
                 expect(usersFound).to.be.a.array;
                 expect(usersFound[0].name).to.equal('Joan');
                 done(error);

@@ -2,8 +2,8 @@
 const util = require('util');
 const _ = require('lodash');
 const Loki = require('lokijs');
-const GibbonAdapter = require('./gibbon-adapter');
-const Gibbon = require('../gibbon');
+const GibbonAdapter = require('./../../lib/adapters/gibbon-adapter');
+const Gibbon = require('../../lib/gibbon');
 
 /**
  *
@@ -62,7 +62,7 @@ LokiJSGibbonAdapter.prototype._initializeCollection = function (collectionName) 
 
 /**
  * Callback when upsert is done (insert new or update is exists).
- * @callback LokiJSGibbonAdapter~_upsertByName
+ * @callback LokiJSGibbonAdapter~_upsertByCollection
  * @param {Error} [error=null] - Error is omitted
  * @param {object} [dataFound] - One instance of a fetched record
  *
@@ -74,16 +74,16 @@ LokiJSGibbonAdapter.prototype._initializeCollection = function (collectionName) 
  * @param {string} collection - Dynamic pointer to a collection
  * @param {object} criteria - In this adapter name is our unique reference for all collections
  * @param {object} data - Object to update or insert
- * @param {LokiJSGibbonAdapter~_upsertByName} callback
+ * @param {LokiJSGibbonAdapter~_upsertByCollection} callback
  * @private
  */
-LokiJSGibbonAdapter.prototype._upsertByName = function (collection, criteria, data, callback) {
+LokiJSGibbonAdapter.prototype._upsertByCollection = function (collection, criteria, data, callback) {
     try {
         let dataFound = this.dbCollection[collection].findOne({name: criteria.name});
         if (!dataFound) {
             dataFound = this.dbCollection[collection].insert(data);
         } else {
-            dataFound = _.merge(dataFound, data);
+            dataFound = Object.assign(dataFound, data);
             this.dbCollection[collection].update(dataFound);
         }
         callback(null, dataFound);
@@ -107,7 +107,7 @@ LokiJSGibbonAdapter.prototype._upsertByName = function (collection, criteria, da
  * @param {LokiJSGibbonAdapter~findByNameCallback} callback
  * @private
  */
-LokiJSGibbonAdapter.prototype._findByName = function (name, criteria, callback) {
+LokiJSGibbonAdapter.prototype._findByCollection = function (name, criteria, callback) {
     try {
         const found = this.dbCollection[name].findOne(criteria);
         callback(null, found);
@@ -151,7 +151,7 @@ LokiJSGibbonAdapter.prototype.initialize = function (callback) {
 /**
  * Callback when fetching is done.
  * @callback LokiJSGibbonAdapter~findUser
- * @see {@link _findByName}
+ * @see {@link _findByCollection}
  */
 
 /**
@@ -162,7 +162,7 @@ LokiJSGibbonAdapter.prototype.initialize = function (callback) {
  * @param {LokiJSGibbonAdapter~findUser} callback
  */
 LokiJSGibbonAdapter.prototype.findUser = function (criteria, callback) {
-    this._findByName(COLLECTION.USER, criteria, callback);
+    this._findByCollection(COLLECTION.USER, criteria, callback);
 };
 
 /**
@@ -198,7 +198,10 @@ LokiJSGibbonAdapter.prototype.findUsersByPermission = function (criteria, callba
                 return gibbon.isPosition(permissionPosition);
             });
 
-            const groupPositions = _.map(groups, '$loki');
+
+            const groupPositions = groups.map((group) => {
+                return group['$loki'];
+            });
             const users = self.dbCollection[COLLECTION.USER].where((user) => {
                 const gibbon = Gibbon.fromString(user.groups);
                 return gibbon.hasAnyFromPositions(groupPositions);
@@ -299,7 +302,7 @@ LokiJSGibbonAdapter.prototype.findGroupsByPermission = function (criteria, callb
 /**
  * Callback when fetching is done.
  * @callback LokiJSGibbonAdapter~findGroup
- * @see {@link _findByName}
+ * @see {@link _findByCollection}
  */
 
 /**
@@ -310,14 +313,14 @@ LokiJSGibbonAdapter.prototype.findGroupsByPermission = function (criteria, callb
  * @param {LokiJSGibbonAdapter~findGroup} callback
  */
 LokiJSGibbonAdapter.prototype.findGroup = function (criteria, callback) {
-    this._findByName(COLLECTION.GROUP, criteria, callback);
+    this._findByCollection(COLLECTION.GROUP, criteria, callback);
 };
 
 
 /**
  * Callback when fetching is done.
  * @callback LokiJSGibbonAdapter~findPermission
- * @see {@link _findByName}
+ * @see {@link _findByCollection}
  */
 
 /**
@@ -328,7 +331,7 @@ LokiJSGibbonAdapter.prototype.findGroup = function (criteria, callback) {
  * @param {LokiJSGibbonAdapter~findPermission} callback
  */
 LokiJSGibbonAdapter.prototype.findPermission = function (criteria, callback) {
-    this._findByName(COLLECTION.PERMISSION, criteria, callback);
+    this._findByCollection(COLLECTION.PERMISSION, criteria, callback);
 };
 
 /**
@@ -548,7 +551,7 @@ LokiJSGibbonAdapter.prototype.removePermission = function (permission, callback)
 /**
  * Callback when update is done.
  * @callback LokiJSGibbonAdapter~upsertUser
- * @see {@link _upsertByName}
+ * @see {@link _upsertByCollection}
  */
 
 /**
@@ -560,13 +563,13 @@ LokiJSGibbonAdapter.prototype.removePermission = function (permission, callback)
  * @param {LokiJSGibbonAdapter~upsertUser} callback
  */
 LokiJSGibbonAdapter.prototype.upsertUser = function (criteria, user, callback) {
-    this._upsertByName(COLLECTION.USER, criteria, user, callback);
+    this._upsertByCollection(COLLECTION.USER, criteria, user, callback);
 };
 
 /**
  * Callback when update is done.
  * @callback LokiJSGibbonAdapter~upsertGroup
- * @see {@link _upsertByName}
+ * @see {@link _upsertByCollection}
  */
 
 /**
@@ -578,13 +581,13 @@ LokiJSGibbonAdapter.prototype.upsertUser = function (criteria, user, callback) {
  * @param {LokiJSGibbonAdapter~upsertGroup} callback
  */
 LokiJSGibbonAdapter.prototype.upsertGroup = function (criteria, group, callback) {
-    this._upsertByName(COLLECTION.GROUP, criteria, group, callback);
+    this._upsertByCollection(COLLECTION.GROUP, criteria, group, callback);
 };
 
 /**
  * Callback when update is done.
  * @callback LokiJSGibbonAdapter~upsertPermission
- * @see {@link _upsertByName}
+ * @see {@link _upsertByCollection}
  */
 
 /**
@@ -596,7 +599,7 @@ LokiJSGibbonAdapter.prototype.upsertGroup = function (criteria, group, callback)
  * @param {LokiJSGibbonAdapter~upsertPermission} callback
  */
 LokiJSGibbonAdapter.prototype.upsertPermission = function (criteria, permission, callback) {
-    this._upsertByName(COLLECTION.PERMISSION, criteria, permission, callback);
+    this._upsertByCollection(COLLECTION.PERMISSION, criteria, permission, callback);
 };
 
 /**
@@ -663,7 +666,7 @@ LokiJSGibbonAdapter.prototype.findPermissionsByUser = function (user, callback) 
             const gibbon = Gibbon.fromString(permissionsFromGroup);
             const permissionBitPositions = gibbon.getPositionsArray();
             permissions = permissions.concat(permissionBitPositions);
-            permissions = _.uniq(permissions);
+            permissions = Array.from(new Set(permissions));
         }
 
         permissions = permissions.sort((a, b) => {
@@ -704,7 +707,9 @@ LokiJSGibbonAdapter.prototype.validateUserWithAllPermissions = function (user, p
         if (!(Array.isArray(permissions)) || permissions.length <= 0) {
             return callback(null, valid);
         }
-        const permissionsAttachedToUser = _.map(permissionsFound, '$loki');
+        const permissionsAttachedToUser = permissionsFound.map((permission) => {
+            return permission['$loki'];
+        });
         const missingPermissions = _.difference(permissions, permissionsAttachedToUser);
         valid = !(Array.isArray(missingPermissions) && missingPermissions.length > 0);
         callback(null, valid);
@@ -736,7 +741,9 @@ LokiJSGibbonAdapter.prototype.validateUserWithAnyPermissions = function (user, p
         if (!(Array.isArray(permissions)) || permissions.length <= 0) {
             return callback(null, valid);
         }
-        const permissionsAttachedToUser = _.map(permissionsFound, '$loki');
+        const permissionsAttachedToUser = permissionsFound.map((permission) => {
+            return permission['$loki'];
+        });
         const overlappingPermissions = _.intersection(permissions, permissionsAttachedToUser);
         valid = (Array.isArray(overlappingPermissions) && overlappingPermissions.length > 0);
         callback(null, valid);
