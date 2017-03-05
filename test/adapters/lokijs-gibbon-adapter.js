@@ -495,7 +495,7 @@ LokiJSGibbonAdapter.prototype.removeGroup = function (group, callback) {
         if (groupFoundPosition !== undefined) {
 
             // Remove all associated permissions stored at users
-            this.dbCollection[COLLECTION.USER].findAndUpdate({'$loki': {'$gt': 0}}, (user) => {
+            this.dbCollection[COLLECTION.USER].findAndUpdate({}, (user) => {
                 if (typeof user.groups === 'string') {
                     const gibbon = Gibbon.fromString(user.groups);
                     gibbon.clearPosition(groupFoundPosition);
@@ -532,7 +532,7 @@ LokiJSGibbonAdapter.prototype.removePermission = function (permission, callback)
         if (permissionFoundPosition !== undefined) {
 
             // Remove all associated permissions stored at groups
-            this.dbCollection[COLLECTION.GROUP].findAndUpdate({'$loki': {'$gt': 0}}, (group) => {
+            this.dbCollection[COLLECTION.GROUP].findAndUpdate({}, (group) => {
                 if (typeof group.permissions === 'string') {
                     const gibbon = Gibbon.fromString(group.permissions);
                     gibbon.clearPosition(permissionFoundPosition);
