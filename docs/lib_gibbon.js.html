@@ -1,4 +1,97 @@
-'use strict';
+<!DOCTYPE html>
+
+<html lang="en">
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width">
+	<title>Gibbons Source: lib/gibbon.js</title>
+
+	<!--[if lt IE 9]>
+	<script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+	<![endif]-->
+	<link type="text/css" rel="stylesheet" href="styles/sunlight.dark.css">
+
+	<link type="text/css" rel="stylesheet" href="styles/site.superhero.css">
+
+</head>
+
+<body>
+
+<div class="navbar navbar-default navbar-fixed-top ">
+<div class="container">
+	<div class="navbar-header">
+		<a class="navbar-brand" href="index.html">Gibbons</a>
+		<button class="navbar-toggle" type="button" data-toggle="collapse" data-target="#topNavigation">
+			<span class="icon-bar"></span>
+			<span class="icon-bar"></span>
+			<span class="icon-bar"></span>
+        </button>
+	</div>
+	<div class="navbar-collapse collapse" id="topNavigation">
+		<ul class="nav navbar-nav">
+			
+			<li class="dropdown">
+				<a href="namespaces.list.html" class="dropdown-toggle" data-toggle="dropdown">Namespaces<b class="caret"></b></a>
+				<ul class="dropdown-menu inline">
+					<li><a href="GibbonProcessor.html">GibbonProcessor</a></li>
+				</ul>
+			</li>
+			
+			<li class="dropdown">
+				<a href="classes.list.html" class="dropdown-toggle" data-toggle="dropdown">Classes<b class="caret"></b></a>
+				<ul class="dropdown-menu inline">
+					<li><a href="BitByte.html">BitByte</a></li><li><a href="Gibbon.html">Gibbon</a></li><li><a href="GibbonAdapter.html">GibbonAdapter</a></li><li><a href="Gibbons.html">Gibbons</a></li><li><a href="LokiJSGibbonAdapter.html">LokiJSGibbonAdapter</a></li>
+				</ul>
+			</li>
+			
+			<li class="dropdown">
+				<a href="tutorials.list.html" class="dropdown-toggle" data-toggle="dropdown">Tutorials<b class="caret"></b></a>
+				<ul class="dropdown-menu inline">
+					<li><a href="tutorial-Tutorial.html">Tutorial</a></li>
+				</ul>
+			</li>
+			
+			<li class="dropdown">
+				<a href="global.html" class="dropdown-toggle" data-toggle="dropdown">Global<b class="caret"></b></a>
+				<ul class="dropdown-menu inline">
+					<li><a href="global.html#COLLECTION">COLLECTION</a></li>
+				</ul>
+			</li>
+			
+		</ul>
+        
+            <div class="col-sm-3 col-md-3">
+                <form class="navbar-form" role="search">
+                    <div class="input-group">
+                        <input type="text" class="form-control" placeholder="Search" name="q" id="search-input">
+                        <div class="input-group-btn">
+                            <button class="btn btn-default" id="search-submit"><i class="glyphicon glyphicon-search"></i></button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        
+	</div>
+
+</div>
+</div>
+
+
+<div class="container" id="toc-content">
+<div class="row">
+
+	
+	<div class="col-md-12">
+	
+		<div id="main">
+			
+
+		<h1 class="page-title">Source: lib/gibbon.js</h1>
+    
+<section>
+    <article>
+        <pre
+            class="sunlight-highlight-javascript linenums">'use strict';
 const GibbonProcessor = require('./gibbon-processor').GibbonProcessor;
 
 
@@ -20,7 +113,7 @@ function Gibbon(arrayBuffer) {
 /**
  * Compare two gibbon instances on data contents
  *
- * @param {Gibbon} gibbon - instance of <b>a</b> Gibbon
+ * @param {Gibbon} gibbon - instance of &lt;b>a&lt;/b> Gibbon
  * @returns {boolean} if instance (or contents) are the same
  * @throws {TypeError} if gibbon is not an instance of Gibbon
  */
@@ -39,9 +132,9 @@ Gibbon.prototype.compare = function (gibbon) {
         const dataView = gibbon.dataView;
         const byteLength = Math.max(thisArrayBuffer.byteLength, arrayBuffer.byteLength);
         let result = true;
-        for (let i = 0; i < byteLength && result; i++) {
-            const value1 = (i < thisDataView.byteLength) ? thisDataView.getUint8(i) : 0x0;
-            const value2 = (i < dataView.byteLength) ? dataView.getUint8(i) : 0x0;
+        for (let i = 0; i &lt; byteLength &amp;&amp; result; i++) {
+            const value1 = (i &lt; thisDataView.byteLength) ? thisDataView.getUint8(i) : 0x0;
+            const value2 = (i &lt; dataView.byteLength) ? dataView.getUint8(i) : 0x0;
             if (value1 !== value2) {
                 result = false;
             }
@@ -52,7 +145,7 @@ Gibbon.prototype.compare = function (gibbon) {
 };
 
 /**
- * This method analyzes every bit value in this gibbon and creates the corresponding <br>
+ * This method analyzes every bit value in this gibbon and creates the corresponding &lt;br>
  *     position array where bits are logical true.
  *
  * @example
@@ -81,9 +174,9 @@ Gibbon.prototype.getPositionsArray = function () {
     const dataView = this.dataView;
     const byteLength = this.arrayBuffer.byteLength;
     const positions = [];
-    for (let byteNo = 0; byteNo < byteLength; byteNo++) {
+    for (let byteNo = 0; byteNo &lt; byteLength; byteNo++) {
         const value = dataView.getUint8(byteNo);
-        for (let bitPos = 0; bitPos < 8; bitPos++) {
+        for (let bitPos = 0; bitPos &lt; 8; bitPos++) {
             const posValue = GibbonProcessor.isTrue(value, bitPos);
             if (posValue) {
                 positions.push(byteNo * 8 + bitPos + 1);
@@ -94,8 +187,8 @@ Gibbon.prototype.getPositionsArray = function () {
 };
 
 /**
- * Set bit: true according to integer position in the Gibbon <br>
- * <i>Note: Starting from 1</i>
+ * Set bit: true according to integer position in the Gibbon &lt;br>
+ * &lt;i>Note: Starting from 1&lt;/i>
  * @throws {Error} Position can't exceed data view bounds.
  * @param {Number} position - unsigned integer value
  * @returns {Gibbon} - For chaining purposes
@@ -103,7 +196,7 @@ Gibbon.prototype.getPositionsArray = function () {
 Gibbon.prototype.setPosition = function (position) {
     const bitBytePosition = GibbonProcessor.getByteNoAndBitPos(position);
     const dataViewBounds = this.dataView.byteLength;
-    if (bitBytePosition.byteNo < dataViewBounds) {
+    if (bitBytePosition.byteNo &lt; dataViewBounds) {
         let byte = this.dataView.getUint8(bitBytePosition.byteNo);
         byte = GibbonProcessor.setBit(byte, bitBytePosition.bitPos);
         this.dataView.setUint8(bitBytePosition.byteNo, byte);
@@ -198,7 +291,7 @@ Gibbon.prototype.isPosition = function (position) {
  * - A positive position means this position should be set logical '1'
  * - A negative position means this position should be set logical '0'
  *
- *  When one wants to check on bit positions outside the memory bounds (dataViewBounds), <br>
+ *  When one wants to check on bit positions outside the memory bounds (dataViewBounds), &lt;br>
  *  method wil return early with `false`.
  *
  *
@@ -219,7 +312,7 @@ Gibbon.prototype.isPosition = function (position) {
  *
  *  gibbon.hasAllFromPositions([-1, 2]); // true
  *
- * @param {Array<Number>} positionArray - containing signed integer values (representing bit positions)
+ * @param {Array&lt;Number>} positionArray - containing signed integer values (representing bit positions)
  * @return {boolean} true when all positions correspondent to the given indexes
  * @throws {TypeError} if positionArray is not an instance of array
  *
@@ -243,12 +336,12 @@ Gibbon.prototype.hasAllFromPositions = function (positionArray = []) {
     // Check bits on position if they are truthy (positive position) or falsy (negative position)
     let hasAllFromPositions = true;
     // Exit early when one of the positions is not logic true.
-    for (let i = 0; i < positions.length && hasAllFromPositions; i++) {
+    for (let i = 0; i &lt; positions.length &amp;&amp; hasAllFromPositions; i++) {
         const position = positions[i];
         const positionAbs = Math.abs(position);
         const bitBytePosition = GibbonProcessor.getByteNoAndBitPos(positionAbs);
         // Check if position is not out of bound of the data view:
-        if (bitBytePosition.byteNo < dataViewBounds) {
+        if (bitBytePosition.byteNo &lt; dataViewBounds) {
             const byte = self.dataView.getUint8(bitBytePosition.byteNo);
             if (position >= 0) {
                 hasAllFromPositions = GibbonProcessor.isTrue(byte, bitBytePosition.bitPos);
@@ -272,7 +365,7 @@ Gibbon.prototype.hasAllFromPositions = function (positionArray = []) {
  *
  *  When any of the positions conforms to logical '1' (true), we return `true` early.
  *
- *  When one wants to check on bit positions outside the memory bounds (dataViewBounds), <br>
+ *  When one wants to check on bit positions outside the memory bounds (dataViewBounds), &lt;br>
  *  method wil return early with `false`.
  *
  *
@@ -293,7 +386,7 @@ Gibbon.prototype.hasAllFromPositions = function (positionArray = []) {
  *
  *  gibbon.hasAllFromPositions([-1, 100]); // true
  *
- * @param {Array<Number>} positionArray - containing signed integer values (representing bit positions)
+ * @param {Array&lt;Number>} positionArray - containing signed integer values (representing bit positions)
  * @return {boolean} true when one of these positions correspond
  * @throws {TypeError} if positionArray is not an instance of array
  */
@@ -312,12 +405,12 @@ Gibbon.prototype.hasAnyFromPositions = function (positionArray = []) {
 
     // Check bits on position if they are truthy (positive position) or falsy (negative position)
     // Exit early when one of the positions is not logic true.
-    for (let i = 0; i < positions.length && !hasAny; i++) {
+    for (let i = 0; i &lt; positions.length &amp;&amp; !hasAny; i++) {
         const position = positions[i];
         const positionAbs = Math.abs(position);
         const bitBytePosition = GibbonProcessor.getByteNoAndBitPos(positionAbs);
         // Check if position is not out of bound of the data view:
-        if (bitBytePosition.byteNo < dataViewBounds) {
+        if (bitBytePosition.byteNo &lt; dataViewBounds) {
             const byte = self.dataView.getUint8(bitBytePosition.byteNo);
             if (position >= 0) {
                 hasAny = GibbonProcessor.isTrue(byte, bitBytePosition.bitPos);
@@ -347,7 +440,7 @@ Gibbon.prototype.hasAnyFromPositions = function (positionArray = []) {
  *  gibbon.setAllFromPositions([1, -2]);
  *  gibbon.hasAllFromPositions([1]); // returns true
  *
- * @param {Array<Number>} positionArray - Array with integer values starting from 1.
+ * @param {Array&lt;Number>} positionArray - Array with integer values starting from 1.
  * @returns {Gibbon} - For chaining purposes
  * @throws {TypeError} if positionArray is not an instance of array
  */
@@ -367,12 +460,12 @@ Gibbon.prototype.setAllFromPositions = function (positionArray = []) {
         return self.indexOf(value) === index;
     });
 
-    for (let i = 0; i < positions.length; i++) {
+    for (let i = 0; i &lt; positions.length; i++) {
         const position = positions[i];
         const positionAbs = Math.abs(position);
         const bitBytePosition = GibbonProcessor.getByteNoAndBitPos(positionAbs);
         // Check if position is not out of bound of the data view:
-        if (bitBytePosition.byteNo < dataViewBounds) {
+        if (bitBytePosition.byteNo &lt; dataViewBounds) {
             let byte = self.dataView.getUint8(bitBytePosition.byteNo);
             byte = GibbonProcessor.changeBit(byte, bitBytePosition.bitPos, (position >= 0));
             self.dataView.setUint8(bitBytePosition.byteNo, byte);
@@ -382,7 +475,7 @@ Gibbon.prototype.setAllFromPositions = function (positionArray = []) {
 };
 
 /**
- * Convert the whole ArrayBuffer to a string<br>
+ * Convert the whole ArrayBuffer to a string&lt;br>
  * (Hint: Could be used to store a gibbon in persistent storage as a encoded string)
  *
  * @returns {string} - Encoded string
@@ -393,7 +486,7 @@ Gibbon.prototype.toString = function () {
 };
 
 /**
- * Class method to create a new Gibbon from a string<br>
+ * Class method to create a new Gibbon from a string&lt;br>
  * (Hint: Could be used to retrieve from persistent storage)
  *
  * @param {string} str - Representing a new Gibbon instance
@@ -406,7 +499,7 @@ Gibbon.fromString = function (str = '') {
     }
     const arrayBuffer = new ArrayBuffer(str.length * 2); // 2 bytes for each char
     const typedArray = new Uint16Array(arrayBuffer);
-    for (let i = 0, strLen = str.length; i < strLen; i++) {
+    for (let i = 0, strLen = str.length; i &lt; strLen; i++) {
         typedArray[i] = str.charCodeAt(i);
     }
     return new Gibbon(arrayBuffer);
@@ -425,3 +518,138 @@ Gibbon.create = function (byteSize) {
 
 
 module.exports = Gibbon;
+</pre>
+    </article>
+</section>
+
+
+
+
+
+		</div>
+	</div>
+
+	<div class="clearfix"></div>
+
+	
+
+</div>
+</div>
+
+
+    <div class="modal fade" id="searchResults">
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+            <h4 class="modal-title">Search results</h4>
+          </div>
+          <div class="modal-body"></div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+          </div>
+        </div><!-- /.modal-content -->
+      </div><!-- /.modal-dialog -->
+    </div>
+
+
+<footer>
+
+	Gibbons (I. Cazemier)
+
+
+<span class="jsdoc-message">
+	Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.4.3</a>
+	
+		on 2017-03-05T20:41:01+01:00
+	
+	using the <a href="https://github.com/docstrap/docstrap">DocStrap template</a>.
+</span>
+</footer>
+
+<script src="scripts/docstrap.lib.js"></script>
+<script src="scripts/toc.js"></script>
+
+    <script type="text/javascript" src="scripts/fulltext-search-ui.js"></script>
+
+
+<script>
+$( function () {
+	$( "[id*='$']" ).each( function () {
+		var $this = $( this );
+
+		$this.attr( "id", $this.attr( "id" ).replace( "$", "__" ) );
+	} );
+
+	$( ".tutorial-section pre, .readme-section pre, pre.prettyprint.source" ).each( function () {
+		var $this = $( this );
+
+		var example = $this.find( "code" );
+		exampleText = example.html();
+		var lang = /{@lang (.*?)}/.exec( exampleText );
+		if ( lang && lang[1] ) {
+			exampleText = exampleText.replace( lang[0], "" );
+			example.html( exampleText );
+			lang = lang[1];
+		} else {
+			var langClassMatch = example.parent()[0].className.match(/lang\-(\S+)/);
+			lang = langClassMatch ? langClassMatch[1] : "javascript";
+		}
+
+		if ( lang ) {
+
+			$this
+			.addClass( "sunlight-highlight-" + lang )
+			.addClass( "linenums" )
+			.html( example.html() );
+
+		}
+	} );
+
+	Sunlight.highlightAll( {
+		lineNumbers : true,
+		showMenu : true,
+		enableDoclinks : true
+	} );
+
+	$.catchAnchorLinks( {
+        navbarOffset: 10
+	} );
+	$( "#toc" ).toc( {
+		anchorName  : function ( i, heading, prefix ) {
+			return $( heading ).attr( "id" ) || ( prefix + i );
+		},
+		selectors   : "#toc-content h1,#toc-content h2,#toc-content h3,#toc-content h4",
+		showAndHide : false,
+		smoothScrolling: true
+	} );
+
+	$( "#main span[id^='toc']" ).addClass( "toc-shim" );
+	$( '.dropdown-toggle' ).dropdown();
+
+    $( "table" ).each( function () {
+      var $this = $( this );
+      $this.addClass('table');
+    } );
+
+} );
+</script>
+
+
+
+<!--Navigation and Symbol Display-->
+
+
+<!--Google Analytics-->
+
+
+
+    <script type="text/javascript">
+        $(document).ready(function() {
+            SearcherDisplay.init();
+        });
+    </script>
+
+
+</body>
+</html>

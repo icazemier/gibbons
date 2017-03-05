@@ -70,7 +70,7 @@ gulp.task('watch-test', () => {
 
 gulp.task('docs', (cb) => {
     const config = require('./config/jsdocs');
-    gulp.src(['README.md', './index.js', './lib/**/*.js'], {read: false})
+    gulp.src(['README.md', './index.js', './lib/**/*.js', './test/adapters/**/*.js'], {read: false})
         .pipe(plumber())
         .pipe(jsdoc(config, cb));
 });

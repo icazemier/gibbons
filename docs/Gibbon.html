@@ -209,8 +209,8 @@
 	<dd class="tag-source">
 		<ul class="dummy">
 			<li>
-				<a href="gibbon.js.html">gibbon.js</a>,
-				 <a href="gibbon.js.html#sunlight-1-line-11">line 11</a>
+				<a href="lib_gibbon.js.html">lib/gibbon.js</a>,
+				 <a href="lib_gibbon.js.html#sunlight-1-line-11">line 11</a>
 			</li>
 		</ul>
 	</dd>
@@ -393,8 +393,8 @@
 	<dd class="tag-source">
 		<ul class="dummy">
 			<li>
-				<a href="gibbon.js.html">gibbon.js</a>,
-				 <a href="gibbon.js.html#sunlight-1-line-390">line 390</a>
+				<a href="lib_gibbon.js.html">lib/gibbon.js</a>,
+				 <a href="lib_gibbon.js.html#sunlight-1-line-421">line 421</a>
 			</li>
 		</ul>
 	</dd>
@@ -558,8 +558,8 @@
 	<dd class="tag-source">
 		<ul class="dummy">
 			<li>
-				<a href="gibbon.js.html">gibbon.js</a>,
-				 <a href="gibbon.js.html#sunlight-1-line-372">line 372</a>
+				<a href="lib_gibbon.js.html">lib/gibbon.js</a>,
+				 <a href="lib_gibbon.js.html#sunlight-1-line-403">line 403</a>
 			</li>
 		</ul>
 	</dd>
@@ -794,8 +794,8 @@
 	<dd class="tag-source">
 		<ul class="dummy">
 			<li>
-				<a href="gibbon.js.html">gibbon.js</a>,
-				 <a href="gibbon.js.html#sunlight-1-line-167">line 167</a>
+				<a href="lib_gibbon.js.html">lib/gibbon.js</a>,
+				 <a href="lib_gibbon.js.html#sunlight-1-line-167">line 167</a>
 			</li>
 		</ul>
 	</dd>
@@ -968,8 +968,8 @@ Note: Starting from 1</p>
 	<dd class="tag-source">
 		<ul class="dummy">
 			<li>
-				<a href="gibbon.js.html">gibbon.js</a>,
-				 <a href="gibbon.js.html#sunlight-1-line-124">line 124</a>
+				<a href="lib_gibbon.js.html">lib/gibbon.js</a>,
+				 <a href="lib_gibbon.js.html#sunlight-1-line-124">line 124</a>
 			</li>
 		</ul>
 	</dd>
@@ -1126,8 +1126,8 @@ Note: Starting from 1</p>
 	<dd class="tag-source">
 		<ul class="dummy">
 			<li>
-				<a href="gibbon.js.html">gibbon.js</a>,
-				 <a href="gibbon.js.html#sunlight-1-line-27">line 27</a>
+				<a href="lib_gibbon.js.html">lib/gibbon.js</a>,
+				 <a href="lib_gibbon.js.html#sunlight-1-line-27">line 27</a>
 			</li>
 		</ul>
 	</dd>
@@ -1267,8 +1267,8 @@ Note: Starting from 1</p>
 	<dd class="tag-source">
 		<ul class="dummy">
 			<li>
-				<a href="gibbon.js.html">gibbon.js</a>,
-				 <a href="gibbon.js.html#sunlight-1-line-80">line 80</a>
+				<a href="lib_gibbon.js.html">lib/gibbon.js</a>,
+				 <a href="lib_gibbon.js.html#sunlight-1-line-80">line 80</a>
 			</li>
 		</ul>
 	</dd>
@@ -1355,10 +1355,10 @@ Note: Starting from 1</p>
     <div class="description">
         <p>Compares all given positions</p>
 <ul>
-<li>A positive position means this position should be set truthy</li>
-<li><p>A negative position means this position should be set falsy</p>
-<p>When wants to check on bit positions outside the memory bounds (dataViewBounds), <br>
-method wil return early with falsy result</p>
+<li>A positive position means this position should be set logical '1'</li>
+<li><p>A negative position means this position should be set logical '0'</p>
+<p>When one wants to check on bit positions outside the memory bounds (dataViewBounds), <br>
+method wil return early with <code>false</code>.</p>
 </li>
 </ul>
     </div>
@@ -1456,8 +1456,8 @@ method wil return early with falsy result</p>
 	<dd class="tag-source">
 		<ul class="dummy">
 			<li>
-				<a href="gibbon.js.html">gibbon.js</a>,
-				 <a href="gibbon.js.html#sunlight-1-line-227">line 227</a>
+				<a href="lib_gibbon.js.html">lib/gibbon.js</a>,
+				 <a href="lib_gibbon.js.html#sunlight-1-line-227">line 227</a>
 			</li>
 		</ul>
 	</dd>
@@ -1550,6 +1550,221 @@ method wil return early with falsy result</p>
  gibbon.setPosition(1).setPosition(2),togglePosition(1);
 
  gibbon.hasAllFromPositions([-1, 2]); // true</pre>
+
+
+    
+</dd>
+
+        
+            
+<hr>
+<dt>
+    <h4 class="name" id="hasAnyFromPositions"><span class="type-signature"></span>hasAnyFromPositions(positionArray)</h4>
+    
+    
+</dt>
+<dd>
+
+    
+    <div class="description">
+        <p>Compares the given positions</p>
+<ul>
+<li>A positive position means this position should be set logical '1'</li>
+<li><p>A negative position means this position should be set logical '0'</p>
+<p>When any of the positions conforms to logical '1' (true), we return <code>true</code> early.</p>
+<p>When one wants to check on bit positions outside the memory bounds (dataViewBounds), <br>
+method wil return early with <code>false</code>.</p>
+</li>
+</ul>
+    </div>
+    
+
+    
+
+    
+
+    
+    
+        <h5>Parameters:</h5>
+        
+
+<table class="params table table-striped">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>positionArray</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">Array.&lt;Number></span>
+
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last"><p>containing signed integer values (representing bit positions)</p></td>
+        </tr>
+
+    
+    </tbody>
+</table>
+
+    
+
+    
+<dl class="details">
+    
+
+	
+
+	
+
+	
+
+    
+
+    
+
+    
+
+    
+
+	
+
+	
+
+	
+
+	
+
+	
+
+
+
+	
+	<dt class="tag-source method-doc-label method-doc-details-label">Source:</dt>
+	<dd class="tag-source">
+		<ul class="dummy">
+			<li>
+				<a href="lib_gibbon.js.html">lib/gibbon.js</a>,
+				 <a href="lib_gibbon.js.html#sunlight-1-line-300">line 300</a>
+			</li>
+		</ul>
+	</dd>
+	
+
+	
+
+	
+
+	
+</dl>
+
+
+    
+
+    
+
+    
+
+    
+
+    
+    <h5>Throws:</h5>
+    
+            
+
+<dl>
+    <dt>
+        <div class="param-desc">
+        <p>if positionArray is not an instance of array</p>
+        </div>
+    </dt>
+    <dt>
+        <dl>
+            <dt>
+                Type
+            </dt>
+            <dd>
+                
+<span class="param-type">TypeError</span>
+
+
+
+            </dd>
+        </dl>
+    </dt>
+</dl>
+
+
+        
+
+    
+    <h5>Returns:</h5>
+    
+            
+<div class="param-desc">
+    <p>true when one of these positions correspond</p>
+</div>
+
+
+
+<dl>
+    <dt>
+        Type
+    </dt>
+    <dd>
+        
+<span class="param-type">boolean</span>
+
+
+
+    </dd>
+</dl>
+
+
+        
+
+    
+        <h5>Examples</h5>
+        
+    <pre class="sunlight-highlight-javascript">// Initialize a gibbon with 2 bytes
+ const gibbon = Gibbon.create(2);
+ // Set 3 bit positions to logical &#x27;1&#x27;
+ gibbon.setPosition(1).setPosition(2).setPosition(10);
+
+ gibbon.hasAnyFromPositions([1, 9]); // true</pre>
+
+    <pre class="sunlight-highlight-javascript">// Set 2 bit positions to logical &#x27;1&#x27; then the first bit position back to &#x27;0&#x27;
+ const gibbon = Gibbon.create(2);
+ gibbon.setPosition(1).setPosition(2),togglePosition(1);
+
+ gibbon.hasAllFromPositions([-1, 100]); // true</pre>
 
 
     
@@ -1663,8 +1878,8 @@ method wil return early with falsy result</p>
 	<dd class="tag-source">
 		<ul class="dummy">
 			<li>
-				<a href="gibbon.js.html">gibbon.js</a>,
-				 <a href="gibbon.js.html#sunlight-1-line-189">line 189</a>
+				<a href="lib_gibbon.js.html">lib/gibbon.js</a>,
+				 <a href="lib_gibbon.js.html#sunlight-1-line-189">line 189</a>
 			</li>
 		</ul>
 	</dd>
@@ -1834,8 +2049,8 @@ gibbon.isPosition(1); // returns true</pre>
 	<dd class="tag-source">
 		<ul class="dummy">
 			<li>
-				<a href="gibbon.js.html">gibbon.js</a>,
-				 <a href="gibbon.js.html#sunlight-1-line-323">line 323</a>
+				<a href="lib_gibbon.js.html">lib/gibbon.js</a>,
+				 <a href="lib_gibbon.js.html#sunlight-1-line-354">line 354</a>
 			</li>
 		</ul>
 	</dd>
@@ -2041,8 +2256,8 @@ gibbon.isPosition(1); // returns true</pre>
 	<dd class="tag-source">
 		<ul class="dummy">
 			<li>
-				<a href="gibbon.js.html">gibbon.js</a>,
-				 <a href="gibbon.js.html#sunlight-1-line-103">line 103</a>
+				<a href="lib_gibbon.js.html">lib/gibbon.js</a>,
+				 <a href="lib_gibbon.js.html#sunlight-1-line-103">line 103</a>
 			</li>
 		</ul>
 	</dd>
@@ -2233,8 +2448,8 @@ gibbon.isPosition(1); // returns true</pre>
 	<dd class="tag-source">
 		<ul class="dummy">
 			<li>
-				<a href="gibbon.js.html">gibbon.js</a>,
-				 <a href="gibbon.js.html#sunlight-1-line-144">line 144</a>
+				<a href="lib_gibbon.js.html">lib/gibbon.js</a>,
+				 <a href="lib_gibbon.js.html#sunlight-1-line-144">line 144</a>
 			</li>
 		</ul>
 	</dd>
@@ -2351,8 +2566,8 @@ gibbon.isPosition(1); // true</pre>
 	<dd class="tag-source">
 		<ul class="dummy">
 			<li>
-				<a href="gibbon.js.html">gibbon.js</a>,
-				 <a href="gibbon.js.html#sunlight-1-line-360">line 360</a>
+				<a href="lib_gibbon.js.html">lib/gibbon.js</a>,
+				 <a href="lib_gibbon.js.html#sunlight-1-line-391">line 391</a>
 			</li>
 		</ul>
 	</dd>
@@ -2459,7 +2674,7 @@ gibbon.isPosition(1); // true</pre>
 <span class="jsdoc-message">
 	Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.4.3</a>
 	
-		on 2017-03-04T11:26:10+01:00
+		on 2017-03-05T20:41:01+01:00
 	
 	using the <a href="https://github.com/docstrap/docstrap">DocStrap template</a>.
 </span>

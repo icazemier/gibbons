@@ -4,7 +4,7 @@
 <head>
 	<meta charset="utf-8">
 	<meta name="viewport" content="width=device-width">
-	<title>Gibbons Index</title>
+	<title>Gibbons Source: lib/adapters/gibbon-adapter.js</title>
 
 	<!--[if lt IE 9]>
 	<script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
@@ -81,76 +81,218 @@
 <div class="row">
 
 	
-	<div class="col-md-8">
+	<div class="col-md-12">
 	
 		<div id="main">
 			
 
-	
-	
+		<h1 class="page-title">Source: lib/adapters/gibbon-adapter.js</h1>
+    
+<section>
+    <article>
+        <pre
+            class="sunlight-highlight-javascript linenums">'use strict';
+
+const INHERITANCE_ERROR = 'Abstract method, override please.';
+/**
+ * @classdesc
+ *
+ * This class should be inherited and acts as contract (Interface)
+ *
+ * @extends EventEmitter
+ * @class
+ * @abstract
+ */
+function GibbonAdapter() {
+}
 
 
+/**
+ * Initialize adapter
+ *
+ * @abstract
+ */
+GibbonAdapter.prototype.initialize = function () {
+    throw new Error(INHERITANCE_ERROR);
+};
 
 
+GibbonAdapter.prototype.addUser = function () {
+    throw new Error(INHERITANCE_ERROR);
+};
+
+/**
+ * Add user group
+ *
+ * @abstract
+ */
+GibbonAdapter.prototype.addGroup = function () {
+    throw new Error(INHERITANCE_ERROR);
+};
+
+/**
+ * Add array of user groups
+ *
+ * @abstract
+ */
+GibbonAdapter.prototype.addGroups = function () {
+    throw new Error(INHERITANCE_ERROR);
+};
+
+/**
+ * Add group permission
+ * @abstract
+ */
+GibbonAdapter.prototype.addPermission = function () {
+    throw new Error(INHERITANCE_ERROR);
+};
+
+/**
+ * Add array of permissions
+ * @abstract
+ */
+GibbonAdapter.prototype.addPermissions = function () {
+    throw new Error(INHERITANCE_ERROR);
+};
+
+/**
+ * Remove a user
+ * @abstract
+ */
+GibbonAdapter.prototype.removeUser = function () {
+    throw new Error(INHERITANCE_ERROR);
+};
+
+/**
+ * Remove a group
+ * @abstract
+ */
+GibbonAdapter.prototype.removeGroup = function () {
+    throw new Error(INHERITANCE_ERROR);
+};
+
+/**
+ * Remove a permission
+ * @abstract
+ */
+GibbonAdapter.prototype.removePermission = function () {
+    throw new Error(INHERITANCE_ERROR);
+};
 
 
+/**
+ * Update or insert user (if not exists)
+ * @abstract
+ */
+GibbonAdapter.prototype.upsertUser = function () {
+    throw new Error(INHERITANCE_ERROR);
+};
+
+/**
+ * Update or insert group (if not exists)
+ * @abstract
+ */
+GibbonAdapter.prototype.upsertGroup = function () {
+    throw new Error(INHERITANCE_ERROR);
+};
+
+/**
+ * Update or insert permission (if not exists)
+ * @abstract
+ */
+GibbonAdapter.prototype.upsertPermission = function () {
+    throw new Error(INHERITANCE_ERROR);
+};
+
+/**
+ * Find user groups
+ * @abstract
+ */
+GibbonAdapter.prototype.findGroupsByUser = function () {
+    throw new Error(INHERITANCE_ERROR);
+};
+
+/**
+ * Find user permissions
+ * @abstract
+ */
+GibbonAdapter.prototype.findPermissionsByUser = function () {
+    throw new Error(INHERITANCE_ERROR);
+};
 
 
+/**
+ * Find user
+ * @abstract
+ */
+GibbonAdapter.prototype.findUser = function () {
+    throw new Error(INHERITANCE_ERROR);
+};
 
 
+/**
+ * Find users with permission
+ * @abstract
+ */
+GibbonAdapter.prototype.findUsersByPermission = function () {
+    throw new Error(INHERITANCE_ERROR);
+};
 
-	
-	
+/**
+ * Find users with group
+ * @abstract
+ */
+GibbonAdapter.prototype.findUsersByGroup = function () {
+    throw new Error(INHERITANCE_ERROR);
+};
 
+/**
+ * Find groups with permission
+ */
+GibbonAdapter.prototype.findGroupsByPermission = function () {
+    throw new Error(INHERITANCE_ERROR);
+};
 
+/**
+ * Find group
+ * @abstract
+ */
+GibbonAdapter.prototype.findGroup = function () {
+    throw new Error(INHERITANCE_ERROR);
+};
 
-
-
-    <section class="readme-section">
-        <article><p><img src="https://raw.githubusercontent.com/kaasdude/gibbons/master/gibbons.png" width="200" /></p>
-<h1>Gibbons</h1><p><em>&quot;Leaping from branch to branch gibbons decide which one to take in a split second&quot;</em></p>
-<p>Gibbons is a Node.js module which helps in managing user groups and user permissions with <code>bitwise</code> efficiency. 
-In applying <a href="https://developer.mozilla.org/nl/docs/Web/JavaScript/Reference/Global_Objects/ArrayBuffer">ArrayBuffers</a> and bitwise operations it tries to use minimal resources.</p>
-<h2>API Documentation and tutorial</h2><p>See: <a href="https://kaasdude.github.io/gibbons/">Gibbons Docs</a></p>
-<h2>How do I get set up?</h2><p><code>npm install gibbons</code></p>
-<h2>Details</h2><h3>Prerequisites to contribute</h3><ul>
-<li>Clone this repository, and check out the develop branch</li>
-<li>Ensure <a href="https://github.com/creationix/nvm">Node Version Manager</a> is installed and operational</li>
-<li><code>nvm install</code></li>
-<li><code>npm install -g gulp</code></li>
-</ul>
-<h3>Linting</h3><p>For this project <a href="http://eslint.org/">ESLint</a> is applied. </p>
-<p>Execute: <code>gulp lint</code></p>
-<p><em>Currently the linter conforms to defaults from: <a href="https://github.com/mysticatea/eslint-plugin-node">eslint-plugin-node</a> and some minor tweaks (see: <code>.eslint.js</code>).</em></p>
-<h3>Unit tests</h3><p>Every path should be covered and can be checked after the unit test is executed, according to a coverage report.</p>
-<p>Execute: <code>gulp test</code></p>
-<p>In the end, a brief version of the coverage report is shown. For the more extensive one, see: <code>test/coverage/lcov-report/index.html</code>.</p>
-<h3>API Documentation</h3><p>A Gulp plugin: <a href="https://github.com/mlucool/gulp-jsdoc3">gulp-jsdoc3</a> is applied to generate the API documentation.</p>
-<p>It's expected to write extensive comments in the code itself when contributing.</p>
-<p>Every time code is updated, we need to ensure the documentation is in sync with the code.</p>
-<p>Execute: <code>gulp docs</code></p>
-<p><em>The result is generated at: <code>docs/index.html</code></em></p>
-<h2>Contribution guidelines</h2><ul>
-<li>When adding new features / code, creating corresponding unit tests are mandatory</li>
-<li>Code review will be done by means of pull requests to the <code>develop</code> branch, preferably with the following pull request template:</li>
-</ul>
-<pre class="prettyprint source"><code>h1. I ensured:
-* [ ] I've updated the unit tests and covered enough parts of the code (`gulp lint` and `gulp test`)
-* [ ] I've updated the API documentation within the code and generated a fresh export (`gulp docs`)</code></pre><h1>Changes</h1><p><a href="https://github.com/kaasdude/gibbons/blob/master/CHANGELOG.md">See: Changelog</a></p>
-<h1>Meta data</h1><ul>
-<li>Maintainer: Ivo Cazemier</li>
-<li><a href="https://bitbucket.org/ivocazemier/gibbons">Bitbucket</a> or <a href="https://github.com/kaasdude/gibbons">Github</a></li>
-<li><a href="https://kaasdude.github.io/gibbons/">API documentation and tutorial</a></li>
-</ul>
-<p><a href="https://www.npmjs.com/package/gibbons"><img src="https://badge.fury.io/js/gibbons.svg" alt="npm version"></a>
-<a href="https://david-dm.org/kaasdude/gibbons"><img src="https://david-dm.org/kaasdude/gibbons.svg" alt="David"></a>
-<a href="https://david-dm.org/kaasdude/gibbons#info=devDependencies"><img src="https://david-dm.org/kaasdude/gibbons/dev-status.svg" alt="David"></a>
-<a href="https://travis-ci.org/kaasdude/gibbons"><img src="https://travis-ci.org/kaasdude/gibbons.svg?branch=master" alt="Travis CI"></a>
-<a href="https://coveralls.io/github/kaasdude/gibbons?branch=master"><img src="https://coveralls.io/repos/github/kaasdude/gibbons/badge.svg?branch=master" alt="Coverage Status"></a></p>
-<p>(License: MIT, See the LICENSE file)</p></article>
-    </section>
+/**
+ * Find permission
+ * @abstract
+ */
+GibbonAdapter.prototype.findPermission = function () {
+    throw new Error(INHERITANCE_ERROR);
+};
 
 
+/**
+ * Validate a user against e.g. given permissions &lt;br>
+ * All permissions given, need to correspond with the permissions owned by this user.
+ *
+ * @abstract
+ */
+GibbonAdapter.prototype.validateUserWithAllPermissions = function () {
+    throw new Error(INHERITANCE_ERROR);
+};
+
+/**
+ * Validate a user against e.g. given permissions &lt;br>
+ * When one of the given permissions are found at this user, user is valid.
+ * @abstract
+ */
+GibbonAdapter.prototype.validateUserWithAnyPermissions = function () {
+    throw new Error(INHERITANCE_ERROR);
+};
+
+module.exports = GibbonAdapter;
+</pre>
+    </article>
+</section>
 
 
 
@@ -161,10 +303,6 @@ In applying <a href="https://developer.mozilla.org/nl/docs/Web/JavaScript/Refere
 
 	<div class="clearfix"></div>
 
-	
-		<div class="col-md-3">
-			<div id="toc" class="col-md-3 hidden-xs hidden-sm hidden-md"></div>
-		</div>
 	
 
 </div>
