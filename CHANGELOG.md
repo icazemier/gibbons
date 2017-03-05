@@ -1,7 +1,7 @@
 # Change Log
 
 #### [v2.0.0](https://github.com/kaasdude/gibbons/compare/1.0.7...2.0.0)
-> TODO
+> 5 March 2017
 
 * Made Gibbons dependency free by moving LokiJSGibbonAdapter to the unit tests
 * Removed inheritance of EventEmitter (People should decide this for themselves)
