@@ -4,7 +4,7 @@
 <head>
 	<meta charset="utf-8">
 	<meta name="viewport" content="width=device-width">
-	<title>Gibbons Index</title>
+	<title>Gibbons Source: lib/gibbon-processor.js</title>
 
 	<!--[if lt IE 9]>
 	<script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
@@ -81,76 +81,231 @@
 <div class="row">
 
 	
-	<div class="col-md-8">
+	<div class="col-md-12">
 	
 		<div id="main">
 			
 
-	
-	
+		<h1 class="page-title">Source: lib/gibbon-processor.js</h1>
+    
+<section>
+    <article>
+        <pre
+            class="sunlight-highlight-javascript linenums">'use strict';
+
+/**
+ * @classdesc
+ * Just a class to carry byte position and bit position around
+ *
+ * @param {Number} byteNo - unsigned integer value (0..n)
+ * @param {Number} bitPos - unsigned integer value (0..n)
+ * @class
+ */
+function BitByte(byteNo, bitPos) {
+    this.byteNo = byteNo;
+    this.bitPos = bitPos;
+}
+
+/**
+ * This is the Gibbon Processor which does all the bit masking, nothing special ;)
+ * @namespace
+ */
+const GibbonProcessor = {};
 
 
+/**
+ * Transforms a position (1..n) to byte index and inner bit position
+ *
+ * @example
+ *
+ * getByteNoAndBitPos(1); // returns { byteNo: 0, bitPos: 0}
+ *
+ * getByteNoAndBitPos(256); // returns { byteNo: 31, bitPos: 7}
+ *
+ * @memberOf GibbonProcessor
+ * @param {Number} position - Unsigned integer value (1..n)
+ * @returns {BitByte} - A new a BitByte instance
+ * @throws {Error} when position is &lt;= 0
+ */
+GibbonProcessor.getByteNoAndBitPos = function (position) {
+    if (position &lt;= 0) {
+        throw new Error('Illegal position');
+    }
+    const index = position - 1;
+    return new BitByte(Math.trunc(index / 8), index % 8);
+};
 
 
+/**
+ * Check if bit is set true on index
+ *
+ * @example
+ *
+ * isTrue(13, 2); // returns true
+ *
+ * // 0000 1101 data
+ * //
+ * // 0000 0011 data (after data >>= index)
+ * // 0000 0001
+ * // ---------- AND
+ * // 0000 0001 === 0000 0001 (true)
+ * //
+ * @memberOf GibbonProcessor
+ * @param {Number} data - Unsigned integer value
+ * @param {Number} index - Unsigned integer value (0..7)
+ * @returns {boolean}
+ */
+GibbonProcessor.isTrue = function (data, index) {
+    /* eslint-disable */
+    data >>= index;
+    return (data &amp; 0x1) === 0x1;
+    /* eslint-enable */
+};
+
+/**
+ * Check if bit is set false on index
+ *
+ * @example
+ *
+ * isFalse(13, 2); // returns false
+ *
+ * // 0000 1101 data
+ * //
+ * // 0000 0011 data (after data >>= index)
+ * // 0000 0001
+ * // ---------- AND
+ * // 0000 0001 === 0000 0000 (false)
+ * //
+ *
+ * @memberOf GibbonProcessor
+ * @param {Number} data - Unsigned integer value
+ * @param {Number} index - Unsigned integer value (0..7)
+ * @returns {boolean}
+ */
+GibbonProcessor.isFalse = function (data, index) {
+    /* eslint-disable */
+    data >>= index;
+    return (data &amp; 0x1) === 0x0;
+    /* eslint-enable */
+};
+
+/**
+ * Set bit true on data from index
+ *
+ * @example
+ *
+ * setBit(0, 1); // returns 1
+ *
+ * // 0000 0000 data
+ * // 0000 0001 mask
+ * // ---------------- OR
+ * // 0000 0001 result
+ *
+ * @memberOf GibbonProcessor
+ * @param {Number} data - Unsigned integer value
+ * @param {Number} index - Unsigned integer value (0..7)
+ * @returns {Number}
+ */
+GibbonProcessor.setBit = function (data, index) {
+    /* eslint-disable */
+    let mask = 1 &lt;&lt; index;
+    return data | mask;
+    /* eslint-enable */
+};
+
+/**
+ * Set bit false on data from index
+ *
+ * @example
+ *
+ * clearBit(1, 0); // returns 0(dec)
+ *
+ * // 0000 0001 mask
+ * //
+ * // 0000 0001 data
+ * // 1111 1110 ~mask
+ * // ---------------- AND
+ * // 0000 0000 result
+ *
+ * @memberOf GibbonProcessor
+ * @param {Number} data - Unsigned integer value
+ * @param {Number} index - Unsigned integer value (0..7)
+ * @returns {Number}
+ */
+GibbonProcessor.clearBit = function (data, index) {
+    /* eslint-disable */
+    let mask = 1 &lt;&lt; index;
+    return data &amp; ~mask;
+    /* eslint-enable */
+};
+
+/**
+ * Change bit according to given value on data from index
+ *
+ * @example
+ *
+ * changeBit(1, 0, false); // returns 0(dec)
+ *
+ * // 0000 0001 data
+ * // 1111 1110 mask ~
+ * // ---------------- AND
+ * // 0000 0000 x1
+ * //
+ * // 0000 0000 state
+ * // 0000 0001 mask
+ * // ---------------- AND
+ * // 0000 0000 x2
+ * //
+ * // 0000 0000 (x1)
+ * // 0000 0000 (x2)
+ * // ---------------- OR
+ * // 0000 0000 result
+ *
+ * @memberOf GibbonProcessor
+ * @param {Number} data - Unsigned integer value
+ * @param {Number} index - Unsigned integer value (0..7)
+ * @param {*} value - truthy | falsy
+ * @returns {Number}
+ */
+GibbonProcessor.changeBit = function (data, index, value) {
+    /* eslint-disable */
+    let mask = 1 &lt;&lt; index;
+    // value relies on true = 1 and false = 0
+    let state = value ? 0x1 : 0x0;
+    return (data &amp; ~mask) | (-state &amp; mask);
+    /* eslint-enable */
+};
+
+/**
+ * Toggle (inverse) bit value on data from index
+ *
+ * @example
+ *
+ * toggleBit(1, 0); // Returns 0(dec)
+ *
+ * // 0000 0001 mask
+ * // 0000 0001 data
+ * // --------------- XOR
+ * // 0000 0000 result
+ *
+ * @memberOf GibbonProcessor
+ * @param {Number} data - Unsigned integer value
+ * @param {Number} index - Unsigned integer value (0..7)
+ * @returns {Number}
+ */
+GibbonProcessor.toggleBit = function (data, index) {
+    /* eslint-disable */
+    let mask = 1 &lt;&lt; index;
+    return data ^ mask;
+    /* eslint-enable */
+};
 
 
-
-
-
-
-
-	
-	
-
-
-
-
-
-    <section class="readme-section">
-        <article><p><img src="https://raw.githubusercontent.com/kaasdude/gibbons/master/gibbons.png" width="200" /></p>
-<h1>Gibbons</h1><p><em>&quot;Leaping from branch to branch gibbons decide which one to take in a split second&quot;</em></p>
-<p>Gibbons is a Node.js module which helps in managing user groups and user permissions with <code>bitwise</code> efficiency. 
-In applying <a href="https://developer.mozilla.org/nl/docs/Web/JavaScript/Reference/Global_Objects/ArrayBuffer">ArrayBuffers</a> and bitwise operations it tries to use minimal resources.</p>
-<h2>API Documentation and tutorial</h2><p>See: <a href="https://kaasdude.github.io/gibbons/">Gibbons Docs</a></p>
-<h2>How do I get set up?</h2><p><code>npm install gibbons</code></p>
-<h2>Details</h2><h3>Prerequisites to contribute</h3><ul>
-<li>Clone this repository, and check out the develop branch</li>
-<li>Ensure <a href="https://github.com/creationix/nvm">Node Version Manager</a> is installed and operational</li>
-<li><code>nvm install</code></li>
-<li><code>npm install -g gulp</code></li>
-</ul>
-<h3>Linting</h3><p>For this project <a href="http://eslint.org/">ESLint</a> is applied. </p>
-<p>Execute: <code>gulp lint</code></p>
-<p><em>Currently the linter conforms to defaults from: <a href="https://github.com/mysticatea/eslint-plugin-node">eslint-plugin-node</a> and some minor tweaks (see: <code>.eslint.js</code>).</em></p>
-<h3>Unit tests</h3><p>Every path should be covered and can be checked after the unit test is executed, according to a coverage report.</p>
-<p>Execute: <code>gulp test</code></p>
-<p>In the end, a brief version of the coverage report is shown. For the more extensive one, see: <code>test/coverage/lcov-report/index.html</code>.</p>
-<h3>API Documentation</h3><p>A Gulp plugin: <a href="https://github.com/mlucool/gulp-jsdoc3">gulp-jsdoc3</a> is applied to generate the API documentation.</p>
-<p>It's expected to write extensive comments in the code itself when contributing.</p>
-<p>Every time code is updated, we need to ensure the documentation is in sync with the code.</p>
-<p>Execute: <code>gulp docs</code></p>
-<p><em>The result is generated at: <code>docs/index.html</code></em></p>
-<h2>Contribution guidelines</h2><ul>
-<li>When adding new features / code, creating corresponding unit tests are mandatory</li>
-<li>Code review will be done by means of pull requests to the <code>develop</code> branch, preferably with the following pull request template:</li>
-</ul>
-<pre class="prettyprint source"><code>h1. I ensured:
-* [ ] I've updated the unit tests and covered enough parts of the code (`gulp lint` and `gulp test`)
-* [ ] I've updated the API documentation within the code and generated a fresh export (`gulp docs`)</code></pre><h1>Changes</h1><p><a href="https://github.com/kaasdude/gibbons/blob/master/CHANGELOG.md">See: Changelog</a></p>
-<h1>Meta data</h1><ul>
-<li>Maintainer: Ivo Cazemier</li>
-<li><a href="https://bitbucket.org/ivocazemier/gibbons">Bitbucket</a> or <a href="https://github.com/kaasdude/gibbons">Github</a></li>
-<li><a href="https://kaasdude.github.io/gibbons/">API documentation and tutorial</a></li>
-</ul>
-<p><a href="https://www.npmjs.com/package/gibbons"><img src="https://badge.fury.io/js/gibbons.svg" alt="npm version"></a>
-<a href="https://david-dm.org/kaasdude/gibbons"><img src="https://david-dm.org/kaasdude/gibbons.svg" alt="David"></a>
-<a href="https://david-dm.org/kaasdude/gibbons#info=devDependencies"><img src="https://david-dm.org/kaasdude/gibbons/dev-status.svg" alt="David"></a>
-<a href="https://travis-ci.org/kaasdude/gibbons"><img src="https://travis-ci.org/kaasdude/gibbons.svg?branch=master" alt="Travis CI"></a>
-<a href="https://coveralls.io/github/kaasdude/gibbons?branch=master"><img src="https://coveralls.io/repos/github/kaasdude/gibbons/badge.svg?branch=master" alt="Coverage Status"></a></p>
-<p>(License: MIT, See the LICENSE file)</p></article>
-    </section>
-
-
+module.exports.GibbonProcessor = GibbonProcessor;
+module.exports.BitByte = BitByte;
+</pre>
+    </article>
+</section>
 
 
 
@@ -161,10 +316,6 @@ In applying <a href="https://developer.mozilla.org/nl/docs/Web/JavaScript/Refere
 
 	<div class="clearfix"></div>
 
-	
-		<div class="col-md-3">
-			<div id="toc" class="col-md-3 hidden-xs hidden-sm hidden-md"></div>
-		</div>
 	
 
 </div>
