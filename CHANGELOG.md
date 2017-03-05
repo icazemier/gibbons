@@ -1,6 +1,33 @@
 # Change Log
 
-#### [v1.0.5](https://github.com/kaasdude/gibbons/compare/1.0.3...1.0.5)
+#### [v2.0.0](https://github.com/kaasdude/gibbons/compare/1.0.7...2.0.0)
+> TODO
+
+* Made Gibbons dependency free by moving LokiJSGibbonAdapter to the unit tests
+* Removed inheritance of EventEmitter (People should decide this for themselves)
+* Removed logger injection (Less clutter)
+* More documentation
+* More unit tests (Together with LokiJS as an use case)
+* Added more convenience methods like: `findUsersByPermissio`, `findGroupsByPermission` and `findUsersByGroup`
+* LokiJSGibbonAdapter:
+  * More try catch wrappers around LokiJS methods (0_o)
+  * Removed LokiJS event listeners
+  * Optimised `addPermissions` and `addGroups`
+  * Changed the behaviour of LokiJSGibbonAdapter `removeGroup` and `removePermission`<br>
+    They ensure the related gibbon bits are also set to logical '0' ('Cascaded update')
+  
+
+#### [v1.0.7](https://github.com/kaasdude/gibbons/compare/1.0.6...1.0.7)
+> 23 February 2017
+
+* Effort to slender the npm package with .npmrc, done.
+
+#### [v1.0.6](https://github.com/kaasdude/gibbons/compare/1.0.5...1.0.6)
+> 23 February 2017
+
+* Effort to slender the npm package with .npmrc 
+
+#### [v1.0.5](https://github.com/kaasdude/gibbons/compare/1.0.4...1.0.5)
 > 19 February 2017
 
 * Bumped dependencies: `lodash`, and freezed version of `lokijs`
