@@ -1,5 +1,5 @@
 
-<img src="https://raw.githubusercontent.com/kaasdude/gibbons/feature/docs/gibbons.png" width="200" />
+<img src="https://raw.githubusercontent.com/kaasdude/gibbons/master/gibbons.png" width="200" />
 
 
 
