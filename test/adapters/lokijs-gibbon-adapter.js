@@ -1,102 +1,9 @@
-<!DOCTYPE html>
-
-<html lang="en">
-<head>
-	<meta charset="utf-8">
-	<meta name="viewport" content="width=device-width">
-	<title>Gibbons Source: adapters/lokijs-gibbon-adapter.js</title>
-
-	<!--[if lt IE 9]>
-	<script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
-	<![endif]-->
-	<link type="text/css" rel="stylesheet" href="styles/sunlight.dark.css">
-
-	<link type="text/css" rel="stylesheet" href="styles/site.superhero.css">
-
-</head>
-
-<body>
-
-<div class="navbar navbar-default navbar-fixed-top ">
-<div class="container">
-	<div class="navbar-header">
-		<a class="navbar-brand" href="index.html">Gibbons</a>
-		<button class="navbar-toggle" type="button" data-toggle="collapse" data-target="#topNavigation">
-			<span class="icon-bar"></span>
-			<span class="icon-bar"></span>
-			<span class="icon-bar"></span>
-        </button>
-	</div>
-	<div class="navbar-collapse collapse" id="topNavigation">
-		<ul class="nav navbar-nav">
-			
-			<li class="dropdown">
-				<a href="namespaces.list.html" class="dropdown-toggle" data-toggle="dropdown">Namespaces<b class="caret"></b></a>
-				<ul class="dropdown-menu inline">
-					<li><a href="GibbonProcessor.html">GibbonProcessor</a></li>
-				</ul>
-			</li>
-			
-			<li class="dropdown">
-				<a href="classes.list.html" class="dropdown-toggle" data-toggle="dropdown">Classes<b class="caret"></b></a>
-				<ul class="dropdown-menu inline">
-					<li><a href="BitByte.html">BitByte</a></li><li><a href="Gibbon.html">Gibbon</a></li><li><a href="GibbonAdapter.html">GibbonAdapter</a></li><li><a href="Gibbons.html">Gibbons</a></li><li><a href="LokiJSGibbonAdapter.html">LokiJSGibbonAdapter</a></li>
-				</ul>
-			</li>
-			
-			<li class="dropdown">
-				<a href="tutorials.list.html" class="dropdown-toggle" data-toggle="dropdown">Tutorials<b class="caret"></b></a>
-				<ul class="dropdown-menu inline">
-					<li><a href="tutorial-Tutorial.html">Tutorial</a></li>
-				</ul>
-			</li>
-			
-			<li class="dropdown">
-				<a href="global.html" class="dropdown-toggle" data-toggle="dropdown">Global<b class="caret"></b></a>
-				<ul class="dropdown-menu inline">
-					<li><a href="global.html#COLLECTION">COLLECTION</a></li>
-				</ul>
-			</li>
-			
-		</ul>
-        
-            <div class="col-sm-3 col-md-3">
-                <form class="navbar-form" role="search">
-                    <div class="input-group">
-                        <input type="text" class="form-control" placeholder="Search" name="q" id="search-input">
-                        <div class="input-group-btn">
-                            <button class="btn btn-default" id="search-submit"><i class="glyphicon glyphicon-search"></i></button>
-                        </div>
-                    </div>
-                </form>
-            </div>
-        
-	</div>
-
-</div>
-</div>
-
-
-<div class="container" id="toc-content">
-<div class="row">
-
-	
-	<div class="col-md-12">
-	
-		<div id="main">
-			
-
-		<h1 class="page-title">Source: adapters/lokijs-gibbon-adapter.js</h1>
-    
-<section>
-    <article>
-        <pre
-            class="sunlight-highlight-javascript linenums">'use strict';
+'use strict';
 const util = require('util');
 const _ = require('lodash');
 const Loki = require('lokijs');
-const GibbonAdapter = require('./gibbon-adapter');
-const Gibbon = require('../gibbon');
+const GibbonAdapter = require('./../../lib/adapters/gibbon-adapter');
+const Gibbon = require('../../lib/gibbon');
 
 /**
  *
@@ -110,8 +17,8 @@ const COLLECTION = {
 
 /**
  * @classdesc
- * Representing an adapter class for LokiJS&lt;br>
- *     &lt;b>(NOTE: This an example adapter, which is used to build and test Gibbons, and can be overridden. One is encouraged to write adapters themselves)&lt;/b>
+ * Representing an adapter class for LokiJS<br>
+ *     <b>(NOTE: This an example adapter, which is used to build and test Gibbons, and can be overridden. One is encouraged to write adapters themselves)</b>
  *
  * @class
  * @augments GibbonAdapter
@@ -155,7 +62,7 @@ LokiJSGibbonAdapter.prototype._initializeCollection = function (collectionName) 
 
 /**
  * Callback when upsert is done (insert new or update is exists).
- * @callback LokiJSGibbonAdapter~_upsertByName
+ * @callback LokiJSGibbonAdapter~_upsertByCollection
  * @param {Error} [error=null] - Error is omitted
  * @param {object} [dataFound] - One instance of a fetched record
  *
@@ -167,16 +74,16 @@ LokiJSGibbonAdapter.prototype._initializeCollection = function (collectionName) 
  * @param {string} collection - Dynamic pointer to a collection
  * @param {object} criteria - In this adapter name is our unique reference for all collections
  * @param {object} data - Object to update or insert
- * @param {LokiJSGibbonAdapter~_upsertByName} callback
+ * @param {LokiJSGibbonAdapter~_upsertByCollection} callback
  * @private
  */
-LokiJSGibbonAdapter.prototype._upsertByName = function (collection, criteria, data, callback) {
+LokiJSGibbonAdapter.prototype._upsertByCollection = function (collection, criteria, data, callback) {
     try {
         let dataFound = this.dbCollection[collection].findOne({name: criteria.name});
         if (!dataFound) {
             dataFound = this.dbCollection[collection].insert(data);
         } else {
-            dataFound = _.merge(dataFound, data);
+            dataFound = Object.assign(dataFound, data);
             this.dbCollection[collection].update(dataFound);
         }
         callback(null, dataFound);
@@ -200,7 +107,7 @@ LokiJSGibbonAdapter.prototype._upsertByName = function (collection, criteria, da
  * @param {LokiJSGibbonAdapter~findByNameCallback} callback
  * @private
  */
-LokiJSGibbonAdapter.prototype._findByName = function (name, criteria, callback) {
+LokiJSGibbonAdapter.prototype._findByCollection = function (name, criteria, callback) {
     try {
         const found = this.dbCollection[name].findOne(criteria);
         callback(null, found);
@@ -244,7 +151,7 @@ LokiJSGibbonAdapter.prototype.initialize = function (callback) {
 /**
  * Callback when fetching is done.
  * @callback LokiJSGibbonAdapter~findUser
- * @see {@link _findByName}
+ * @see {@link _findByCollection}
  */
 
 /**
@@ -255,7 +162,7 @@ LokiJSGibbonAdapter.prototype.initialize = function (callback) {
  * @param {LokiJSGibbonAdapter~findUser} callback
  */
 LokiJSGibbonAdapter.prototype.findUser = function (criteria, callback) {
-    this._findByName(COLLECTION.USER, criteria, callback);
+    this._findByCollection(COLLECTION.USER, criteria, callback);
 };
 
 /**
@@ -291,7 +198,10 @@ LokiJSGibbonAdapter.prototype.findUsersByPermission = function (criteria, callba
                 return gibbon.isPosition(permissionPosition);
             });
 
-            const groupPositions = _.map(groups, '$loki');
+
+            const groupPositions = groups.map((group) => {
+                return group['$loki'];
+            });
             const users = self.dbCollection[COLLECTION.USER].where((user) => {
                 const gibbon = Gibbon.fromString(user.groups);
                 return gibbon.hasAnyFromPositions(groupPositions);
@@ -392,7 +302,7 @@ LokiJSGibbonAdapter.prototype.findGroupsByPermission = function (criteria, callb
 /**
  * Callback when fetching is done.
  * @callback LokiJSGibbonAdapter~findGroup
- * @see {@link _findByName}
+ * @see {@link _findByCollection}
  */
 
 /**
@@ -403,14 +313,14 @@ LokiJSGibbonAdapter.prototype.findGroupsByPermission = function (criteria, callb
  * @param {LokiJSGibbonAdapter~findGroup} callback
  */
 LokiJSGibbonAdapter.prototype.findGroup = function (criteria, callback) {
-    this._findByName(COLLECTION.GROUP, criteria, callback);
+    this._findByCollection(COLLECTION.GROUP, criteria, callback);
 };
 
 
 /**
  * Callback when fetching is done.
  * @callback LokiJSGibbonAdapter~findPermission
- * @see {@link _findByName}
+ * @see {@link _findByCollection}
  */
 
 /**
@@ -421,7 +331,7 @@ LokiJSGibbonAdapter.prototype.findGroup = function (criteria, callback) {
  * @param {LokiJSGibbonAdapter~findPermission} callback
  */
 LokiJSGibbonAdapter.prototype.findPermission = function (criteria, callback) {
-    this._findByName(COLLECTION.PERMISSION, criteria, callback);
+    this._findByCollection(COLLECTION.PERMISSION, criteria, callback);
 };
 
 /**
@@ -585,7 +495,7 @@ LokiJSGibbonAdapter.prototype.removeGroup = function (group, callback) {
         if (groupFoundPosition !== undefined) {
 
             // Remove all associated permissions stored at users
-            this.dbCollection[COLLECTION.USER].findAndUpdate({'$loki': {'$gt': 0}}, (user) => {
+            this.dbCollection[COLLECTION.USER].findAndUpdate({}, (user) => {
                 if (typeof user.groups === 'string') {
                     const gibbon = Gibbon.fromString(user.groups);
                     gibbon.clearPosition(groupFoundPosition);
@@ -622,7 +532,7 @@ LokiJSGibbonAdapter.prototype.removePermission = function (permission, callback)
         if (permissionFoundPosition !== undefined) {
 
             // Remove all associated permissions stored at groups
-            this.dbCollection[COLLECTION.GROUP].findAndUpdate({'$loki': {'$gt': 0}}, (group) => {
+            this.dbCollection[COLLECTION.GROUP].findAndUpdate({}, (group) => {
                 if (typeof group.permissions === 'string') {
                     const gibbon = Gibbon.fromString(group.permissions);
                     gibbon.clearPosition(permissionFoundPosition);
@@ -641,7 +551,7 @@ LokiJSGibbonAdapter.prototype.removePermission = function (permission, callback)
 /**
  * Callback when update is done.
  * @callback LokiJSGibbonAdapter~upsertUser
- * @see {@link _upsertByName}
+ * @see {@link _upsertByCollection}
  */
 
 /**
@@ -653,13 +563,13 @@ LokiJSGibbonAdapter.prototype.removePermission = function (permission, callback)
  * @param {LokiJSGibbonAdapter~upsertUser} callback
  */
 LokiJSGibbonAdapter.prototype.upsertUser = function (criteria, user, callback) {
-    this._upsertByName(COLLECTION.USER, criteria, user, callback);
+    this._upsertByCollection(COLLECTION.USER, criteria, user, callback);
 };
 
 /**
  * Callback when update is done.
  * @callback LokiJSGibbonAdapter~upsertGroup
- * @see {@link _upsertByName}
+ * @see {@link _upsertByCollection}
  */
 
 /**
@@ -671,13 +581,13 @@ LokiJSGibbonAdapter.prototype.upsertUser = function (criteria, user, callback) {
  * @param {LokiJSGibbonAdapter~upsertGroup} callback
  */
 LokiJSGibbonAdapter.prototype.upsertGroup = function (criteria, group, callback) {
-    this._upsertByName(COLLECTION.GROUP, criteria, group, callback);
+    this._upsertByCollection(COLLECTION.GROUP, criteria, group, callback);
 };
 
 /**
  * Callback when update is done.
  * @callback LokiJSGibbonAdapter~upsertPermission
- * @see {@link _upsertByName}
+ * @see {@link _upsertByCollection}
  */
 
 /**
@@ -689,7 +599,7 @@ LokiJSGibbonAdapter.prototype.upsertGroup = function (criteria, group, callback)
  * @param {LokiJSGibbonAdapter~upsertPermission} callback
  */
 LokiJSGibbonAdapter.prototype.upsertPermission = function (criteria, permission, callback) {
-    this._upsertByName(COLLECTION.PERMISSION, criteria, permission, callback);
+    this._upsertByCollection(COLLECTION.PERMISSION, criteria, permission, callback);
 };
 
 /**
@@ -750,13 +660,13 @@ LokiJSGibbonAdapter.prototype.findPermissionsByUser = function (user, callback) 
         }
 
         let i = 0;
-        for (i; i &lt; groups.length; i++) {
+        for (i; i < groups.length; i++) {
             const group = groups[i];
             const permissionsFromGroup = group.permissions;
             const gibbon = Gibbon.fromString(permissionsFromGroup);
             const permissionBitPositions = gibbon.getPositionsArray();
             permissions = permissions.concat(permissionBitPositions);
-            permissions = _.uniq(permissions);
+            permissions = Array.from(new Set(permissions));
         }
 
         permissions = permissions.sort((a, b) => {
@@ -778,13 +688,13 @@ LokiJSGibbonAdapter.prototype.findPermissionsByUser = function (user, callback) 
  */
 
 /**
- * Validate a user against all given permissions &lt;br>
- * When one of the given permissions is missing for the given user,&lt;br>
+ * Validate a user against all given permissions <br>
+ * When one of the given permissions is missing for the given user,<br>
  * given user is not valid.
  *
  * @override
  * @param {object} user - User to validate
- * @param {Array&lt;Number>} permissions - Array with unsigned integers with permissions (positions starting at 1)
+ * @param {Array<Number>} permissions - Array with unsigned integers with permissions (positions starting at 1)
  * @param {LokiJSGibbonAdapter~validateUserWithAllPermissions} callback
  */
 LokiJSGibbonAdapter.prototype.validateUserWithAllPermissions = function (user, permissions, callback) {
@@ -794,12 +704,14 @@ LokiJSGibbonAdapter.prototype.validateUserWithAllPermissions = function (user, p
             return callback(error, valid);
         }
 
-        if (!(Array.isArray(permissions)) || permissions.length &lt;= 0) {
+        if (!(Array.isArray(permissions)) || permissions.length <= 0) {
             return callback(null, valid);
         }
-        const permissionsAttachedToUser = _.map(permissionsFound, '$loki');
+        const permissionsAttachedToUser = permissionsFound.map((permission) => {
+            return permission['$loki'];
+        });
         const missingPermissions = _.difference(permissions, permissionsAttachedToUser);
-        valid = !(Array.isArray(missingPermissions) &amp;&amp; missingPermissions.length > 0);
+        valid = !(Array.isArray(missingPermissions) && missingPermissions.length > 0);
         callback(null, valid);
     });
 };
@@ -812,12 +724,12 @@ LokiJSGibbonAdapter.prototype.validateUserWithAllPermissions = function (user, p
  */
 
 /**
- * Validate a user against any given permissions &lt;br>
- * When one of the given permissions is found for the given user,&lt;br>
+ * Validate a user against any given permissions <br>
+ * When one of the given permissions is found for the given user,<br>
  * the outcome is valid.
  * @override
  * @param {object} user - User to validate
- * @param {Array&lt;Number>} permissions - Array with unsigned integers with permissions (positions starting at 1)
+ * @param {Array<Number>} permissions - Array with unsigned integers with permissions (positions starting at 1)
  * @param {LokiJSGibbonAdapter~validateUserWithAnyPermissions} callback
  */
 LokiJSGibbonAdapter.prototype.validateUserWithAnyPermissions = function (user, permissions, callback) {
@@ -826,12 +738,14 @@ LokiJSGibbonAdapter.prototype.validateUserWithAnyPermissions = function (user, p
         if (error) {
             return callback(error, valid);
         }
-        if (!(Array.isArray(permissions)) || permissions.length &lt;= 0) {
+        if (!(Array.isArray(permissions)) || permissions.length <= 0) {
             return callback(null, valid);
         }
-        const permissionsAttachedToUser = _.map(permissionsFound, '$loki');
+        const permissionsAttachedToUser = permissionsFound.map((permission) => {
+            return permission['$loki'];
+        });
         const overlappingPermissions = _.intersection(permissions, permissionsAttachedToUser);
-        valid = (Array.isArray(overlappingPermissions) &amp;&amp; overlappingPermissions.length > 0);
+        valid = (Array.isArray(overlappingPermissions) && overlappingPermissions.length > 0);
         callback(null, valid);
     });
 };
@@ -843,138 +757,3 @@ module.exports = LokiJSGibbonAdapter;
 
 
 
-</pre>
-    </article>
-</section>
-
-
-
-
-
-		</div>
-	</div>
-
-	<div class="clearfix"></div>
-
-	
-
-</div>
-</div>
-
-
-    <div class="modal fade" id="searchResults">
-      <div class="modal-dialog">
-        <div class="modal-content">
-          <div class="modal-header">
-            <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-            <h4 class="modal-title">Search results</h4>
-          </div>
-          <div class="modal-body"></div>
-          <div class="modal-footer">
-            <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-          </div>
-        </div><!-- /.modal-content -->
-      </div><!-- /.modal-dialog -->
-    </div>
-
-
-<footer>
-
-	Gibbons (I. Cazemier)
-
-
-<span class="jsdoc-message">
-	Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.4.3</a>
-	
-		on 2017-03-04T11:26:10+01:00
-	
-	using the <a href="https://github.com/docstrap/docstrap">DocStrap template</a>.
-</span>
-</footer>
-
-<script src="scripts/docstrap.lib.js"></script>
-<script src="scripts/toc.js"></script>
-
-    <script type="text/javascript" src="scripts/fulltext-search-ui.js"></script>
-
-
-<script>
-$( function () {
-	$( "[id*='$']" ).each( function () {
-		var $this = $( this );
-
-		$this.attr( "id", $this.attr( "id" ).replace( "$", "__" ) );
-	} );
-
-	$( ".tutorial-section pre, .readme-section pre, pre.prettyprint.source" ).each( function () {
-		var $this = $( this );
-
-		var example = $this.find( "code" );
-		exampleText = example.html();
-		var lang = /{@lang (.*?)}/.exec( exampleText );
-		if ( lang && lang[1] ) {
-			exampleText = exampleText.replace( lang[0], "" );
-			example.html( exampleText );
-			lang = lang[1];
-		} else {
-			var langClassMatch = example.parent()[0].className.match(/lang\-(\S+)/);
-			lang = langClassMatch ? langClassMatch[1] : "javascript";
-		}
-
-		if ( lang ) {
-
-			$this
-			.addClass( "sunlight-highlight-" + lang )
-			.addClass( "linenums" )
-			.html( example.html() );
-
-		}
-	} );
-
-	Sunlight.highlightAll( {
-		lineNumbers : true,
-		showMenu : true,
-		enableDoclinks : true
-	} );
-
-	$.catchAnchorLinks( {
-        navbarOffset: 10
-	} );
-	$( "#toc" ).toc( {
-		anchorName  : function ( i, heading, prefix ) {
-			return $( heading ).attr( "id" ) || ( prefix + i );
-		},
-		selectors   : "#toc-content h1,#toc-content h2,#toc-content h3,#toc-content h4",
-		showAndHide : false,
-		smoothScrolling: true
-	} );
-
-	$( "#main span[id^='toc']" ).addClass( "toc-shim" );
-	$( '.dropdown-toggle' ).dropdown();
-
-    $( "table" ).each( function () {
-      var $this = $( this );
-      $this.addClass('table');
-    } );
-
-} );
-</script>
-
-
-
-<!--Navigation and Symbol Display-->
-
-
-<!--Google Analytics-->
-
-
-
-    <script type="text/javascript">
-        $(document).ready(function() {
-            SearcherDisplay.init();
-        });
-    </script>
-
-
-</body>
-</html>

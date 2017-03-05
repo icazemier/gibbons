@@ -18,7 +18,7 @@ gulp.task('default', ['lint', 'test', 'docs']);
 
 
 gulp.task('pre-test', () => {
-    return gulp.src('lib/**/*.js')
+    return gulp.src(['lib/**/*.js'])
     // Covering files
         .pipe(istanbul({includeUntested: true}))
         // Force `require` to return covered files
@@ -40,13 +40,7 @@ gulp.task('test', ['pre-test'], () => {
         // Enforce coverage
         .pipe(istanbul.enforceThresholds({
             thresholds: {
-                global: 95
-                // {
-                //     statements: 90,
-                //     branches: 90,
-                //     functions: 90,
-                //     lines: 90
-                // }
+                global: 100
             }
         }));
 });

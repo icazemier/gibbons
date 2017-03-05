@@ -341,6 +341,51 @@ describe('Gibbon: Bit masking tests', function () {
                 done();
             });
 
+            it(`Test ${helper.testNumber++}: Checks on match on any positions`, function (done) {
+
+                // Initialize a Gibbon with ArrayBuffer (size = 1 bytes)
+                const gibbon = Gibbon.create(1);
+
+                // Pre set all bits positions for the test:
+                gibbon.setPosition(1)
+                    .setPosition(3)
+                    .setPosition(5)
+                    .setPosition(7);
+
+                // We're going to check on these and more, this should return `false`
+                const positions = [5, 7, -4];
+
+                // Check before encoding to string
+                const result = gibbon.hasAnyFromPositions(positions);
+
+                expect(result).to.be.equal(true);
+                done();
+
+            });
+
+
+            it(`Test ${helper.testNumber++}: Checks on match on any positions (alternative)`, function (done) {
+
+                // Initialize a Gibbon with ArrayBuffer (size = 1 bytes)
+                const gibbon = Gibbon.create(1);
+
+                // Pre set all bits positions for the test:
+                gibbon.setPosition(1)
+                    .setPosition(3)
+                    .setPosition(5)
+                    .setPosition(7);
+
+                // We're going to check on these and more, this should return `false`
+                const positions = [-2, 7];
+
+                // Check before encoding to string
+                const result = gibbon.hasAnyFromPositions(positions);
+
+                expect(result).to.be.equal(true);
+                done();
+
+            });
+
         });
 
     });
@@ -476,6 +521,36 @@ describe('Gibbon: Bit masking tests', function () {
 
             function throwError() {
                 gibbon.setAllFromPositions('w00t!');
+            }
+
+            expect(throwError).to.throw(TypeError);
+            done();
+        });
+
+
+        it(`Test ${helper.testNumber++}: Try to do things out of bounds on anyPositions`, function (done) {
+
+            // Initialize a Gibbon with ArrayBuffer (size = 1 bytes)
+            const gibbon = Gibbon.create(1);
+
+            const ref = [-10, -11, -12]; // -10, -11 and -12 are out of bounds
+            // Pre set some bit positions for the test:
+            gibbon.setAllFromPositions(ref);
+            const positions = gibbon.getPositionsArray();
+            const match = gibbon.hasAnyFromPositions(ref);
+
+            expect(positions).to.be.array;
+            expect(match).to.be.false;
+            done();
+        });
+
+        it(`Test ${helper.testNumber++}: Try to do have something other than array on anyPositions`, function (done) {
+
+            // Initialize a Gibbon with ArrayBuffer (size = 1 bytes)
+            const gibbon = Gibbon.create(1);
+
+            function throwError() {
+                gibbon.hasAnyFromPositions('w00t!');
             }
 
             expect(throwError).to.throw(TypeError);
