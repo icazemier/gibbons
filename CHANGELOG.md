@@ -1,5 +1,15 @@
 # Change Log
 
+#### [v2.0.2](https://github.com/kaasdude/gibbons/compare/2.0.1...2.0.2)
+> 9 March 2017
+
+* Enabled availability of the LokiJS adapter ( sorry (0_o) )
+
+#### [v2.0.1](https://github.com/kaasdude/gibbons/compare/2.0.0...2.0.1)
+> 5 March 2017
+
+* Fix link to logo for documentation
+
 #### [v2.0.0](https://github.com/kaasdude/gibbons/compare/1.0.7...2.0.0)
 > 5 March 2017
 
