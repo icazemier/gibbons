@@ -6,7 +6,7 @@ const expect = require('chai').expect;
 const helper = require('./helper');
 const Gibbons = require('../index').Gibbons;
 const Gibbon = require('../index').Gibbon;
-const LokiJSGibbonAdapter = require('../index').LokiJSGibbonAdapter;
+const LokiJSGibbonAdapter = require('../test/adapters/lokijs-gibbon-adapter');
 
 
 describe('Gibbons', () => {
