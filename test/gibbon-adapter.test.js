@@ -2,7 +2,7 @@
 const expect = require('chai').expect;
 const helper = require('./helper');
 
-const HatAdapter = require('../index').GibbonAdapter;
+const GibbonAdapter = require('../index').GibbonAdapter;
 
 
 describe('Gibbon Adapter tests', function () {
@@ -13,7 +13,7 @@ describe('Gibbon Adapter tests', function () {
 
             it(`Test ${helper.testNumber++}: Try to call the abstract method initialize from adapter instance)`, function (done) {
                 function throwTypeError() {
-                    const adapter = new HatAdapter();
+                    const adapter = new GibbonAdapter();
                     adapter.initialize();
                 }
 
@@ -24,7 +24,7 @@ describe('Gibbon Adapter tests', function () {
 
             it(`Test ${helper.testNumber++}: Try to call the abstract method addUser from adapter instance)`, function (done) {
                 function throwTypeError() {
-                    const adapter = new HatAdapter();
+                    const adapter = new GibbonAdapter();
                     adapter.addUser();
                 }
 
@@ -35,7 +35,7 @@ describe('Gibbon Adapter tests', function () {
 
             it(`Test ${helper.testNumber++}: Try to call the abstract method addGroup from adapter instance)`, function (done) {
                 function throwTypeError() {
-                    const adapter = new HatAdapter();
+                    const adapter = new GibbonAdapter();
                     adapter.addGroup();
                 }
 
@@ -45,7 +45,7 @@ describe('Gibbon Adapter tests', function () {
 
             it(`Test ${helper.testNumber++}: Try to call the abstract method addGroups from adapter instance)`, function (done) {
                 function throwTypeError() {
-                    const adapter = new HatAdapter();
+                    const adapter = new GibbonAdapter();
                     adapter.addGroups();
                 }
 
@@ -56,7 +56,7 @@ describe('Gibbon Adapter tests', function () {
 
             it(`Test ${helper.testNumber++}: Try to call the abstract method addPermission from adapter instance)`, function (done) {
                 function throwTypeError() {
-                    const adapter = new HatAdapter();
+                    const adapter = new GibbonAdapter();
                     adapter.addPermission();
                 }
 
@@ -66,7 +66,7 @@ describe('Gibbon Adapter tests', function () {
 
             it(`Test ${helper.testNumber++}: Try to call the abstract method addPermissions from adapter instance)`, function (done) {
                 function throwTypeError() {
-                    const adapter = new HatAdapter();
+                    const adapter = new GibbonAdapter();
                     adapter.addPermissions();
                 }
 
@@ -76,7 +76,7 @@ describe('Gibbon Adapter tests', function () {
 
             it(`Test ${helper.testNumber++}: Try to call the abstract method removeUser from adapter instance)`, function (done) {
                 function throwTypeError() {
-                    const adapter = new HatAdapter();
+                    const adapter = new GibbonAdapter();
                     adapter.removeUser();
                 }
 
@@ -87,7 +87,7 @@ describe('Gibbon Adapter tests', function () {
 
             it(`Test ${helper.testNumber++}: Try to call the abstract method removeGroup from adapter instance)`, function (done) {
                 function throwTypeError() {
-                    const adapter = new HatAdapter();
+                    const adapter = new GibbonAdapter();
                     adapter.removeGroup();
                 }
 
@@ -98,7 +98,7 @@ describe('Gibbon Adapter tests', function () {
 
             it(`Test ${helper.testNumber++}: Try to call the abstract method removePermission from adapter instance)`, function (done) {
                 function throwTypeError() {
-                    const adapter = new HatAdapter();
+                    const adapter = new GibbonAdapter();
                     adapter.removePermission();
                 }
 
@@ -109,7 +109,7 @@ describe('Gibbon Adapter tests', function () {
 
             it(`Test ${helper.testNumber++}: Try to call the abstract method upsertUser from adapter instance)`, function (done) {
                 function throwTypeError() {
-                    const adapter = new HatAdapter();
+                    const adapter = new GibbonAdapter();
                     adapter.upsertUser();
                 }
 
@@ -120,7 +120,7 @@ describe('Gibbon Adapter tests', function () {
 
             it(`Test ${helper.testNumber++}: Try to call the abstract method upsertGroup from adapter instance)`, function (done) {
                 function throwTypeError() {
-                    const adapter = new HatAdapter();
+                    const adapter = new GibbonAdapter();
                     adapter.upsertGroup();
                 }
 
@@ -131,8 +131,18 @@ describe('Gibbon Adapter tests', function () {
 
             it(`Test ${helper.testNumber++}: Try to call the abstract method upsertPermission from adapter instance)`, function (done) {
                 function throwTypeError() {
-                    const adapter = new HatAdapter();
+                    const adapter = new GibbonAdapter();
                     adapter.upsertPermission();
+                }
+
+                expect(throwTypeError).to.throw(Error);
+                done();
+            });
+
+            it(`Test ${helper.testNumber++}: Try to call the abstract method findGroups from adapter instance)`, function (done) {
+                function throwTypeError() {
+                    const adapter = new GibbonAdapter();
+                    adapter.findGroups();
                 }
 
                 expect(throwTypeError).to.throw(Error);
@@ -141,7 +151,7 @@ describe('Gibbon Adapter tests', function () {
 
             it(`Test ${helper.testNumber++}: Try to call the abstract method findGroup from adapter instance)`, function (done) {
                 function throwTypeError() {
-                    const adapter = new HatAdapter();
+                    const adapter = new GibbonAdapter();
                     adapter.findGroup();
                 }
 
@@ -151,7 +161,7 @@ describe('Gibbon Adapter tests', function () {
 
             it(`Test ${helper.testNumber++}: Try to call the abstract method findPermission from adapter instance)`, function (done) {
                 function throwTypeError() {
-                    const adapter = new HatAdapter();
+                    const adapter = new GibbonAdapter();
                     adapter.findPermission();
                 }
 
@@ -162,7 +172,7 @@ describe('Gibbon Adapter tests', function () {
 
             it(`Test ${helper.testNumber++}: Try to call the abstract method findGroupsByUser from adapter instance)`, function (done) {
                 function throwTypeError() {
-                    const adapter = new HatAdapter();
+                    const adapter = new GibbonAdapter();
                     adapter.findGroupsByUser();
                 }
 
@@ -173,7 +183,7 @@ describe('Gibbon Adapter tests', function () {
 
             it(`Test ${helper.testNumber++}: Try to call the abstract method findPermissionsByUser from adapter instance)`, function (done) {
                 function throwTypeError() {
-                    const adapter = new HatAdapter();
+                    const adapter = new GibbonAdapter();
                     adapter.findPermissionsByUser();
                 }
 
@@ -184,7 +194,7 @@ describe('Gibbon Adapter tests', function () {
 
             it(`Test ${helper.testNumber++}: Try to call the abstract method findUser from adapter instance)`, function (done) {
                 function throwTypeError() {
-                    const adapter = new HatAdapter();
+                    const adapter = new GibbonAdapter();
                     adapter.findUser();
                 }
 
@@ -194,7 +204,7 @@ describe('Gibbon Adapter tests', function () {
 
             it(`Test ${helper.testNumber++}: Try to call the abstract method validateUserWithAllPermissions from adapter instance)`, function (done) {
                 function throwTypeError() {
-                    const adapter = new HatAdapter();
+                    const adapter = new GibbonAdapter();
                     adapter.validateUserWithAllPermissions();
                 }
 
@@ -204,7 +214,7 @@ describe('Gibbon Adapter tests', function () {
 
             it(`Test ${helper.testNumber++}: Try to call the abstract method validateUserWithAnyPermissions from adapter instance)`, function (done) {
                 function throwTypeError() {
-                    const adapter = new HatAdapter();
+                    const adapter = new GibbonAdapter();
                     adapter.validateUserWithAnyPermissions();
                 }
 
@@ -214,7 +224,7 @@ describe('Gibbon Adapter tests', function () {
 
             it(`Test ${helper.testNumber++}: Try to call the abstract method findUsersByPermission from adapter instance)`, function (done) {
                 function throwTypeError() {
-                    const adapter = new HatAdapter();
+                    const adapter = new GibbonAdapter();
                     adapter.findUsersByPermission();
                 }
 
@@ -224,7 +234,7 @@ describe('Gibbon Adapter tests', function () {
 
             it(`Test ${helper.testNumber++}: Try to call the abstract method findUsersByGroup from adapter instance)`, function (done) {
                 function throwTypeError() {
-                    const adapter = new HatAdapter();
+                    const adapter = new GibbonAdapter();
                     adapter.findUsersByGroup();
                 }
 
@@ -234,7 +244,7 @@ describe('Gibbon Adapter tests', function () {
 
             it(`Test ${helper.testNumber++}: Try to call the abstract method findGroupsByPermission from adapter instance)`, function (done) {
                 function throwTypeError() {
-                    const adapter = new HatAdapter();
+                    const adapter = new GibbonAdapter();
                     adapter.findGroupsByPermission();
                 }
 
