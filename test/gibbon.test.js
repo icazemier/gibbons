@@ -320,8 +320,8 @@ describe('Gibbon: Bit masking tests', function () {
                 const positions = gibbon.getPositionsArray();
                 const match = gibbon.hasAllFromPositions(positions);
 
-                expect(positions).to.be.array;
-                expect(match).to.be.true;
+                expect(positions).to.be.an('array');
+                expect(match).to.equal(true);
                 done();
             });
 
@@ -336,8 +336,8 @@ describe('Gibbon: Bit masking tests', function () {
                 const positions = gibbon.getPositionsArray();
                 const match = gibbon.hasAllFromPositions(ref);
 
-                expect(positions).to.be.array;
-                expect(match).to.be.true;
+                expect(positions).to.be.an('array');
+                expect(match).to.equal(true);
                 done();
             });
 
@@ -509,8 +509,8 @@ describe('Gibbon: Bit masking tests', function () {
             const positions = gibbon.getPositionsArray();
             const match = gibbon.hasAllFromPositions(ref);
 
-            expect(positions).to.be.array;
-            expect(match).to.be.false;
+            expect(positions).to.be.an('array');
+            expect(match).to.equal(false);
             done();
         });
 
@@ -539,8 +539,8 @@ describe('Gibbon: Bit masking tests', function () {
             const positions = gibbon.getPositionsArray();
             const match = gibbon.hasAnyFromPositions(ref);
 
-            expect(positions).to.be.array;
-            expect(match).to.be.false;
+            expect(positions).to.be.an('array');
+            expect(match).to.equal(false);
             done();
         });
 

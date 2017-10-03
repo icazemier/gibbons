@@ -1,7 +1,7 @@
 {
   "name": "gibbons",
   "private": false,
-  "version": "2.0.3",
+  "version": "2.1.0",
   "description": "Gibbons is a Node.js module which helps in managing user groups and user permissions with `bitwise` effiency.",
   "contributors": [
     {
@@ -17,41 +17,53 @@
   ],
   "main": "index.js",
   "engines": {
-    "node": ">=6.0 <7.0"
+    "node": ">=6.0 <9.0"
   },
   "os": [
     "darwin",
     "linux"
   ],
   "scripts": {
-    "test": "gulp test",
-    "prepush": "gulp test"
+    "docs": "jsdoc --readme README.md lib -r -c config/jsdocs.json -d docs",
+    "prepush": "eslint lib/ && nyc mocha --timeout=1000",
+    "lint": "eslint lib/",
+    "test": "eslint lib/ && nyc mocha --timeout=1000"
   },
   "repository": {
     "type": "git",
     "url": "https://github.com/kaasdude/gibbons"
   },
   "license": "MIT",
-  "dependencies": {
-  },
+  "dependencies": {},
   "devDependencies": {
-    "async": "2.1.2",
-    "chai": "3.5.0",
-    "coveralls": "2.11.15",
-    "eslint": "3.9.1",
-    "eslint-config-standard": "6.2.1",
-    "eslint-plugin-node": "3.0.5",
-    "eslint-plugin-promise": "3.3.1",
-    "eslint-plugin-standard": "2.0.1",
-    "gulp": "3.9.1",
-    "gulp-eslint": "3.0.1",
-    "gulp-istanbul": "1.1.1",
-    "gulp-jsdoc3": "1.0.0",
-    "gulp-mocha": "3.0.1",
-    "gulp-plumber": "1.1.0",
-    "husky": "0.12.0",
+    "async": "2.5.0",
+    "chai": "4.1.2",
+    "coveralls": "3.0.0",
+    "eslint": "4.8.0",
+    "eslint-plugin-node": "5.2.0",
+    "jsdoc": "3.5.5",
+    "husky": "0.14.3",
     "lodash": "4.17.4",
-    "lokijs": "1.4.3",
-    "mocha": "3.1.2"
+    "lokijs": "1.5.0",
+    "mocha": "4.0.0",
+    "nyc": "11.2.1"
+  },
+  "nyc": {
+    "check-coverage": true,
+    "statements": 100,
+    "branches": 100,
+    "functions": 100,
+    "lines": 100,
+    "include": [
+      "lib/**/*.js"
+    ],
+    "reporter": [
+      "html",
+      "text-summary",
+      "spec"
+    ],
+    "cache": true,
+    "all": true,
+    "report-dir": "./docs/coverage"
   }
 }

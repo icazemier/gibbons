@@ -29,7 +29,5 @@ describe('Gibbons: Generic tests', function () {
             expect(throwError).to.throw(Error, /Abstract method, override please./);
 
         });
-
-
     });
 });
