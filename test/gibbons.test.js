@@ -778,7 +778,7 @@ describe('Gibbons', () => {
 
         it(`Test ${helper.testNumber++}: Find users by permission`, (done) => {
             gibbons.findUsersByPermission({name: 'Change it'}, (error, usersFound) => {
-                expect(usersFound).to.be.a.array;
+                expect(usersFound).to.be.an('array');
                 expect(usersFound[0].name).to.equal('Joan');
                 done(error);
             });
@@ -787,7 +787,7 @@ describe('Gibbons', () => {
         it(`Test ${helper.testNumber++}: Find groups by permission`, (done) => {
             gibbons.findGroupsByPermission({name: 'Do this'}, (error, groupsFound) => {
 
-                expect(groupsFound).to.be.a.array;
+                expect(groupsFound).to.be.an('array');
                 expect(groupsFound[0].name).to.equal('user');
                 done(error);
             });
@@ -809,16 +809,19 @@ describe('Gibbons', () => {
                 // Should be removed:
                 gibbons.findPermission({name: 'Do this'}, (error, permission) => {
 
-                    expect(!!permission).to.be.false;
+                    expect(!!permission).to.equal(false);
 
                     // user (Permission `Do this` should be removed from this )
-                    expect(gibbonFromGroupsArray[0].hasAllFromPositions([-1])).to.be.equal(true);
+                    expect(gibbonFromGroupsArray[0].hasAllFromPositions([-1])).to.equal(true);
 
                     // admin
-                    expect(gibbonFromGroupsArray[1].hasAllFromPositions([2, 4])).to.be.equal(true);
+                    expect(gibbonFromGroupsArray[1].hasAllFromPositions([2, 4])).to.equal(true);
 
                     // operator
-                    expect(gibbonFromGroupsArray[2].hasAllFromPositions([3])).to.be.equal(true);
+                    expect(gibbonFromGroupsArray[2].hasAllFromPositions([3])).to.equal(true);
+
+                    // Test when no criteria are given none are in criteria, which corresponds with element 1
+                    expect(gibbonFromGroupsArray[1].hasAllFromPositions()).to.equal(true);
 
                     done(error);
                 });
@@ -831,9 +834,9 @@ describe('Gibbons', () => {
         it(`Test ${helper.testNumber++}: Find groups by a funny permission`, (done) => {
             gibbons.findGroupsByPermission({name: 'not allowed'}, (error, groupsFound) => {
 
-                expect(error).to.be.an.error;
+                expect(error).to.be.an('error');
                 expect(error.message).to.equal('Permission not found');
-                expect(groupsFound).to.be.undefined;
+                expect(groupsFound).to.equal(undefined);
                 done();
             });
         });
@@ -841,9 +844,9 @@ describe('Gibbons', () => {
         it(`Test ${helper.testNumber++}: Find users by a funny permission`, (done) => {
             gibbons.findUsersByPermission({name: 'Do nothing;)'}, (error, groupsFound) => {
 
-                expect(error).to.be.an.error;
+                expect(error).to.be.an('error');
                 expect(error.message).to.equal('Permission not found');
-                expect(groupsFound).to.be.undefined;
+                expect(groupsFound).to.equal(undefined);
                 done();
             });
         });
@@ -935,49 +938,43 @@ describe('Gibbons', () => {
 
         it(`Test ${helper.testNumber++}: Validate all permissions from a user against no permissions`, (done) => {
             gibbons.validateUserWithAllPermissions({name: 'Klaas'}, [], (error, valid) => {
-                expect(valid).to.be.a.boolean;
-                expect(valid).to.be.false;
+                expect(valid).to.equal(false);
                 done(error);
             });
         });
 
         it(`Test ${helper.testNumber++}: Validate all permissions from a user`, (done) => {
             gibbons.validateUserWithAllPermissions({name: 'Klaas'}, [1, 2, 3, 4], (error, valid) => {
-                expect(valid).to.be.a.boolean;
-                expect(valid).to.be.true;
+                expect(valid).to.equal(true);
                 done(error);
             });
         });
 
         it(`Test ${helper.testNumber++}: Validate all permissions from a user in a different order`, (done) => {
             gibbons.validateUserWithAllPermissions({name: 'Klaas'}, [2, 4, 3, 1], (error, valid) => {
-                expect(valid).to.be.a.boolean;
-                expect(valid).to.be.true;
+                expect(valid).to.equal(true);
                 done(error);
             });
         });
 
         it(`Test ${helper.testNumber++}: Validate all permissions from a user`, (done) => {
             gibbons.validateUserWithAllPermissions({name: 'Klaas'}, [1, 2, 3, 4, 5], (error, valid) => {
-                expect(valid).to.be.a.boolean;
-                expect(valid).to.be.false;
+                expect(valid).to.equal(false);
                 done(error);
             });
         });
 
         it(`Test ${helper.testNumber++}: Validate all permissions from a user in a different order`, (done) => {
             gibbons.validateUserWithAllPermissions({name: 'Klaas'}, [1, 5, 3, 4, 1], (error, valid) => {
-                expect(valid).to.be.a.boolean;
-                expect(valid).to.be.false;
+                expect(valid).to.equal(false);
                 done(error);
             });
         });
 
         it(`Test ${helper.testNumber++}: Validate all permissions from a non existing user`, (done) => {
             gibbons.validateUserWithAllPermissions({name: 'Jan'}, [1, 2], (error, valid) => {
-                expect(error).to.be.an(error);
+                expect(error).to.be.an('error');
                 expect(error.message).to.equal('user not found');
-                expect(valid).to.be.a.boolean;
                 expect(valid).to.equal(false);
                 done();
             });
@@ -987,32 +984,28 @@ describe('Gibbons', () => {
         it(`Test ${helper.testNumber++}: Validate any permissions from a user against no permissions`, (done) => {
 
             gibbons.validateUserWithAnyPermissions({name: 'Klaas'}, [], (error, valid) => {
-                expect(valid).to.be.a.boolean;
-                expect(valid).to.be.false;
+                expect(valid).to.equal(false);
                 done(error);
             });
         });
 
         it(`Test ${helper.testNumber++}: Validate any permissions from a user`, (done) => {
             gibbons.validateUserWithAnyPermissions({name: 'Klaas'}, [1, 2, 45], (error, valid) => {
-                expect(valid).to.be.a.boolean;
-                expect(valid).to.be.true;
+                expect(valid).to.equal(true);
                 done(error);
             });
         });
 
         it(`Test ${helper.testNumber++}: Validate any permissions from a user in a different order`, (done) => {
             gibbons.validateUserWithAnyPermissions({name: 'Klaas'}, [3, 1, 3456], (error, valid) => {
-                expect(valid).to.be.a.boolean;
-                expect(valid).to.be.true;
+                expect(valid).to.equal(true);
                 done(error);
             });
         });
 
         it(`Test ${helper.testNumber++}: Validate any permissions from a user in a different order`, (done) => {
             gibbons.validateUserWithAnyPermissions({name: 'Klaas'}, [35435], (error, valid) => {
-                expect(valid).to.be.a.boolean;
-                expect(valid).to.be.false;
+                expect(valid).to.equal(false);
                 done(error);
             });
         });
@@ -1021,7 +1014,6 @@ describe('Gibbons', () => {
             gibbons.validateUserWithAnyPermissions({name: 'Jan'}, [1, 2], (error, valid) => {
                 expect(error).to.be.an('error');
                 expect(error.message).to.equal('user not found');
-                expect(valid).to.be.a('boolean');
                 expect(valid).to.equal(false);
                 done();
             });

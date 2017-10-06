@@ -99,6 +99,14 @@ describe('Gibbon: Bit masking tests', function () {
 
         describe('From to String', function () {
 
+            it(`Test ${helper.testNumber++}: Create Gibbon with no given string`, function (done) {
+
+                const gibbon = Gibbon.fromString();
+                const positions = gibbon.getPositionsArray();
+                expect(positions.length).to.equal(0);
+                done();
+
+            });
 
             it(`Test ${helper.testNumber++}: Set bits (Converts from string and back and checks consistency)`, function (done) {
 
@@ -270,10 +278,10 @@ describe('Gibbon: Bit masking tests', function () {
                 expect(gibbon.isPosition(7)).to.be.equal(true);
                 expect(gibbon.isPosition(8)).to.be.equal(true);
 
-                gibbon.changePosition(1, false)
-                    .changePosition(3, false)
-                    .changePosition(5, false)
-                    .changePosition(7, false)
+                gibbon.changePosition(1)
+                    .changePosition(3)
+                    .changePosition(5)
+                    .changePosition(7)
                     .changePosition(8, true);
 
                 expect(gibbon.isPosition(1)).to.be.equal(false);
@@ -384,6 +392,37 @@ describe('Gibbon: Bit masking tests', function () {
                 expect(result).to.be.equal(true);
                 done();
 
+            });
+
+            it(`Test ${helper.testNumber++}: Checks on match on any positions (no criteria given)`, function (done) {
+
+                // Initialize a Gibbon with ArrayBuffer (size = 1 bytes)
+                const gibbon = Gibbon.create(1);
+
+                // Pre set all bits positions for the test:
+                gibbon.setPosition(1)
+                    .setPosition(3)
+                    .setPosition(5)
+                    .setPosition(7);
+
+                // Check before encoding to string
+                const result = gibbon.hasAnyFromPositions();
+
+                expect(result).to.be.equal(false);
+                done();
+
+            });
+
+            it(`Test ${helper.testNumber++}: Set positions without giving positions`, function (done) {
+
+                // Initialize a Gibbon with ArrayBuffer (size = 1 bytes)
+                const gibbon = Gibbon.create(1);
+                gibbon.setAllFromPositions();
+                const positions = gibbon.getPositionsArray();
+
+                expect(positions).to.be.an('array');
+                expect(positions.length).to.equal(0);
+                done();
             });
 
         });

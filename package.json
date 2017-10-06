@@ -24,10 +24,11 @@
     "linux"
   ],
   "scripts": {
+    "coverage": "nyc report --reporter=text-lcov | coveralls",
     "docs": "jsdoc --readme README.md lib -r -c config/jsdocs.json -d docs",
     "prepush": "eslint lib/ && nyc mocha --timeout=1000",
     "lint": "eslint lib/",
-    "test": "eslint lib/ && nyc mocha --timeout=1000"
+    "test": "nyc mocha --timeout=1000"
   },
   "repository": {
     "type": "git",
@@ -45,7 +46,7 @@
     "husky": "0.14.3",
     "lodash": "4.17.4",
     "lokijs": "1.5.0",
-    "mocha": "4.0.0",
+    "mocha": "4.0.1",
     "nyc": "11.2.1"
   },
   "nyc": {
@@ -60,7 +61,7 @@
     "reporter": [
       "html",
       "text-summary",
-      "spec"
+      "lcov"
     ],
     "cache": true,
     "all": true,
