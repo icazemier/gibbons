@@ -28,13 +28,12 @@ See: [Gibbons Docs](https://kaasdude.github.io/gibbons/)
 * Clone this repository, and check out the develop branch
 * Ensure [Node Version Manager](https://github.com/creationix/nvm) is installed and operational
 * `nvm install`
-* `npm install -g gulp`
 
 ### Linting ###
 
 For this project [ESLint](http://eslint.org/) is applied. 
  
-Execute: `gulp lint`
+Execute: `npm run lint`
 
 _Currently the linter conforms to defaults from: [eslint-plugin-node](https://github.com/mysticatea/eslint-plugin-node) and some minor tweaks (see: `.eslint.js`)._
 
@@ -42,21 +41,21 @@ _Currently the linter conforms to defaults from: [eslint-plugin-node](https://gi
 
 Every path should be covered and can be checked after the unit test is executed, according to a coverage report.
 
-Execute: `gulp test`
+Execute: `npm test`
 
 In the end, a brief version of the coverage report is shown. For the more extensive one, see: `test/coverage/lcov-report/index.html`.
 
 ### API Documentation ###
 
-A Gulp plugin: [gulp-jsdoc3](https://github.com/mlucool/gulp-jsdoc3) is applied to generate the API documentation.
+[jsdoc](https://www.npmjs.com/package/jsdoc) is applied to generate the API documentation.
 
 It's expected to write extensive comments in the code itself when contributing.
 
 Every time code is updated, we need to ensure the documentation is in sync with the code.
 
-Execute: `gulp docs`
+Execute: `npm run docs`
 
-_The result is generated at: `docs/index.html`_
+_The result is generated at: `docs/api/index.html`_
 
 
 ## Contribution guidelines ##
@@ -66,8 +65,8 @@ _The result is generated at: `docs/index.html`_
 
 ```
 h1. I ensured:
-* [ ] I've updated the unit tests and covered enough parts of the code (`gulp lint` and `gulp test`)
-* [ ] I've updated the API documentation within the code and generated a fresh export (`gulp docs`)
+* [ ] I've updated the unit tests and covered enough parts of the code (`npm run lint` and `npm test`)
+* [ ] I've updated the API documentation within the code and generated a fresh export (`npm run docs`)
 ```
 
 # Changes

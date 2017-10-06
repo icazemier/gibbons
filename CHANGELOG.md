@@ -1,5 +1,13 @@
 # Change Log
 
+#### [v2.1.0](https://github.com/kaasdude/gibbons/compare/2.0.2...2.1.0)
+> 6 October 2017
+
+* Updated `node_modules`
+* Removed gulp scripts in favour of npm scripts
+* More unit tests to satisfy more cases (mainly in the default values for method arguments)
+
+
 #### [v2.0.2](https://github.com/kaasdude/gibbons/compare/2.0.1...2.0.2)
 > 9 March 2017
 
