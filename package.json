@@ -25,7 +25,7 @@
   ],
   "scripts": {
     "coverage": "nyc report --reporter=text-lcov | coveralls",
-    "docs": "jsdoc --readme README.md lib -r -c config/jsdocs.json -d docs",
+    "docs": "jsdoc --readme README.md lib -r -c config/jsdocs.json",
     "prepush": "eslint lib/ && nyc mocha --timeout=1000",
     "lint": "eslint lib/",
     "test": "nyc mocha --timeout=1000"
