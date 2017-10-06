@@ -1,7 +1,7 @@
 module.exports = {
     opts: {
         access: 'all',
-        destination: './docs',
+        destination: './docs/api',
         tutorials: './tutorials',
         recurse: true
     },
