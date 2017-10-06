@@ -1,0 +1,250 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>JSDoc: Source: adapters/gibbon-adapter.js</title>
+
+    <script src="scripts/prettify/prettify.js"> </script>
+    <script src="scripts/prettify/lang-css.js"> </script>
+    <!--[if lt IE 9]>
+      <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <link type="text/css" rel="stylesheet" href="styles/prettify-tomorrow.css">
+    <link type="text/css" rel="stylesheet" href="styles/jsdoc-default.css">
+</head>
+
+<body>
+
+<div id="main">
+
+    <h1 class="page-title">Source: adapters/gibbon-adapter.js</h1>
+
+    
+
+
+
+    
+    <section>
+        <article>
+            <pre class="prettyprint source linenums"><code>'use strict';
+
+const INHERITANCE_ERROR = 'Abstract method, override please.';
+/**
+ * @classdesc
+ *
+ * This class should be inherited and acts as contract (Interface)
+ *
+ * @extends EventEmitter
+ * @class
+ * @abstract
+ */
+function GibbonAdapter() {
+}
+
+
+/**
+ * Initialize adapter
+ *
+ * @abstract
+ */
+GibbonAdapter.prototype.initialize = function () {
+    throw new Error(INHERITANCE_ERROR);
+};
+
+
+GibbonAdapter.prototype.addUser = function () {
+    throw new Error(INHERITANCE_ERROR);
+};
+
+/**
+ * Add user group
+ *
+ * @abstract
+ */
+GibbonAdapter.prototype.addGroup = function () {
+    throw new Error(INHERITANCE_ERROR);
+};
+
+/**
+ * Add array of user groups
+ *
+ * @abstract
+ */
+GibbonAdapter.prototype.addGroups = function () {
+    throw new Error(INHERITANCE_ERROR);
+};
+
+/**
+ * Add group permission
+ * @abstract
+ */
+GibbonAdapter.prototype.addPermission = function () {
+    throw new Error(INHERITANCE_ERROR);
+};
+
+/**
+ * Add array of permissions
+ * @abstract
+ */
+GibbonAdapter.prototype.addPermissions = function () {
+    throw new Error(INHERITANCE_ERROR);
+};
+
+/**
+ * Remove a user
+ * @abstract
+ */
+GibbonAdapter.prototype.removeUser = function () {
+    throw new Error(INHERITANCE_ERROR);
+};
+
+/**
+ * Remove a group
+ * @abstract
+ */
+GibbonAdapter.prototype.removeGroup = function () {
+    throw new Error(INHERITANCE_ERROR);
+};
+
+/**
+ * Remove a permission
+ * @abstract
+ */
+GibbonAdapter.prototype.removePermission = function () {
+    throw new Error(INHERITANCE_ERROR);
+};
+
+
+/**
+ * Update or insert user (if not exists)
+ * @abstract
+ */
+GibbonAdapter.prototype.upsertUser = function () {
+    throw new Error(INHERITANCE_ERROR);
+};
+
+/**
+ * Update or insert group (if not exists)
+ * @abstract
+ */
+GibbonAdapter.prototype.upsertGroup = function () {
+    throw new Error(INHERITANCE_ERROR);
+};
+
+/**
+ * Update or insert permission (if not exists)
+ * @abstract
+ */
+GibbonAdapter.prototype.upsertPermission = function () {
+    throw new Error(INHERITANCE_ERROR);
+};
+
+/**
+ * Find user groups
+ * @abstract
+ */
+GibbonAdapter.prototype.findGroupsByUser = function () {
+    throw new Error(INHERITANCE_ERROR);
+};
+
+/**
+ * Find user permissions
+ * @abstract
+ */
+GibbonAdapter.prototype.findPermissionsByUser = function () {
+    throw new Error(INHERITANCE_ERROR);
+};
+
+
+/**
+ * Find user
+ * @abstract
+ */
+GibbonAdapter.prototype.findUser = function () {
+    throw new Error(INHERITANCE_ERROR);
+};
+
+
+/**
+ * Find users with permission
+ * @abstract
+ */
+GibbonAdapter.prototype.findUsersByPermission = function () {
+    throw new Error(INHERITANCE_ERROR);
+};
+
+/**
+ * Find users with group
+ * @abstract
+ */
+GibbonAdapter.prototype.findUsersByGroup = function () {
+    throw new Error(INHERITANCE_ERROR);
+};
+
+/**
+ * Find groups with permission
+ */
+GibbonAdapter.prototype.findGroupsByPermission = function () {
+    throw new Error(INHERITANCE_ERROR);
+};
+
+/**
+ * Find group
+ * @abstract
+ */
+GibbonAdapter.prototype.findGroup = function () {
+    throw new Error(INHERITANCE_ERROR);
+};
+
+/**
+ * Find permission
+ * @abstract
+ */
+GibbonAdapter.prototype.findPermission = function () {
+    throw new Error(INHERITANCE_ERROR);
+};
+
+
+/**
+ * Validate a user against e.g. given permissions &lt;br>
+ * All permissions given, need to correspond with the permissions owned by this user.
+ *
+ * @abstract
+ */
+GibbonAdapter.prototype.validateUserWithAllPermissions = function () {
+    throw new Error(INHERITANCE_ERROR);
+};
+
+/**
+ * Validate a user against e.g. given permissions &lt;br>
+ * When one of the given permissions are found at this user, user is valid.
+ * @abstract
+ */
+GibbonAdapter.prototype.validateUserWithAnyPermissions = function () {
+    throw new Error(INHERITANCE_ERROR);
+};
+
+module.exports = GibbonAdapter;
+</code></pre>
+        </article>
+    </section>
+
+
+
+
+</div>
+
+<nav>
+    <h2><a href="index.html">Home</a></h2><h3>Classes</h3><ul><li><a href="BitByte.html">BitByte</a></li><li><a href="Gibbon.html">Gibbon</a></li><li><a href="GibbonAdapter.html">GibbonAdapter</a></li><li><a href="Gibbons.html">Gibbons</a></li></ul><h3>Namespaces</h3><ul><li><a href="GibbonProcessor.html">GibbonProcessor</a></li></ul><h3>Tutorials</h3><ul><li><a href="tutorial-Tutorial.html">Tutorial</a></li></ul>
+</nav>
+
+<br class="clear">
+
+<footer>
+    Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.5.5</a> on Fri Oct 06 2017 22:56:32 GMT+0200 (CEST)
+</footer>
+
+<script> prettyPrint(); </script>
+<script src="scripts/linenumber.js"> </script>
+</body>
+</html>
