@@ -1,7 +1,7 @@
 {
   "name": "gibbons",
   "private": false,
-  "version": "2.1.0",
+  "version": "2.2.0",
   "description": "Gibbons is a Node.js module which helps in managing user groups and user permissions with `bitwise` effiency.",
   "contributors": [
     {
