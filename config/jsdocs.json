@@ -1,7 +1,7 @@
 {
   "opts": {
     "access": "all",
-    "destination": "./docs/api/",
+    "destination": "./docs/",
     "tutorials": "./tutorials",
     "recurse": true
   },
