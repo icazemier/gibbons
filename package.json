@@ -21,7 +21,8 @@
   },
   "os": [
     "darwin",
-    "linux"
+    "linux",
+    "win32"
   ],
   "scripts": {
     "coverage": "nyc report --reporter=text-lcov | coveralls",
