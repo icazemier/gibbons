@@ -35,7 +35,7 @@ For this project [ESLint](http://eslint.org/) is applied.
  
 Execute: `npm run lint`
 
-_Currently the linter conforms to defaults from: [eslint-plugin-node](https://github.com/mysticatea/eslint-plugin-node) and some minor tweaks (see: `.eslint.js`)._
+_Currently the linter conforms to defaults from: [eslint-plugin-node](https://github.com/mysticatea/eslint-plugin-node) and some minor tweaks (see: `.eslintrc`)._
 
 ### Unit tests ###
 
