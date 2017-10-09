@@ -22,7 +22,6 @@ See: [Gibbons Docs](https://kaasdude.github.io/gibbons/)
 
 ## Details ##
 
-
 ### Prerequisites to contribute ###
 
 * Clone this repository, and check out the develop branch
