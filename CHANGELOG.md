@@ -1,5 +1,14 @@
 # Change Log
 
+#### [v2.2.2](https://github.com/kaasdude/gibbons/compare/2.2.1...2.2.2)
+> 10 January 2018
+
+* `devDependencies` minor updates
+
+#### [v2.2.1](https://github.com/kaasdude/gibbons/compare/2.2.0...2.2.1)
+> 10 January 2018 ( :fireworks: Happy new year everybody! :fireworks: )
+
+* Depdendency updates according to [marked dependency is insecure version #1489](https://github.com/jsdoc3/jsdoc/issues/1489)
 
 #### [v2.2.0](https://github.com/kaasdude/gibbons/compare/2.1.0...2.2.0)
 > 9 October 2017
