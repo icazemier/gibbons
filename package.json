@@ -1,7 +1,7 @@
 {
   "name": "gibbons",
   "private": false,
-  "version": "2.2.1",
+  "version": "2.2.2",
   "description": "Gibbons is a Node.js module which helps in managing user groups and user permissions with `bitwise` effiency.",
   "contributors": [
     {
@@ -38,17 +38,17 @@
   "license": "MIT",
   "dependencies": {},
   "devDependencies": {
-    "async": "2.5.0",
+    "async": "2.6.0",
     "chai": "4.1.2",
     "coveralls": "3.0.0",
-    "eslint": "4.8.0",
-    "eslint-plugin-node": "5.2.0",
+    "eslint": "4.15.0",
+    "eslint-plugin-node": "5.2.1",
     "jsdoc": "3.5.5",
     "husky": "0.14.3",
     "lodash": "4.17.4",
-    "lokijs": "1.5.0",
-    "mocha": "4.0.1",
-    "nyc": "11.2.1"
+    "lokijs": "1.5.1",
+    "mocha": "4.1.0",
+    "nyc": "11.4.1"
   },
   "nyc": {
     "check-coverage": true,
