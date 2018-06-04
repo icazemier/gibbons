@@ -1,5 +1,10 @@
 # Change Log
 
+#### [v2.2.4](https://github.com/kaasdude/gibbons/compare/2.2.4...2.2.4)
+> 4 June 2018
+
+* `devDependencies` updates
+
 #### [v2.2.3](https://github.com/kaasdude/gibbons/compare/2.2.2...2.2.3)
 > 4 June 2018
 
