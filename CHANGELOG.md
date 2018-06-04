@@ -1,5 +1,12 @@
 # Change Log
 
+#### [v2.2.3](https://github.com/kaasdude/gibbons/compare/2.2.2...2.2.3)
+> 4 June 2018
+
+* `devDependencies` updates (some according to [Known vulnerability found](https://nvd.nist.gov/vuln/detail/CVE-2018-3728))
+* Generated docs from scratch
+* Tested with node.js v10.3.0
+
 #### [v2.2.2](https://github.com/kaasdude/gibbons/compare/2.2.1...2.2.2)
 > 10 January 2018
 
