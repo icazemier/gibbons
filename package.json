@@ -78,7 +78,7 @@
   },
   "husky": {
     "hooks": {
-      "pre-push": "npm lint && nyc mocha --timeout=1000"
+      
     }
   }
 }
