@@ -1,4 +1,4 @@
-import GibbonAdapter from './adapters/gibbon-adapter.mjs';
+import GibbonAdapter from './adapters/gibbon-adapter';
 
 /**
  * The Gibbons class

@@ -1,13 +1,13 @@
-'use strict';
 const async = require('async');
-const _ = require('lodash');
-const expect = require('chai').expect;
 
-const helper = require('./helper');
-const Gibbons = require('../index').Gibbons;
-const Gibbon = require('../index').Gibbon;
-const LokiJSGibbonAdapter = require('../test/adapters/lokijs-gibbon-adapter');
+import _ from 'lodash';
+import {helper} from './helper';
+import chai from 'chai';
+import Gibbon from '../lib/gibbon';
+import Gibbons from '../lib/gibbons';
+import LokiJSGibbonAdapter from '../test/adapters/lokijs-gibbon-adapter';
 
+const expect = chai.expect;
 
 describe('Gibbons', () => {
 
@@ -288,7 +288,7 @@ describe('Gibbons', () => {
                     gibbons.addUser(user, callback);
                 },
                 (userAdded, callback) => {
-                    gibbons.findUser({name: 'Ivo'}, (error, userFound) => {
+                    gibbons.findUser({ name: 'Ivo' }, (error, userFound) => {
                         expect(userFound).to.have.property('name');
                         expect(userFound).to.have.property('groups');
                         expect(userFound.name).to.equal(user.name);
@@ -297,12 +297,12 @@ describe('Gibbons', () => {
                     });
                 },
                 (userFound, callback) => {
-                    gibbons.removeUser({name: 'Ivo'}, (error) => {
+                    gibbons.removeUser({ name: 'Ivo' }, (error) => {
                         callback(error);
                     });
                 },
                 (callback) => {
-                    gibbons.findUser({name: 'Ivo'}, (error, userFound) => {
+                    gibbons.findUser({ name: 'Ivo' }, (error, userFound) => {
                         expect(userFound).to.equal(null);
                         callback(error);
                     });
@@ -338,7 +338,7 @@ describe('Gibbons', () => {
                     gibbons.addGroup(group, callback);
                 },
                 (groupAdded, callback) => {
-                    gibbons.findGroup({name: 'user'}, (error, groupFound) => {
+                    gibbons.findGroup({ name: 'user' }, (error, groupFound) => {
                         expect(groupFound).to.have.property('name');
                         expect(groupFound).to.have.property('description');
                         expect(groupFound).to.have.property('permissions');
@@ -349,12 +349,12 @@ describe('Gibbons', () => {
                     });
                 },
                 (groupFound, callback) => {
-                    gibbons.removeGroup({name: 'user'}, (error) => {
+                    gibbons.removeGroup({ name: 'user' }, (error) => {
                         callback(error);
                     });
                 },
                 (callback) => {
-                    gibbons.findGroup({name: 'user'}, (error, groupFound) => {
+                    gibbons.findGroup({ name: 'user' }, (error, groupFound) => {
                         expect(groupFound).to.equal(null);
                         callback(error);
                     });
@@ -377,7 +377,7 @@ describe('Gibbons', () => {
                     gibbons.addPermission(permission, callback);
                 },
                 (permissionAdded, callback) => {
-                    gibbons.findPermission({name: 'You may do this'}, (error, permissionFound) => {
+                    gibbons.findPermission({ name: 'You may do this' }, (error, permissionFound) => {
                         expect(permissionFound).to.have.property('name');
                         expect(permissionFound).to.have.property('description');
                         expect(permissionFound.name).to.equal(permission.name);
@@ -386,12 +386,12 @@ describe('Gibbons', () => {
                     });
                 },
                 (groupFound, callback) => {
-                    gibbons.removePermission({name: 'You may do this'}, (error) => {
+                    gibbons.removePermission({ name: 'You may do this' }, (error) => {
                         callback(error);
                     });
                 },
                 (callback) => {
-                    gibbons.findPermission({name: 'You may do this'}, (error, permissionFound) => {
+                    gibbons.findPermission({ name: 'You may do this' }, (error, permissionFound) => {
                         expect(permissionFound).to.equal(null);
                         callback(error);
                     });
@@ -484,8 +484,8 @@ describe('Gibbons', () => {
         });
 
         it(`Test ${helper.testNumber++}: Find groups by user`, (done) => {
-            gibbons.findGroupsByUser({name: 'Klaas'}, (error, groupsFound) => {
-                const groupPositionsFound = _.map(groupsFound, '$loki');
+            gibbons.findGroupsByUser({ name: 'Klaas' }, (error, groupsFound) => {
+                const groupPositionsFound = groupsFound.map(group => group.$loki);
                 expect(groupsFound).to.be.an('array');
                 expect(groupPositionsFound.sort()).to.deep.equal(groupPositionsAdded.sort());
                 done(error);
@@ -493,7 +493,7 @@ describe('Gibbons', () => {
         });
 
         it(`Test ${helper.testNumber++}: Find groups by non existing user PIET`, (done) => {
-            gibbons.findGroupsByUser({name: 'PIET'}, (error, groupsFound) => {
+            gibbons.findGroupsByUser({ name: 'PIET' }, (error, groupsFound) => {
                 expect(error).to.be.an('error');
                 expect(error.message).to.equal('user not found');
                 expect(groupsFound).to.be.undefined;
@@ -504,7 +504,7 @@ describe('Gibbons', () => {
 
         it(`Test ${helper.testNumber++}: Find permissions by user`, (done) => {
 
-            gibbons.findPermissionsByUser({name: 'Klaas'}, (error, permissionsFound) => {
+            gibbons.findPermissionsByUser({ name: 'Klaas' }, (error, permissionsFound) => {
                 const permissionPositionsFound = _.map(permissionsFound, '$loki');
                 expect(permissionsFound).to.be.an('array');
                 expect(permissionPositionsFound.sort()).to.deep.equal(permissionPositionsAdded.sort());
@@ -516,7 +516,7 @@ describe('Gibbons', () => {
 
         it(`Test ${helper.testNumber++}: Find permissions by non existing user`, (done) => {
 
-            gibbons.findPermissionsByUser({name: 'Henk'}, (error, permissionsFound) => {
+            gibbons.findPermissionsByUser({ name: 'Henk' }, (error, permissionsFound) => {
                 expect(error).to.be.an('error');
                 expect(error.message).to.equal('user not found');
                 expect(permissionsFound).to.equal(undefined);
@@ -638,7 +638,7 @@ describe('Gibbons', () => {
 
 
         it(`Test ${helper.testNumber++}: Find users by group`, (done) => {
-            gibbons.findUsersByGroup({name: 'user'}, (error, usersFound) => {
+            gibbons.findUsersByGroup({ name: 'user' }, (error, usersFound) => {
                 expect(usersFound).to.be.an('array');
                 expect(usersFound[0].name).to.equal('Hank');
                 expect(usersFound[1].name).to.equal('Klaas');
@@ -647,7 +647,7 @@ describe('Gibbons', () => {
         });
 
         it(`Test ${helper.testNumber++}: Find users by a funny group`, (done) => {
-            gibbons.findUsersByGroup({name: 'usersssss'}, (error, usersFound) => {
+            gibbons.findUsersByGroup({ name: 'usersssss' }, (error, usersFound) => {
                 expect(error).to.be.an('error');
                 expect(error.message).to.equal('Group not found');
                 expect(usersFound).to.be.undefined;
@@ -777,7 +777,7 @@ describe('Gibbons', () => {
         });
 
         it(`Test ${helper.testNumber++}: Find users by permission`, (done) => {
-            gibbons.findUsersByPermission({name: 'Change it'}, (error, usersFound) => {
+            gibbons.findUsersByPermission({ name: 'Change it' }, (error, usersFound) => {
                 expect(usersFound).to.be.an('array');
                 expect(usersFound[0].name).to.equal('Joan');
                 done(error);
@@ -785,7 +785,7 @@ describe('Gibbons', () => {
         });
 
         it(`Test ${helper.testNumber++}: Find groups by permission`, (done) => {
-            gibbons.findGroupsByPermission({name: 'Do this'}, (error, groupsFound) => {
+            gibbons.findGroupsByPermission({ name: 'Do this' }, (error, groupsFound) => {
 
                 expect(groupsFound).to.be.an('array');
                 expect(groupsFound[0].name).to.equal('user');
@@ -795,7 +795,7 @@ describe('Gibbons', () => {
 
         it(`Test ${helper.testNumber++}: Removes permission which should remove them from the groups also`, (done) => {
 
-            gibbons.removePermission({name: 'Do this'}, (error) => {
+            gibbons.removePermission({ name: 'Do this' }, (error) => {
 
                 if (error) {
                     return done(error);
@@ -807,7 +807,7 @@ describe('Gibbons', () => {
                 }
 
                 // Should be removed:
-                gibbons.findPermission({name: 'Do this'}, (error, permission) => {
+                gibbons.findPermission({ name: 'Do this' }, (error, permission) => {
 
                     expect(!!permission).to.equal(false);
 
@@ -832,7 +832,7 @@ describe('Gibbons', () => {
 
 
         it(`Test ${helper.testNumber++}: Find groups by a funny permission`, (done) => {
-            gibbons.findGroupsByPermission({name: 'not allowed'}, (error, groupsFound) => {
+            gibbons.findGroupsByPermission({ name: 'not allowed' }, (error, groupsFound) => {
 
                 expect(error).to.be.an('error');
                 expect(error.message).to.equal('Permission not found');
@@ -842,7 +842,7 @@ describe('Gibbons', () => {
         });
 
         it(`Test ${helper.testNumber++}: Find users by a funny permission`, (done) => {
-            gibbons.findUsersByPermission({name: 'Do nothing;)'}, (error, groupsFound) => {
+            gibbons.findUsersByPermission({ name: 'Do nothing;)' }, (error, groupsFound) => {
 
                 expect(error).to.be.an('error');
                 expect(error.message).to.equal('Permission not found');
@@ -937,42 +937,42 @@ describe('Gibbons', () => {
         });
 
         it(`Test ${helper.testNumber++}: Validate all permissions from a user against no permissions`, (done) => {
-            gibbons.validateUserWithAllPermissions({name: 'Klaas'}, [], (error, valid) => {
+            gibbons.validateUserWithAllPermissions({ name: 'Klaas' }, [], (error, valid) => {
                 expect(valid).to.equal(false);
                 done(error);
             });
         });
 
         it(`Test ${helper.testNumber++}: Validate all permissions from a user`, (done) => {
-            gibbons.validateUserWithAllPermissions({name: 'Klaas'}, [1, 2, 3, 4], (error, valid) => {
+            gibbons.validateUserWithAllPermissions({ name: 'Klaas' }, [1, 2, 3, 4], (error, valid) => {
                 expect(valid).to.equal(true);
                 done(error);
             });
         });
 
         it(`Test ${helper.testNumber++}: Validate all permissions from a user in a different order`, (done) => {
-            gibbons.validateUserWithAllPermissions({name: 'Klaas'}, [2, 4, 3, 1], (error, valid) => {
+            gibbons.validateUserWithAllPermissions({ name: 'Klaas' }, [2, 4, 3, 1], (error, valid) => {
                 expect(valid).to.equal(true);
                 done(error);
             });
         });
 
         it(`Test ${helper.testNumber++}: Validate all permissions from a user`, (done) => {
-            gibbons.validateUserWithAllPermissions({name: 'Klaas'}, [1, 2, 3, 4, 5], (error, valid) => {
+            gibbons.validateUserWithAllPermissions({ name: 'Klaas' }, [1, 2, 3, 4, 5], (error, valid) => {
                 expect(valid).to.equal(false);
                 done(error);
             });
         });
 
         it(`Test ${helper.testNumber++}: Validate all permissions from a user in a different order`, (done) => {
-            gibbons.validateUserWithAllPermissions({name: 'Klaas'}, [1, 5, 3, 4, 1], (error, valid) => {
+            gibbons.validateUserWithAllPermissions({ name: 'Klaas' }, [1, 5, 3, 4, 1], (error, valid) => {
                 expect(valid).to.equal(false);
                 done(error);
             });
         });
 
         it(`Test ${helper.testNumber++}: Validate all permissions from a non existing user`, (done) => {
-            gibbons.validateUserWithAllPermissions({name: 'Jan'}, [1, 2], (error, valid) => {
+            gibbons.validateUserWithAllPermissions({ name: 'Jan' }, [1, 2], (error, valid) => {
                 expect(error).to.be.an('error');
                 expect(error.message).to.equal('user not found');
                 expect(valid).to.equal(false);
@@ -983,35 +983,35 @@ describe('Gibbons', () => {
 
         it(`Test ${helper.testNumber++}: Validate any permissions from a user against no permissions`, (done) => {
 
-            gibbons.validateUserWithAnyPermissions({name: 'Klaas'}, [], (error, valid) => {
+            gibbons.validateUserWithAnyPermissions({ name: 'Klaas' }, [], (error, valid) => {
                 expect(valid).to.equal(false);
                 done(error);
             });
         });
 
         it(`Test ${helper.testNumber++}: Validate any permissions from a user`, (done) => {
-            gibbons.validateUserWithAnyPermissions({name: 'Klaas'}, [1, 2, 45], (error, valid) => {
+            gibbons.validateUserWithAnyPermissions({ name: 'Klaas' }, [1, 2, 45], (error, valid) => {
                 expect(valid).to.equal(true);
                 done(error);
             });
         });
 
         it(`Test ${helper.testNumber++}: Validate any permissions from a user in a different order`, (done) => {
-            gibbons.validateUserWithAnyPermissions({name: 'Klaas'}, [3, 1, 3456], (error, valid) => {
+            gibbons.validateUserWithAnyPermissions({ name: 'Klaas' }, [3, 1, 3456], (error, valid) => {
                 expect(valid).to.equal(true);
                 done(error);
             });
         });
 
         it(`Test ${helper.testNumber++}: Validate any permissions from a user in a different order`, (done) => {
-            gibbons.validateUserWithAnyPermissions({name: 'Klaas'}, [35435], (error, valid) => {
+            gibbons.validateUserWithAnyPermissions({ name: 'Klaas' }, [35435], (error, valid) => {
                 expect(valid).to.equal(false);
                 done(error);
             });
         });
 
         it(`Test ${helper.testNumber++}: Validate any permissions from a non existing user`, (done) => {
-            gibbons.validateUserWithAnyPermissions({name: 'Jan'}, [1, 2], (error, valid) => {
+            gibbons.validateUserWithAnyPermissions({ name: 'Jan' }, [1, 2], (error, valid) => {
                 expect(error).to.be.an('error');
                 expect(error.message).to.equal('user not found');
                 expect(valid).to.equal(false);

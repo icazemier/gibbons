@@ -1,4 +1,4 @@
-import GibbonProcessor from './gibbon-processor.mjs';
+import GibbonProcessor from './gibbon-processor';
 
 /**
  * A Gibbon
