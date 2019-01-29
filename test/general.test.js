@@ -2,8 +2,8 @@
 const expect = require('chai').expect;
 const helper = require('./helper');
 
-const Gibbon = require('../lib/gibbon');
-const GibbonAdapter = require('../lib/adapters/gibbon-adapter');
+const Gibbon = require('../lib/gibbon.mjs');
+const GibbonAdapter = require('../lib/adapters/gibbon-adapter.mjs');
 
 
 describe('Gibbons: Generic tests', function () {

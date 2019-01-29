@@ -1,19 +1,31 @@
 {
     "env": {
-        "browser": true,
-        "commonjs": true,
-        "es6": true
+        "es6": true,
+        "node": true
     },
-    "plugins": ["node"],
-    "extends": ["eslint:recommended"],
+    "extends": "eslint:recommended",
     "parserOptions": {
         "sourceType": "module"
     },
+    "plugins": [
+        "node"
+    ],
     "rules": {
+        "indent": [
+            "error",
+            4
+        ],
+        "linebreak-style": [
+            "error",
+            "unix"
+        ],
         "quotes": [
             "error",
             "single"
         ],
-        "no-undef": ["warn"],
+        "semi": [
+            "error",
+            "always"
+        ]
     }
 }

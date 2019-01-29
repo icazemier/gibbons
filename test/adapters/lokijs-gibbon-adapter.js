@@ -2,8 +2,8 @@
 const util = require('util');
 const _ = require('lodash');
 const Loki = require('lokijs');
-const GibbonAdapter = require('./../../lib/adapters/gibbon-adapter');
-const Gibbon = require('../../lib/gibbon');
+const GibbonAdapter = require('../../lib/adapters/gibbon-adapter.mjs');
+const Gibbon = require('../../lib/gibbon.mjs');
 
 /**
  *

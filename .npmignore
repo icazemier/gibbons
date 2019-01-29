@@ -21,3 +21,5 @@ jsconfig.json
 
 #LokiJS adapter
 !test/adapters/lokijs-gibbon-adapter.js
+
+src
