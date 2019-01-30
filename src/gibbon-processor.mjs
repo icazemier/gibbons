@@ -14,7 +14,7 @@ export class BitByte {
 /**
  * This is the Gibbon Processor which does all the bit masking, nothing special ;)
  */
-export default class GibbonProcessor {
+export class GibbonProcessor {
 
     /**
      * Transforms a position (1..n) to byte index and inner bit position

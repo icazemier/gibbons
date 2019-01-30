@@ -11,8 +11,8 @@ module.exports = {
             }
         ]
     ],
-    // sourceMaps: 'inline',
-    // retainLines: true,
+    sourceMaps: 'inline',
+    retainLines: true,
     env: {
         test: {
             plugins: ['istanbul']

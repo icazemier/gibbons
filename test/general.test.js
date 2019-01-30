@@ -1,7 +1,7 @@
-import {helper} from './helper';
+import { helper } from './helper';
 import chai from 'chai';
-import Gibbon from '../lib/gibbon';
-import GibbonAdapter from '../lib/adapters/gibbon-adapter';
+import { Gibbon, GibbonAdapter } from '../src/index';
+
 
 const expect = chai.expect;
 

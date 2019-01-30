@@ -1,6 +1,6 @@
-import {helper} from './helper';
+import { helper } from './helper';
 import chai from 'chai';
-import Gibbon from '../lib/gibbon';
+import { Gibbon } from '../src/index';
 
 const expect = chai.expect;
 

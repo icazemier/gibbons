@@ -1,4 +1,4 @@
-import GibbonProcessor from './gibbon-processor';
+import { GibbonProcessor } from './gibbon-processor';
 
 /**
  * A Gibbon
@@ -6,7 +6,7 @@ import GibbonProcessor from './gibbon-processor';
  * @param {ArrayBuffer} arrayBuffer - allocate this Gibbon with some working memory
  * @throws {TypeError} if arrayBuffer is not an instance of ArrayBuffer
  */
-export default class Gibbon {
+export class Gibbon {
     constructor(arrayBuffer) {
         if (!(arrayBuffer instanceof ArrayBuffer)) {
             throw new TypeError('argument not an instance of ArrayBuffer');

@@ -1,9 +1,9 @@
-import GibbonAdapter from './adapters/gibbon-adapter';
+import { GibbonAdapter } from './adapters/gibbon-adapter';
 
 /**
  * The Gibbons class
  */
-export default class Gibbons {
+export class Gibbons {
 
     /**
      * This is the Gibbons class<br>

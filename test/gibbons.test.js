@@ -1,11 +1,9 @@
 const async = require('async');
-
 import _ from 'lodash';
-import {helper} from './helper';
+import { helper } from './helper';
 import chai from 'chai';
-import Gibbon from '../lib/gibbon';
-import Gibbons from '../lib/gibbons';
-import LokiJSGibbonAdapter from '../test/adapters/lokijs-gibbon-adapter';
+import { Gibbon, Gibbons } from '../src/index';
+import {LokiJSGibbonAdapter} from '../test/adapters/lokijs-gibbon-adapter';
 
 const expect = chai.expect;
 

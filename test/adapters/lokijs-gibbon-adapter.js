@@ -1,8 +1,6 @@
-'use strict';
-const _ = require('lodash');
-const Loki = require('lokijs');
-const GibbonAdapter = require('../../lib/adapters/gibbon-adapter').default;
-const Gibbon = require('../../lib/gibbon').default;
+import Loki from 'lokijs';
+import _ from 'lodash';
+import { GibbonAdapter, Gibbon } from '../../src/index';
 
 /**
  *
@@ -18,7 +16,7 @@ const COLLECTION = {
  * Representing an adapter class for LokiJS<br>
  *     <b>(NOTE: This an example adapter, which is used to build and test Gibbons, and can be overridden. One is encouraged to write adapters themselves)</b>
  */
-class LokiJSGibbonAdapter extends GibbonAdapter {
+export class LokiJSGibbonAdapter extends GibbonAdapter {
 
     constructor(options) {
         super(options);
@@ -745,5 +743,3 @@ class LokiJSGibbonAdapter extends GibbonAdapter {
         });
     }
 }
-
-module.exports = LokiJSGibbonAdapter;

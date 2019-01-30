@@ -4,7 +4,7 @@ const INHERITANCE_ERROR = 'Abstract method, override please.';
  *
  * @abstract
  */
-export default class GibbonAdapter {
+export class GibbonAdapter {
 
     /**
      * Initialize adapter
