@@ -1,0 +1,26 @@
+{
+    "require": [
+      "@babel/register"
+    ],
+    "sourceMap": false,
+    "instrument": false,
+    "check-coverage": true,
+    "statements": 100,
+    "branches": 100,
+    "functions": 100,
+    "lines": 100,
+    "extension": [
+      ".mjs"
+    ],
+    "include": [
+      "src/**/*.mjs"
+    ],
+    "reporter": [
+      "html",
+      "text-summary",
+      "lcov"
+    ],
+    "cache": true,
+    "all": true,
+    "report-dir": "./docs/coverage"
+}

@@ -15,9 +15,9 @@
     "user groups",
     "bitwise"
   ],
-  "main": "dist/index.js",
+  "main": "lib/index.js",
   "engines": {
-    "node": ">=6.0 <=11.6.0"
+    "node": ">=6.16.0 <=11.8.0"
   },
   "os": [
     "darwin",
@@ -27,7 +27,7 @@
   "scripts": {
     "build": "rm -rf ./lib && npm run build:js",
     "build:js": "babel src --out-dir lib",
-    "build:mjs": "MODULE=true babel src --out-dir lib --keep-file-extension",
+    "build:mjs": "cross-env MODULE=true babel src --out-dir lib --keep-file-extension",
     "clean": "rm -rf ./lib",
     "coverage": "nyc report --reporter=text-lcov | coveralls",
     "docs": "jsdoc --readme README.md src -r -c config/jsdocs.json",
@@ -60,32 +60,6 @@
     "lokijs": "1.5.6",
     "mocha": "5.2.0",
     "nyc": "13.1.0"
-  },
-  "nyc": {
-    "require": [
-      "@babel/register"
-    ],
-    "sourceMap": false,
-    "instrument": false,
-    "check-coverage": true,
-    "statements": 100,
-    "branches": 100,
-    "functions": 100,
-    "lines": 100,
-    "extension": [
-      ".mjs"
-    ],
-    "include": [
-      "src/**/*.mjs"
-    ],
-    "reporter": [
-      "html",
-      "text-summary",
-      "lcov"
-    ],
-    "cache": true,
-    "all": true,
-    "report-dir": "./docs/coverage"
   },
   "husky": {
     "hooks": {}

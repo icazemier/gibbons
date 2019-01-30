@@ -18,24 +18,16 @@ const COLLECTION = {
  */
 export class LokiJSGibbonAdapter extends GibbonAdapter {
 
-    constructor(options) {
-        super(options);
+    /**
+     * 
+     * @param {*} options 
+     */
+    constructor() {
+        super();
 
-        Object.defineProperty(this, 'dbCollection', {
-            writable: true,
-            enumerable: true,
-            configurable: false,
-            value: {}
-        });
-
-        Object.defineProperty(this, 'db', {
-            writable: true,
-            enumerable: true,
-            configurable: false,
-            value: null
-        });
+        this.dbCollection = {};
+        this.db = null;
     }
-
 
     /**
      * This gets a collection when not set, it will be created
@@ -60,7 +52,6 @@ export class LokiJSGibbonAdapter extends GibbonAdapter {
      * @param {object} [dataFound] - One instance of a fetched record
      *
      */
-
     /**
      * Generic Upsert method for user, group and permission collections
      *
@@ -92,7 +83,6 @@ export class LokiJSGibbonAdapter extends GibbonAdapter {
      * @param {object} [userObject] - Instance of a fetched record
      *
      */
-
     /**
      * Generic private method to dynamically query the collection and fetch data
      * @param {string} name - Collection name to query
@@ -113,7 +103,6 @@ export class LokiJSGibbonAdapter extends GibbonAdapter {
      * Callback when initializing is done.
      * @callback LokiJSGibbonAdapter~initializeCallback
      */
-
     /**
      * Initialize persistence storage itself and it's collections
      *
@@ -121,24 +110,19 @@ export class LokiJSGibbonAdapter extends GibbonAdapter {
      * @param {LokiJSGibbonAdapter~initializeCallback} callback - Callback when done
      */
     initialize(callback) {
-        const self = this;
 
         this.db = new Loki('lokijs.db', {
             autosave: false,
             autoload: true,
             verbose: true,
-            autoloadCallback: loadHandler,
+            autoloadCallback: () => {
+                // Initialize all collections
+                this._initializeCollection(COLLECTION.USER);
+                this._initializeCollection(COLLECTION.GROUP);
+                this._initializeCollection(COLLECTION.PERMISSION);
+                callback();
+            }
         });
-
-        function loadHandler() {
-
-            // Initialize all collections
-            self._initializeCollection(COLLECTION.USER);
-            self._initializeCollection(COLLECTION.GROUP);
-            self._initializeCollection(COLLECTION.PERMISSION);
-
-            callback();
-        }
     }
 
     /**
@@ -146,7 +130,6 @@ export class LokiJSGibbonAdapter extends GibbonAdapter {
      * @callback LokiJSGibbonAdapter~findUser
      * @see {@link _findByCollection}
      */
-
     /**
      * Tries to fetch a user
      *
@@ -174,8 +157,7 @@ export class LokiJSGibbonAdapter extends GibbonAdapter {
      */
     findUsersByPermission(criteria, callback) {
 
-        const self = this;
-        self.findPermission(criteria, (error, permission) => {
+        this.findPermission(criteria, (error, permission) => {
 
             if (error) {
                 return callback(error);
@@ -186,7 +168,7 @@ export class LokiJSGibbonAdapter extends GibbonAdapter {
 
             try {
                 const permissionPosition = permission['$loki'];
-                const groups = self.dbCollection[COLLECTION.GROUP].where((group) => {
+                const groups = this.dbCollection[COLLECTION.GROUP].where((group) => {
                     const gibbon = Gibbon.fromString(group.permissions);
                     return gibbon.isPosition(permissionPosition);
                 });
@@ -195,7 +177,7 @@ export class LokiJSGibbonAdapter extends GibbonAdapter {
                 const groupPositions = groups.map((group) => {
                     return group['$loki'];
                 });
-                const users = self.dbCollection[COLLECTION.USER].where((user) => {
+                const users = this.dbCollection[COLLECTION.USER].where((user) => {
                     const gibbon = Gibbon.fromString(user.groups);
                     return gibbon.hasAnyFromPositions(groupPositions);
                 });
@@ -223,9 +205,8 @@ export class LokiJSGibbonAdapter extends GibbonAdapter {
      * @param {LokiJSGibbonAdapter~findUsersByGroup} callback
      */
     findUsersByGroup(criteria, callback) {
-        const self = this;
 
-        self.findGroup(criteria, (error, group) => {
+        this.findGroup(criteria, (error, group) => {
 
             if (error) {
                 return callback(error);
@@ -236,7 +217,7 @@ export class LokiJSGibbonAdapter extends GibbonAdapter {
 
             try {
                 const groupPosition = group['$loki'];
-                const users = self.dbCollection[COLLECTION.USER].where((user) => {
+                const users = this.dbCollection[COLLECTION.USER].where((user) => {
                     const gibbon = Gibbon.fromString(user.groups);
                     return gibbon.isPosition(groupPosition);
                 });
@@ -265,9 +246,7 @@ export class LokiJSGibbonAdapter extends GibbonAdapter {
      * @param {LokiJSGibbonAdapter~findGroupsByPermission} callback
      */
     findGroupsByPermission(criteria, callback) {
-
-        const self = this;
-        self.findPermission(criteria, (error, permission) => {
+        this.findPermission(criteria, (error, permission) => {
 
             if (error) {
                 return callback(error);
@@ -278,7 +257,7 @@ export class LokiJSGibbonAdapter extends GibbonAdapter {
 
             try {
                 const permissionPosition = permission['$loki'];
-                const groups = self.dbCollection[COLLECTION.GROUP].where((group) => {
+                const groups = this.dbCollection[COLLECTION.GROUP].where((group) => {
                     const gibbon = Gibbon.fromString(group.permissions);
                     return gibbon.isPosition(permissionPosition);
                 });
@@ -286,9 +265,7 @@ export class LokiJSGibbonAdapter extends GibbonAdapter {
             } catch (error) {
                 callback(error);
             }
-
         });
-
     }
 
 
@@ -333,7 +310,6 @@ export class LokiJSGibbonAdapter extends GibbonAdapter {
      * @param {Error} [error] - Error thrown by LokiJS
      * @param {object} [user] - Added user
      */
-
     /**
      * Add a user object to the user collection
      *
@@ -348,7 +324,6 @@ export class LokiJSGibbonAdapter extends GibbonAdapter {
         } catch (error) {
             callback(error);
         }
-
     }
 
     /**
@@ -357,7 +332,6 @@ export class LokiJSGibbonAdapter extends GibbonAdapter {
      * @param {Error} [error] - Error thrown by LokiJS
      * @param {object} [user] - Added group
      */
-
     /**
      * Add a group object to the group collection
      *
@@ -380,7 +354,6 @@ export class LokiJSGibbonAdapter extends GibbonAdapter {
      * @param {Error} [error] - Error thrown by LokiJS
      * @param {Array} [groups] - Added groups
      */
-
     /**
      * Add a groups from array to the group collection
      *
@@ -403,7 +376,6 @@ export class LokiJSGibbonAdapter extends GibbonAdapter {
      * @param {Error} [error] - Error thrown by LokiJS
      * @param {object} [permission] - Added permissions
      */
-
     /**
      * Add a permission object to the permission collection
      *
@@ -426,7 +398,6 @@ export class LokiJSGibbonAdapter extends GibbonAdapter {
      * @param {Error} [error] - This could contain an error emitted by LokiJS
      * @param {Array} [permissions] - Inserted permissions
      */
-
     /**
      * Add a permission from array to the permission collection
      *
@@ -443,13 +414,11 @@ export class LokiJSGibbonAdapter extends GibbonAdapter {
         }
     }
 
-
     /**
      * Callback when removal is done.
      * @callback LokiJSGibbonAdapter~removeUser
      * @param {Error} [error] - This could contain an error thrown by LokiJS
      */
-
     /**
      * Remove a user from the user collection
      *
@@ -644,7 +613,6 @@ export class LokiJSGibbonAdapter extends GibbonAdapter {
      * @param {LokiJSGibbonAdapter~findPermissionsByUser} callback
      */
     findPermissionsByUser(user, callback) {
-        const self = this;
         let permissions = [];
         this.findGroupsByUser(user, (err, groups) => {
 
@@ -652,8 +620,7 @@ export class LokiJSGibbonAdapter extends GibbonAdapter {
                 return callback(err);
             }
 
-            let i = 0;
-            for (i; i < groups.length; i++) {
+            for (let i = 0; i < groups.length; i++) {
                 const group = groups[i];
                 const permissionsFromGroup = group.permissions;
                 const gibbon = Gibbon.fromString(permissionsFromGroup);
@@ -667,9 +634,8 @@ export class LokiJSGibbonAdapter extends GibbonAdapter {
             });
 
             const criteria = { '$loki': { '$in': permissions } };
-            const permissionsFound = self.dbCollection[COLLECTION.PERMISSION].find(criteria);
-            return callback(null, permissionsFound);
-
+            const permissionsFound = this.dbCollection[COLLECTION.PERMISSION].find(criteria);
+            callback(null, permissionsFound);
         });
     }
 
@@ -679,7 +645,6 @@ export class LokiJSGibbonAdapter extends GibbonAdapter {
      * @param {Error} [error] - If user not found or an error thrown by LokiJS
      * @param {boolean} valid - When valid or not
      */
-
     /**
      * Validate a user against all given permissions <br>
      * When one of the given permissions is missing for the given user,<br>
@@ -691,8 +656,10 @@ export class LokiJSGibbonAdapter extends GibbonAdapter {
      * @param {LokiJSGibbonAdapter~validateUserWithAllPermissions} callback
      */
     validateUserWithAllPermissions(user, permissions, callback) {
-        let valid = false;
+
         this.findPermissionsByUser(user, (error, permissionsFound) => {
+            let valid = false;
+
             if (error) {
                 return callback(error, valid);
             }
@@ -715,7 +682,6 @@ export class LokiJSGibbonAdapter extends GibbonAdapter {
      * @param {Error} [error] - If user not found or an error thrown by LokiJS
      * @param {boolean} valid - When valid or not
      */
-
     /**
      * Validate a user against any given permissions <br>
      * When one of the given permissions is found for the given user,<br>
@@ -726,8 +692,9 @@ export class LokiJSGibbonAdapter extends GibbonAdapter {
      * @param {LokiJSGibbonAdapter~validateUserWithAnyPermissions} callback
      */
     validateUserWithAnyPermissions(user, permissions, callback) {
-        let valid = false;
+
         this.findPermissionsByUser(user, (error, permissionsFound) => {
+            let valid = false;
             if (error) {
                 return callback(error, valid);
             }

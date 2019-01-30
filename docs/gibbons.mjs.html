@@ -1,4 +1,32 @@
-import { GibbonAdapter } from './adapters/gibbon-adapter';
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>JSDoc: Source: gibbons.mjs</title>
+
+    <script src="scripts/prettify/prettify.js"> </script>
+    <script src="scripts/prettify/lang-css.js"> </script>
+    <!--[if lt IE 9]>
+      <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <link type="text/css" rel="stylesheet" href="styles/prettify-tomorrow.css">
+    <link type="text/css" rel="stylesheet" href="styles/jsdoc-default.css">
+</head>
+
+<body>
+
+<div id="main">
+
+    <h1 class="page-title">Source: gibbons.mjs</h1>
+
+    
+
+
+
+    
+    <section>
+        <article>
+            <pre class="prettyprint source linenums"><code>import { GibbonAdapter } from './adapters/gibbon-adapter';
 
 /**
  * The Gibbons class
@@ -6,7 +34,7 @@ import { GibbonAdapter } from './adapters/gibbon-adapter';
 export class Gibbons {
 
     /**
-     * This is the Gibbons class<br>
+     * This is the Gibbons class&lt;br>
      * It's the entry point for group- and permission handling
      *
      * @param {GibbonAdapter} gibbonAdapter - An instance of GibbonAdapter is required.
@@ -25,7 +53,7 @@ export class Gibbons {
     }
 
     /**
-     * Initializes Gibbons<br>
+     * Initializes Gibbons&lt;br>
      * (it initializes the given adapter)
      *
      * @param {function} callback
@@ -36,7 +64,7 @@ export class Gibbons {
 
 
     /**
-     * Finds a user<br>
+     * Finds a user&lt;br>
      * (Is delegated to a given adapter)
      *
      * @param {object} criteria - User to find
@@ -47,7 +75,7 @@ export class Gibbons {
     }
 
     /**
-     * Finds a group<br>
+     * Finds a group&lt;br>
      * (Is delegated to a given adapter)
      *
      * @param {object} criteria - Group to find
@@ -59,7 +87,7 @@ export class Gibbons {
 
 
     /**
-     * Finds a permission<br>
+     * Finds a permission&lt;br>
      * (Is delegated to a given adapter)
      *
      * @param {object} criteria - Permission to find
@@ -70,7 +98,7 @@ export class Gibbons {
     }
 
     /**
-     * Finds users attached to groups which contains a certain permission<br>
+     * Finds users attached to groups which contains a certain permission&lt;br>
      * (Is delegated to a given adapter)
      *
      * @param {object} criteria - permission to find users by
@@ -82,7 +110,7 @@ export class Gibbons {
 
 
     /**
-     * Finds users attached to a certain group<br>
+     * Finds users attached to a certain group&lt;br>
      * (Is delegated to a given adapter)
      *
      * @param {object} criteria - group to find users by
@@ -93,7 +121,7 @@ export class Gibbons {
     }
 
     /**
-     * Finds groups attached to given permission<br>
+     * Finds groups attached to given permission&lt;br>
      * (Is delegated to a given adapter)
      *
      * @param {object} criteria - permission to find groups by
@@ -104,7 +132,7 @@ export class Gibbons {
     }
 
     /**
-     * Adds a user<br>
+     * Adds a user&lt;br>
      * (Is delegated to a given adapter)
      *
      * @param {object} user - User to add
@@ -115,7 +143,7 @@ export class Gibbons {
     }
 
     /**
-     * Add a group<br>
+     * Add a group&lt;br>
      * (Is delegated to a given adapter)
      *
      * @param {object} group - Group to add
@@ -126,10 +154,10 @@ export class Gibbons {
     }
 
     /**
-     * Adds an array of groups<br>
+     * Adds an array of groups&lt;br>
      * (Is delegated to a given adapter)
      *
-     * @param {Array<object>} groups - Collection of groups to add
+     * @param {Array&lt;object>} groups - Collection of groups to add
      * @param {function} callback
      */
     addGroups(groups, callback) {
@@ -137,7 +165,7 @@ export class Gibbons {
     }
 
     /**
-     * Add a permission<br>
+     * Add a permission&lt;br>
      * (Is delegated to a given adapter)
      *
      * @param {object} permission - Permission to add
@@ -148,10 +176,10 @@ export class Gibbons {
     }
 
     /**
-     * Adds an array of permissions<br>
+     * Adds an array of permissions&lt;br>
      * (Is delegated to a given adapter)
      *
-     * @param {Array<object>} permissions - Collection of permissions to add
+     * @param {Array&lt;object>} permissions - Collection of permissions to add
      * @param {function} callback
      */
     addPermissions(permissions, callback) {
@@ -159,7 +187,7 @@ export class Gibbons {
     }
 
     /**
-     * Removes a user<br>
+     * Removes a user&lt;br>
      * (Is delegated to a given adapter)
      *
      * @param {object} user - User criteria for removal of a certain user
@@ -170,7 +198,7 @@ export class Gibbons {
     }
 
     /**
-     * Removes a group<br>
+     * Removes a group&lt;br>
      * (Is delegated to a given adapter)
      *
      * @param {object} group - Group criteria for removal of a certain group
@@ -181,7 +209,7 @@ export class Gibbons {
     }
 
     /**
-     * Removes a permission<br>
+     * Removes a permission&lt;br>
      * (Is delegated to a given adapter)
      *
      * @param {object} permission - Permission criteria for removal of a certain permission
@@ -192,7 +220,7 @@ export class Gibbons {
     }
 
     /**
-     * Updates an existing user, and if not found inserts the user<br>
+     * Updates an existing user, and if not found inserts the user&lt;br>
      * (Is delegated to a given adapter)
      *
      * @param {object} criteria - User criteria to update when found
@@ -205,7 +233,7 @@ export class Gibbons {
 
 
     /**
-     * Updates an existing group, and if not found inserts the group<br>
+     * Updates an existing group, and if not found inserts the group&lt;br>
      * (Is delegated to a given adapter)
      *
      * @param {object} criteria - Group criteria to update when found
@@ -217,7 +245,7 @@ export class Gibbons {
     }
 
     /**
-     * Updates an existing permission, and if not found inserts the permission<br>
+     * Updates an existing permission, and if not found inserts the permission&lt;br>
      * (Is delegated to a given adapter)
      *
      * @param {object} criteria - Permission criteria to update when found
@@ -229,7 +257,7 @@ export class Gibbons {
     }
 
     /**
-     * Finds a group collection attached to this certain user<br>
+     * Finds a group collection attached to this certain user&lt;br>
      * (Is delegated to a given adapter)
      *
      * @param {object} user - User criteria to find the corresponding groups
@@ -240,7 +268,7 @@ export class Gibbons {
     }
 
     /**
-     * Finds a permission collection attached to this certain user<br>
+     * Finds a permission collection attached to this certain user&lt;br>
      * (Is delegated to a given adapter)
      *
      * @param {object} user - User criteria to find the corresponding permissions
@@ -252,11 +280,11 @@ export class Gibbons {
 
     /**
      * Validates given user against given array of permission positions.
-     * <b>All</b> given permissions need to be found at this given user<br>
+     * &lt;b>All&lt;/b> given permissions need to be found at this given user&lt;br>
      * (Is delegated to a given adapter)
      *
      * @param {object} user - User as criteria to validate
-     * @param {Array<Number>} permissions
+     * @param {Array&lt;Number>} permissions
      * @param {function} callback
      */
     validateUserWithAllPermissions(user, permissions, callback) {
@@ -265,11 +293,11 @@ export class Gibbons {
 
     /**
      * Validates given user against given array of permission positions.
-     * <b>If any</b> given permission is found attached to this given user<br>
+     * &lt;b>If any&lt;/b> given permission is found attached to this given user&lt;br>
      * (Is delegated to a given adapter)
      *
      * @param {object} user - User to validate permissions against
-     * @param {Array<Number>} permissions - Permission collection of integers
+     * @param {Array&lt;Number>} permissions - Permission collection of integers
      * @param {function} callback
      */
     validateUserWithAnyPermissions(user, permissions, callback) {
@@ -278,3 +306,26 @@ export class Gibbons {
 
 }
 
+</code></pre>
+        </article>
+    </section>
+
+
+
+
+</div>
+
+<nav>
+    <h2><a href="index.html">Home</a></h2><h3>Classes</h3><ul><li><a href="BitByte.html">BitByte</a></li><li><a href="Gibbon.html">Gibbon</a></li><li><a href="GibbonAdapter.html">GibbonAdapter</a></li><li><a href="GibbonProcessor.html">GibbonProcessor</a></li><li><a href="Gibbons.html">Gibbons</a></li></ul><h3>Tutorials</h3><ul><li><a href="tutorial-Tutorial.html">Tutorial</a></li></ul>
+</nav>
+
+<br class="clear">
+
+<footer>
+    Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.5.5</a> on Wed Jan 30 2019 23:29:16 GMT+0100 (Central European Standard Time)
+</footer>
+
+<script> prettyPrint(); </script>
+<script src="scripts/linenumber.js"> </script>
+</body>
+</html>
