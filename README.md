@@ -42,7 +42,7 @@ Every path should be covered and can be checked after the unit test is executed,
 
 Execute: `npm test`
 
-In the end, a brief version of the coverage report is shown. For the more extensive one, see: `test/coverage/lcov-report/index.html`.
+In the end, a brief version of the coverage report is shown. For the more extensive one, see: `docs/coverage/lcov-report/index.html`.
 
 ### API Documentation ###
 
@@ -54,7 +54,7 @@ Every time code is updated, we need to ensure the documentation is in sync with 
 
 Execute: `npm run docs`
 
-_The result is generated at: `docs/api/index.html`_
+_The result is generated at: `docs/index.html`_
 
 
 ## Contribution guidelines ##

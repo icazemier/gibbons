@@ -1,10 +1,9 @@
-'use strict';
-const expect = require('chai').expect;
-const helper = require('./helper');
+import { helper } from './helper';
+import chai from 'chai';
+import { Gibbon, GibbonAdapter } from '../src/index';
 
-const Gibbon = require('../lib/gibbon');
-const GibbonAdapter = require('../lib/adapters/gibbon-adapter');
 
+const expect = chai.expect;
 
 describe('Gibbons: Generic tests', function () {
 
