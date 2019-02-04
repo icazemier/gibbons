@@ -107,7 +107,7 @@ export class GibbonProcessor {
      */
     static setBit  (data, index) {
         /* eslint-disable */
-        let mask = 1 << index;
+        const mask = 1 << index;
         return data | mask;
         /* eslint-enable */
     }
@@ -132,7 +132,7 @@ export class GibbonProcessor {
      */
     static clearBit  (data, index) {
         /* eslint-disable */
-        let mask = 1 << index;
+        const mask = 1 << index;
         return data & ~mask;
         /* eslint-enable */
     }
@@ -166,9 +166,9 @@ export class GibbonProcessor {
      */
     static changeBit  (data, index, value) {
         /* eslint-disable */
-        let mask = 1 << index;
+        const mask = 1 << index;
         // value relies on true = 1 and false = 0
-        let state = value ? 0x1 : 0x0;
+        const state = value ? 0x1 : 0x0;
         return (data & ~mask) | (-state & mask);
         /* eslint-enable */
     }
@@ -191,7 +191,7 @@ export class GibbonProcessor {
      */
     static toggleBit  (data, index) {
         /* eslint-disable */
-        let mask = 1 << index;
+        const mask = 1 << index;
         return data ^ mask;
         /* eslint-enable */
     }
