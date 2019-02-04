@@ -1,6 +1,37 @@
 # Change Log
 
-#### [v2.2.4](https://github.com/kaasdude/gibbons/compare/2.2.4...2.2.4)
+#### [v3.0.0](https://github.com/kaasdude/gibbons/compare/2.2.4...3.0.0)
+> 31 Januari 2019
+
+* Migrated code and tests to implement es6 classes
+* Optimised docs a bit
+* Updated node engines
+* Updated dependencies
+* Incorporated Babel to transpile because import statements are still experimental
+
+**BREAKING CHANGES**
+
+* Migrate your extended GibbonAdapter to use es6 classes [Please read the Node.js docs here](https://nodejs.org/dist/latest-v11.x/docs/api/util.html#util_util_inherits_constructor_superconstructor)
+
+Change:
+```
+function YourGibbonAdapter(){
+    GibbonAdapter.call(this);
+}
+
+util.inherits(YourGibbonAdapter, GibbonAdapter);
+```
+
+to:
+```
+class YourGibbonAdapter extends GibbonAdapter {
+    constructor(){
+        super();
+    }
+}
+```
+
+#### [v2.2.4](https://github.com/kaasdude/gibbons/compare/2.2.3...2.2.4)
 > 4 June 2018
 
 * `devDependencies` updates

@@ -1,7 +1,9 @@
-'use strict';
-const expect = require('chai').expect;
-const helper = require('./helper');
-const Gibbon = require('../index').Gibbon;
+import { helper } from './helper';
+import chai from 'chai';
+import { Gibbon } from '../src/index';
+
+const expect = chai.expect;
+
 
 
 describe('Gibbon: Bit masking tests', function () {
@@ -13,7 +15,7 @@ describe('Gibbon: Bit masking tests', function () {
             it(`Test ${helper.testNumber++}: Compare reference / alias)`, function (done) {
 
                 // Initialize a Gibbon with ArrayBuffer (size = 1 bytes)
-                const gibbon = new Gibbon.create(1);
+                const gibbon = Gibbon.create(1);
                 const alias = gibbon;
 
                 const same = gibbon.compare(alias);
