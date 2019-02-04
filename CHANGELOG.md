@@ -1,13 +1,14 @@
 # Change Log
 
 #### [v3.0.0](https://github.com/kaasdude/gibbons/compare/2.2.4...3.0.0)
-> 31 Januari 2019
+> 04 Februari 2019
 
 * Migrated code and tests to implement es6 classes
 * Optimised docs a bit
 * Updated node engines
 * Updated dependencies
 * Incorporated Babel to transpile because import statements are still experimental
+* NOTE: Please read the breaking change below.
 
 **BREAKING CHANGES**
 
