@@ -1,5 +1,16 @@
 # Change Log
 
+#### [v3.0.0](https://github.com/kaasdude/gibbons/compare/3.0.0...4.0.0)
+> 15 Februari 2020
+
+* Updated dependencies
+* Generated docs
+
+**BREAKING CHANGE**
+
+Decided Node 6 is no longer supported.
+
+
 #### [v3.0.0](https://github.com/kaasdude/gibbons/compare/2.2.4...3.0.0)
 > 04 Februari 2019
 
@@ -96,7 +107,7 @@ class YourGibbonAdapter extends GibbonAdapter {
   * Optimised `addPermissions` and `addGroups`
   * Changed the behaviour of LokiJSGibbonAdapter `removeGroup` and `removePermission`<br>
     They ensure the related gibbon bits are also set to logical '0' ('Cascaded update')
-  
+
 
 #### [v1.0.7](https://github.com/kaasdude/gibbons/compare/1.0.6...1.0.7)
 > 23 February 2017
@@ -106,7 +117,7 @@ class YourGibbonAdapter extends GibbonAdapter {
 #### [v1.0.6](https://github.com/kaasdude/gibbons/compare/1.0.5...1.0.6)
 > 23 February 2017
 
-* Effort to slender the npm package with .npmrc 
+* Effort to slender the npm package with .npmrc
 
 #### [v1.0.5](https://github.com/kaasdude/gibbons/compare/1.0.4...1.0.5)
 > 19 February 2017
@@ -145,4 +156,4 @@ class YourGibbonAdapter extends GibbonAdapter {
 #### 1.0.0
 > 24 January 2017
 
-* Release 1.0.0! 
+* Release 1.0.0!

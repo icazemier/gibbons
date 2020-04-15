@@ -1026,7 +1026,7 @@ describe('Gibbons', () => {
             });
         });
 
-        it(`Test ${helper.testNumber++}: Try to construct a SortingHat without an adapter`, function (done) {
+        it(`Test ${helper.testNumber++}: Try to construct a Gibbons without an adapter`, function (done) {
             function throwTypeError() {
                 new Gibbons();
             }

@@ -7,6 +7,7 @@ module.exports = {
                     node: 'current'
                 },
                 useBuiltIns: 'usage',
+                corejs: '3.0.0',
                 modules: process.env.MODULE ? false : 'commonjs'
             }
         ]
