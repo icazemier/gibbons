@@ -1,5 +1,5 @@
 
-<img src="https://raw.githubusercontent.com/kaasdude/gibbons/master/gibbons.png" width="200" />
+<img src="https://raw.githubusercontent.com/icazemier/gibbons/master/gibbons.png" width="200" />
 
 
 
@@ -8,13 +8,13 @@
 
 _"Leaping from branch to branch gibbons decide which one to take in a split second"_
 
-Gibbons is a Node.js module which helps in managing user groups and user permissions with `bitwise` efficiency. 
+Gibbons is a Node.js module which helps in managing user groups and user permissions with `bitwise` efficiency.
 In applying [ArrayBuffers](https://developer.mozilla.org/nl/docs/Web/JavaScript/Reference/Global_Objects/ArrayBuffer) and bitwise operations it tries to use minimal resources.
 
 
 ## API Documentation and tutorial
 
-See: [Gibbons Docs](https://kaasdude.github.io/gibbons/)
+See: [Gibbons Docs](https://icazemier.github.io/gibbons/)
 
 ## How do I get set up? ##
 
@@ -30,8 +30,8 @@ See: [Gibbons Docs](https://kaasdude.github.io/gibbons/)
 
 ### Linting ###
 
-For this project [ESLint](http://eslint.org/) is applied. 
- 
+For this project [ESLint](http://eslint.org/) is applied.
+
 Execute: `npm run lint`
 
 _Currently the linter conforms to defaults from: [eslint-plugin-node](https://github.com/mysticatea/eslint-plugin-node) and some minor tweaks (see: `.eslintrc`)._
@@ -69,20 +69,20 @@ h1. I ensured:
 ```
 
 # Changes
-[See: Changelog](https://github.com/kaasdude/gibbons/blob/master/CHANGELOG.md)
+[See: Changelog](https://github.com/icazemier/gibbons/blob/master/CHANGELOG.md)
 
 # Meta data #
 
 * Maintainer: Ivo Cazemier
-* [Bitbucket](https://bitbucket.org/ivocazemier/gibbons) or [Github](https://github.com/kaasdude/gibbons)
-* [API documentation and tutorial](https://kaasdude.github.io/gibbons/)
+* [Bitbucket](https://bitbucket.org/ivocazemier/gibbons) or [Github](https://github.com/icazemier/gibbons)
+* [API documentation and tutorial](https://icazemier.github.io/gibbons/)
 
 
 [![npm version](https://badge.fury.io/js/gibbons.svg)](https://www.npmjs.com/package/gibbons)
-[![David](https://david-dm.org/kaasdude/gibbons.svg)](https://david-dm.org/kaasdude/gibbons)
-[![David](https://david-dm.org/kaasdude/gibbons/dev-status.svg)](https://david-dm.org/kaasdude/gibbons#info=devDependencies)
-[![Travis CI](https://travis-ci.org/kaasdude/gibbons.svg?branch=master)](https://travis-ci.org/kaasdude/gibbons)
-[![Coverage Status](https://coveralls.io/repos/github/kaasdude/gibbons/badge.svg?branch=master)](https://coveralls.io/github/kaasdude/gibbons?branch=master)
+[![David](https://david-dm.org/icazemier/gibbons.svg)](https://david-dm.org/icazemier/gibbons)
+[![David](https://david-dm.org/icazemier/gibbons/dev-status.svg)](https://david-dm.org/icazemier/gibbons#info=devDependencies)
+[![Travis CI](https://travis-ci.org/icazemier/gibbons.svg?branch=master)](https://travis-ci.org/icazemier/gibbons)
+[![Coverage Status](https://coveralls.io/repos/github/icazemier/gibbons/badge.svg?branch=master)](https://coveralls.io/github/icazemier/gibbons?branch=master)
 
 
 (License: MIT, See the LICENSE file)
