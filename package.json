@@ -1,13 +1,13 @@
 {
   "name": "gibbons",
   "private": false,
-  "version": "4.0.0",
+  "version": "4.0.1",
   "description": "Gibbons is a Node.js module which helps in managing user groups and user permissions with `bitwise` effiency.",
   "contributors": [
     {
       "name": "Ivo Cazemier",
-      "email": "n-pm@flashinnovations.nl",
-      "url": "http://flashinnovations.nl/"
+      "email": "git@warmemelk.nl",
+      "url": "https://github.com/icazemier"
     }
   ],
   "keywords": [
@@ -38,7 +38,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/kaasdude/gibbons"
+    "url": "https://github.com/icazemier/gibbons"
   },
   "license": "MIT",
   "dependencies": {},
