@@ -1,3 +1,10 @@
+# [4.1.0](https://github.com/icazemier/gibbons/compare/v4.0.1...v4.1.0) (2020-08-03)
+
+
+### Features
+
+* GitHub workflows ([6c50237](https://github.com/icazemier/gibbons/commit/6c50237d2c31601a2cd004a900383f04046ae0bf))
+
 # Change Log
 
 #### [v4.0.1](https://github.com/icazemier/gibbons/compare/3.0.0...4.0.1)
