@@ -1,7 +1,7 @@
 {
-  "name": "gibbons",
+  "name": "@icazemier/gibbons",
   "private": false,
-  "version": "4.0.1",
+  "version": "0.0.0-development",
   "description": "Gibbons is a Node.js module which helps in managing user groups and user permissions with `bitwise` effiency.",
   "contributors": [
     {
@@ -15,9 +15,9 @@
     "user groups",
     "bitwise"
   ],
-  "main": "lib/index.js",
+  "main": "build/index.js",
   "engines": {
-    "node": ">=8.17.0 < 13"
+    "node": ">=8.17.0 < 15"
   },
   "os": [
     "darwin",
@@ -25,20 +25,25 @@
     "win32"
   ],
   "scripts": {
-    "build": "rm -rf ./lib && npm run build:js",
-    "build:js": "babel src --out-dir lib",
-    "build:mjs": "cross-env MODULE=true babel src --out-dir lib --keep-file-extension",
-    "clean": "rm -rf ./lib",
+    "build": "npm run clean && npm run build:js",
+    "build:js": "babel src --out-dir build",
+    "build:mjs": "cross-env MODULE=true babel src --out-dir build --keep-file-extension",
+    "clean": "rm -rf ./build",
     "coverage": "nyc report --reporter=text-lcov | coveralls",
     "docs": "jsdoc --readme README.md src -r -c config/jsdocs.json",
     "lint": "eslint --ext .mjs src",
     "prepublish": "npm run build",
     "prepare": "npm run build",
-    "test": "cross-env NODE_ENV=test nyc mocha --timeout=1000"
+    "test": "cross-env NODE_ENV=test nyc mocha --timeout=1000",
+    "semantic-release": "semantic-release"
   },
   "repository": {
     "type": "git",
     "url": "https://github.com/icazemier/gibbons"
+  },
+  "publishConfig": {
+    "access": "public",
+    "pkgRoot": "build"
   },
   "license": "MIT",
   "dependencies": {},
@@ -48,6 +53,8 @@
     "@babel/node": "7.8.7",
     "@babel/preset-env": "7.9.5",
     "@babel/register": "7.9.0",
+    "@semantic-release/changelog": "5.0.1",
+    "@semantic-release/git": "9.0.0",
     "async": "3.2.0",
     "babel-plugin-istanbul": "6.0.0",
     "chai": "4.2.0",
@@ -57,10 +64,11 @@
     "eslint-plugin-node": "11.1.0",
     "husky": "4.2.5",
     "jsdoc": "3.6.4",
-    "lodash": "4.17.15",
+    "lodash": "4.17.19",
     "lokijs": "1.5.8",
     "mocha": "7.1.1",
-    "nyc": "15.0.1"
+    "nyc": "15.0.1",
+    "semantic-release": "17.1.1"
   },
   "husky": {
     "hooks": {
