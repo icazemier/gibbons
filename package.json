@@ -64,7 +64,7 @@
     "eslint-plugin-node": "11.1.0",
     "husky": "4.2.5",
     "jsdoc": "3.6.4",
-    "lodash": "4.17.19",
+    "lodash": "4.17.21",
     "lokijs": "1.5.8",
     "mocha": "7.1.1",
     "nyc": "15.0.1",
