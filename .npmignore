@@ -1,25 +1,22 @@
-#tests
-test
-
-#build tools
-.travis.yml
-
-#linters
-.eslintrc*
-
-#editor settings
-.idea
-.editorconfig
-
-#others
+coverage/
+docs/
+test/
+.github/
 .nvmrc
-.vscode
-docs
-tutorials
-config
+.vscode/
+test/
+tutorials/
+.c8rc.json
+.editorconfig
+.eslintrc.json
+.prettierrc.json
+.releaserc.json
+CHANGELOG.md
+gibbons.svg
 jsconfig.json
+jsdocs.json
+test/**/*.test.js
 
-#LokiJS adapter
-!test/adapters/lokijs-gibbon-adapter.js
 
-src
+
+

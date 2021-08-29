@@ -1,0 +1,7 @@
+{
+    "diff": true,
+    "extension": ["mjs"],
+    "slow": "75",
+    "timeout": "1000",
+    "spec": "test/**/*.test.js"
+}

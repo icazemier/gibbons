@@ -1,4 +1,4 @@
-import { GibbonProcessor } from './gibbon-processor';
+import { GibbonProcessor } from './gibbon-processor.mjs';
 
 /**
  * A Gibbon
@@ -35,11 +35,18 @@ export class Gibbon {
         } else {
             const thisDataView = this.dataView;
             const dataView = gibbon.dataView;
-            const byteLength = Math.max(thisArrayBuffer.byteLength, arrayBuffer.byteLength);
+            const byteLength = Math.max(
+                thisArrayBuffer.byteLength,
+                arrayBuffer.byteLength
+            );
             let result = true;
             for (let i = 0; i < byteLength && result; i++) {
-                const value1 = (i < thisDataView.byteLength) ? thisDataView.getUint8(i) : 0x0;
-                const value2 = (i < dataView.byteLength) ? dataView.getUint8(i) : 0x0;
+                const value1 =
+                    i < thisDataView.byteLength
+                        ? thisDataView.getUint8(i)
+                        : 0x0;
+                const value2 =
+                    i < dataView.byteLength ? dataView.getUint8(i) : 0x0;
                 if (value1 !== value2) {
                     result = false;
                 }
@@ -213,7 +220,7 @@ export class Gibbon {
      *
      *  // Set 2 bit positions to logical '1' then the first bit position back to '0'
      *  const gibbon = Gibbon.create(2);
-     *  gibbon.setPosition(1).setPosition(2),togglePosition(1);
+     *  gibbon.setPosition(1).setPosition(2).togglePosition(1);
      *
      *  gibbon.hasAllFromPositions([-1, 2]); // true
      *
@@ -225,15 +232,12 @@ export class Gibbon {
     hasAllFromPositions(positionArray = []) {
         const dataViewBounds = this.dataView.byteLength;
 
-        if (!(Array.isArray(positionArray))) {
+        if (!Array.isArray(positionArray)) {
             throw new TypeError('positionArray not an instance of Array');
         }
 
-        // Shallow copy
-        let positions = positionArray.slice(0);
-
-        // Remove duplicate values
-        positions = [...new Set(positions)];
+        // Remove duplicate values from shallow copy
+        const positions = [...new Set(positionArray.slice(0))];
 
         // Check bits on position if they are truthy (positive position) or falsy (negative position)
         let hasAllFromPositions = true;
@@ -241,14 +245,21 @@ export class Gibbon {
         for (let i = 0; i < positions.length && hasAllFromPositions; i++) {
             const position = positions[i];
             const positionAbs = Math.abs(position);
-            const bitBytePosition = GibbonProcessor.getByteNoAndBitPos(positionAbs);
+            const bitBytePosition =
+                GibbonProcessor.getByteNoAndBitPos(positionAbs);
             // Check if position is not out of bounds compared to the dataView byte length:
             if (bitBytePosition.byteNo < dataViewBounds) {
                 const byte = this.dataView.getUint8(bitBytePosition.byteNo);
                 if (position >= 0) {
-                    hasAllFromPositions = GibbonProcessor.isTrue(byte, bitBytePosition.bitPos);
+                    hasAllFromPositions = GibbonProcessor.isTrue(
+                        byte,
+                        bitBytePosition.bitPos
+                    );
                 } else {
-                    hasAllFromPositions = GibbonProcessor.isFalse(byte, bitBytePosition.bitPos);
+                    hasAllFromPositions = GibbonProcessor.isFalse(
+                        byte,
+                        bitBytePosition.bitPos
+                    );
                 }
             } else {
                 // Position is outside the bounds of the DataView, skipping the rest...
@@ -295,7 +306,7 @@ export class Gibbon {
         let hasAny = false;
         const dataViewBounds = this.dataView.byteLength;
 
-        if (!(Array.isArray(positionArray))) {
+        if (!Array.isArray(positionArray)) {
             throw new TypeError('positionArray not an instance of Array');
         }
         // Shallow copy
@@ -309,20 +320,26 @@ export class Gibbon {
         for (let i = 0; i < positions.length && !hasAny; i++) {
             const position = positions[i];
             const positionAbs = Math.abs(position);
-            const bitBytePosition = GibbonProcessor.getByteNoAndBitPos(positionAbs);
+            const bitBytePosition =
+                GibbonProcessor.getByteNoAndBitPos(positionAbs);
             // Check if position is not out of bound of the data view:
             if (bitBytePosition.byteNo < dataViewBounds) {
                 const byte = this.dataView.getUint8(bitBytePosition.byteNo);
                 if (position >= 0) {
-                    hasAny = GibbonProcessor.isTrue(byte, bitBytePosition.bitPos);
+                    hasAny = GibbonProcessor.isTrue(
+                        byte,
+                        bitBytePosition.bitPos
+                    );
                 } else {
-                    hasAny = GibbonProcessor.isFalse(byte, bitBytePosition.bitPos);
+                    hasAny = GibbonProcessor.isFalse(
+                        byte,
+                        bitBytePosition.bitPos
+                    );
                 }
             }
         }
         return hasAny;
     }
-
 
     /**
      * Able to manipulate bits according to an array of signed integers
@@ -348,7 +365,7 @@ export class Gibbon {
     setAllFromPositions(positionArray = []) {
         const dataViewBounds = this.dataView.byteLength;
 
-        if (!(Array.isArray(positionArray))) {
+        if (!Array.isArray(positionArray)) {
             throw new TypeError('positionArray not an instance of Array');
         }
 
@@ -361,15 +378,75 @@ export class Gibbon {
         for (let i = 0; i < positions.length; i++) {
             const position = positions[i];
             const positionAbs = Math.abs(position);
-            const bitBytePosition = GibbonProcessor.getByteNoAndBitPos(positionAbs);
+            const bitBytePosition =
+                GibbonProcessor.getByteNoAndBitPos(positionAbs);
             // Check if position is not out of bound of the data view:
             if (bitBytePosition.byteNo < dataViewBounds) {
                 let byte = this.dataView.getUint8(bitBytePosition.byteNo);
-                byte = GibbonProcessor.changeBit(byte, bitBytePosition.bitPos, (position >= 0));
+                byte = GibbonProcessor.changeBit(
+                    byte,
+                    bitBytePosition.bitPos,
+                    position >= 0
+                );
                 this.dataView.setUint8(bitBytePosition.byteNo, byte);
             }
         }
         return this;
+    }
+
+    /**
+     * Able to manipulate bits according to an array of signed integers
+     * (opposite of setAllFromPositions)
+     *
+     * @example
+     *
+     *  // Set 2 bit positions to logical '0'
+     *  const gibbon = Gibbon.create(2);
+     *  gibbon.unsetAllFromPositions([1, 2]);
+     *  gibbon.hasAllFromPositions([1, 2]); // returns false
+     *  gibbon.hasAllFromPositions([-1, -2]); // returns true
+     *
+     * @example
+     *
+     *  // Set 1 bit positions to logical '0' and the second to '1'
+     *  const gibbon = Gibbon.create(2);
+     *  gibbon.setAllFromPositions([1, -2]);
+     *  gibbon.hasAllFromPositions([2]); // returns true
+     *
+     * @param {Array<Number>} positionArray - Array with integer values starting from 1.
+     * @returns {Gibbon} - For chaining purposes
+     * @throws {TypeError} if positionArray is not an instance of array
+     */
+    unsetAllFromPositions(positionArray = []) {
+        const positions = positionArray.map((position) => -position);
+        return this.setAllFromPositions(positions);
+    }
+
+    static decode(gibbon) {
+        if (gibbon instanceof Buffer) {
+            return Gibbon.fromBuffer(gibbon);
+        }
+        return Gibbon.fromString(gibbon);
+    }
+
+    encode() {
+        if (process.env.GIBBONS_ENCODE_FROM_TO_STRING) {
+            return this.toString();
+        }
+        return this.toBuffer();
+    }
+
+    toBuffer() {
+        return Buffer.from(this.arrayBuffer);
+    }
+
+    static fromBuffer(buffer) {
+        const arrayBuffer = new ArrayBuffer(buffer.length);
+        const view = new Uint8Array(arrayBuffer);
+        for (let i = 0; i < buffer.length; ++i) {
+            view[i] = buffer[i];
+        }
+        return new Gibbon(arrayBuffer);
     }
 
     /**
@@ -380,25 +457,27 @@ export class Gibbon {
      * @override
      */
     toString() {
-        return String.fromCharCode.apply(null, new Uint16Array(this.arrayBuffer));
+        return String.fromCharCode.apply(
+            null,
+            new Uint16Array(this.arrayBuffer)
+        );
     }
 
     /**
      * Class method to create a new Gibbon from a string<br>
      * (Hint: Could be used to retrieve from persistent storage)
      *
-     * @param {string} str - Representing a new Gibbon instance
+     * @param {string} gibbonString - To be decoded to a Gibbon
      * @returns {Gibbon} - new instance of a Gibbon
-     * @throws {TypeError} if given argument is not an instance of string
      */
-    static fromString(str = '') {
-        if (typeof str !== 'string') {
+    static fromString(gibbonString = '') {
+        if (typeof gibbonString !== 'string') {
             throw new TypeError('argument not a string');
         }
-        const arrayBuffer = new ArrayBuffer(str.length * 2); // 2 bytes for each char
+        const arrayBuffer = new ArrayBuffer(gibbonString.length * 2); // 2 bytes for each char
         const typedArray = new Uint16Array(arrayBuffer);
-        for (let i = 0, strLen = str.length; i < strLen; i++) {
-            typedArray[i] = str.charCodeAt(i);
+        for (let i = 0, strLen = gibbonString.length; i < strLen; i++) {
+            typedArray[i] = gibbonString.charCodeAt(i);
         }
         return new Gibbon(arrayBuffer);
     }
@@ -412,5 +491,4 @@ export class Gibbon {
         const arrayBuffer = new ArrayBuffer(byteSize);
         return new Gibbon(arrayBuffer);
     }
-
 }
