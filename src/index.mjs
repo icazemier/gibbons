@@ -1,6 +1,2 @@
-import {GibbonAdapter} from './adapters/gibbon-adapter';
-import {Gibbon} from './gibbon';
-import {GibbonProcessor} from './gibbon-processor';
-import {Gibbons} from './gibbons';
-
-export { Gibbons, GibbonAdapter, Gibbon, GibbonProcessor };
+export { Gibbon } from './gibbon.mjs';
+export { GibbonProcessor } from './gibbon-processor.mjs';
