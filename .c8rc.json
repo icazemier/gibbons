@@ -1,0 +1,6 @@
+{
+    "include": ["src/**/*.mjs"],
+    "check-coverage": true,
+    "lines": 99,
+    "reporter": ["text", "text-summary", "cobertura", "html"]
+}

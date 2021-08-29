@@ -1,4 +1,4 @@
-import { GibbonProcessor } from './gibbon-processor';
+import { GibbonProcessor } from './gibbon-processor.mjs';
 
 /**
  * A Gibbon
@@ -213,7 +213,7 @@ export class Gibbon {
      *
      *  // Set 2 bit positions to logical '1' then the first bit position back to '0'
      *  const gibbon = Gibbon.create(2);
-     *  gibbon.setPosition(1).setPosition(2),togglePosition(1);
+     *  gibbon.setPosition(1).setPosition(2).togglePosition(1);
      *
      *  gibbon.hasAllFromPositions([-1, 2]); // true
      *

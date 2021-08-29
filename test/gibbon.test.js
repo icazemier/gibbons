@@ -1,19 +1,13 @@
-import { helper } from './helper';
+import { helper } from './helper.js';
 import chai from 'chai';
-import { Gibbon } from '../src/index';
+import { Gibbon } from '../src/index.mjs';
 
-const expect = chai.expect;
-
-
+const { expect } = chai;
 
 describe('Gibbon: Bit masking tests', function () {
-
     describe('Happy flows', function () {
-
         describe('Compare gibbons', function () {
-
             it(`Test ${helper.testNumber++}: Compare reference / alias)`, function (done) {
-
                 // Initialize a Gibbon with ArrayBuffer (size = 1 bytes)
                 const gibbon = Gibbon.create(1);
                 const alias = gibbon;
@@ -21,11 +15,9 @@ describe('Gibbon: Bit masking tests', function () {
                 const same = gibbon.compare(alias);
                 expect(same).to.be.equal(true);
                 done();
-
             });
 
             it(`Test ${helper.testNumber++}: Compares different size but same data)`, function (done) {
-
                 // Initialize a Gibbon with ArrayBuffer (size = 1 bytes)
                 const gibbon1 = Gibbon.create(1);
                 const gibbon2 = Gibbon.create(2);
@@ -40,11 +32,9 @@ describe('Gibbon: Bit masking tests', function () {
                 expect(same).to.be.equal(true);
 
                 done();
-
             });
 
             it(`Test ${helper.testNumber++}: Compares different size and different data)`, function (done) {
-
                 // Initialize a Gibbon with ArrayBuffer (size = 1 bytes)
 
                 const gibbon1 = Gibbon.create(1);
@@ -58,16 +48,15 @@ describe('Gibbon: Bit masking tests', function () {
                 expect(same).to.be.equal(false);
 
                 done();
-
             });
 
             it(`Test ${helper.testNumber++}: Compare replicated data)`, function (done) {
-
                 // Initialize a Gibbon with ArrayBuffer (size = 256 bytes)
                 const gibbon1 = Gibbon.create(256);
 
                 // Pre set some bit positions for the test:
-                gibbon1.setPosition(1)
+                gibbon1
+                    .setPosition(1)
                     .setPosition(2)
                     .setPosition(3)
                     .setPosition(4)
@@ -84,39 +73,33 @@ describe('Gibbon: Bit masking tests', function () {
                 const str1 = gibbon1.toString();
                 //////////////////////////////////
 
-
                 //////////////////////////////////
                 // Convert string to a new Gibbon instance and check if bit positions still comply
                 const gibbon2 = Gibbon.fromString(str1);
-
 
                 // Assertions:
                 expect(gibbon1.compare(gibbon2)).to.be.equal(true);
                 expect(gibbon2.compare(gibbon1)).to.be.equal(true);
 
                 done();
-
             });
         });
 
         describe('From to String', function () {
-
             it(`Test ${helper.testNumber++}: Create Gibbon with no given string`, function (done) {
-
                 const gibbon = Gibbon.fromString();
                 const positions = gibbon.getPositionsArray();
                 expect(positions.length).to.equal(0);
                 done();
-
             });
 
             it(`Test ${helper.testNumber++}: Set bits (Converts from string and back and checks consistency)`, function (done) {
-
                 // Initialize a Gibbon with ArrayBuffer (size = 256 bytes)
                 const gibbon = Gibbon.create(256);
 
                 // Pre set some bit positions for the test:
-                gibbon.setPosition(1)
+                gibbon
+                    .setPosition(1)
                     .setPosition(2)
                     .setPosition(3)
                     .setPosition(4)
@@ -138,7 +121,6 @@ describe('Gibbon: Bit masking tests', function () {
                 const str1 = gibbon.toString();
                 //////////////////////////////////
 
-
                 //////////////////////////////////
                 // Convert string to a new Gibbon instance and check if bit positions still comply
                 const gibbon1 = Gibbon.fromString(str1);
@@ -148,17 +130,15 @@ describe('Gibbon: Bit masking tests', function () {
                 expect(matches1).to.be.equal(true);
                 expect(matches2).to.be.equal(true);
                 done();
-
             });
 
-
             it(`Test ${helper.testNumber++}: Toggle bits (Converts from string and back and checks consistency)`, function (done) {
-
                 // Initialize a Gibbon with ArrayBuffer (size = 256 bytes)
                 const gibbon = Gibbon.create(256);
 
                 // Pre set some bit positions for the test:
-                gibbon.setPosition(1)
+                gibbon
+                    .setPosition(1)
                     .setPosition(2)
                     .setPosition(3)
                     .setPosition(4)
@@ -173,7 +153,8 @@ describe('Gibbon: Bit masking tests', function () {
                     .setPosition(13);
 
                 // Toggle some
-                gibbon.togglePosition(1)
+                gibbon
+                    .togglePosition(1)
                     .togglePosition(3)
                     .togglePosition(5)
                     .togglePosition(7)
@@ -182,13 +163,14 @@ describe('Gibbon: Bit masking tests', function () {
                     .togglePosition(13);
 
                 // We're going to check on these positions
-                const positions = [-1, 2, -3, 4, -5, 6, -7, 8, -9, 10, -11, 12, -13];
+                const positions = [
+                    -1, 2, -3, 4, -5, 6, -7, 8, -9, 10, -11, 12, -13,
+                ];
 
                 // Check before encoding to string
                 const matches1 = gibbon.hasAllFromPositions(positions);
                 const str1 = gibbon.toString();
                 //////////////////////////////////
-
 
                 //////////////////////////////////
                 // Convert string to a new Gibbon instance and check if bit positions still comply
@@ -199,17 +181,15 @@ describe('Gibbon: Bit masking tests', function () {
                 expect(matches1).to.be.equal(true);
                 expect(matches2).to.be.equal(true);
                 done();
-
             });
 
-
             it(`Test ${helper.testNumber++}: Individual bit positions (Sets some individual bits and checks outcome)`, function (done) {
-
                 // Initialize a Gibbon with ArrayBuffer (size = 2 bytes)
                 const gibbon = Gibbon.create(2);
 
                 // Pre set some bit positions for the test:
-                gibbon.setPosition(1)
+                gibbon
+                    .setPosition(1)
                     .setPosition(2)
                     .setPosition(3)
                     .setPosition(4)
@@ -225,7 +205,6 @@ describe('Gibbon: Bit masking tests', function () {
 
                 const str1 = gibbon.toString();
                 //////////////////////////////////
-
 
                 //////////////////////////////////
                 // Convert string to a new Gibbon instance
@@ -250,18 +229,16 @@ describe('Gibbon: Bit masking tests', function () {
                 expect(gibbon1.isPosition(15)).to.be.equal(false);
                 expect(gibbon1.isPosition(16)).to.be.equal(false);
 
-
                 done();
-
             });
 
             it(`Test ${helper.testNumber++}: Individual bit positions (Sets some individual bits, manipulate and checks outcome)`, function (done) {
-
                 // Initialize a Gibbon with ArrayBuffer (size = 2 bytes)
                 const gibbon = Gibbon.create(2);
 
                 // Pre set some bit positions for the test:
-                gibbon.setPosition(1)
+                gibbon
+                    .setPosition(1)
                     .setPosition(2)
                     .setPosition(3)
                     .setPosition(4)
@@ -269,7 +246,6 @@ describe('Gibbon: Bit masking tests', function () {
                     .setPosition(6)
                     .setPosition(7)
                     .setPosition(8);
-
 
                 expect(gibbon.isPosition(1)).to.be.equal(true);
                 expect(gibbon.isPosition(2)).to.be.equal(true);
@@ -280,7 +256,8 @@ describe('Gibbon: Bit masking tests', function () {
                 expect(gibbon.isPosition(7)).to.be.equal(true);
                 expect(gibbon.isPosition(8)).to.be.equal(true);
 
-                gibbon.changePosition(1)
+                gibbon
+                    .changePosition(1)
                     .changePosition(3)
                     .changePosition(5)
                     .changePosition(7)
@@ -295,7 +272,8 @@ describe('Gibbon: Bit masking tests', function () {
                 expect(gibbon.isPosition(7)).to.be.equal(false);
                 expect(gibbon.isPosition(8)).to.be.equal(true);
 
-                gibbon.clearPosition(2)
+                gibbon
+                    .clearPosition(2)
                     .clearPosition(4)
                     .clearPosition(6)
                     .clearPosition(8);
@@ -305,19 +283,17 @@ describe('Gibbon: Bit masking tests', function () {
                 expect(gibbon.hasAllFromPositions(positions)).to.be.equal(true);
 
                 done();
-
             });
         });
 
         describe('Get / Set positions array', function () {
-
             it(`Test ${helper.testNumber++}: Fetch positions where bit is set true`, function (done) {
-
                 // Initialize a Gibbon with ArrayBuffer (size = 2 bytes)
                 const gibbon = Gibbon.create(2);
 
                 // Pre set some bit positions for the test:
-                gibbon.setPosition(1)
+                gibbon
+                    .setPosition(1)
                     .setPosition(2)
                     .setPosition(3)
                     .setPosition(4)
@@ -336,7 +312,6 @@ describe('Gibbon: Bit masking tests', function () {
             });
 
             it(`Test ${helper.testNumber++}: Parse positions`, function (done) {
-
                 // Initialize a Gibbon with ArrayBuffer (size = 2 bytes)
                 const gibbon = Gibbon.create(2);
 
@@ -352,12 +327,12 @@ describe('Gibbon: Bit masking tests', function () {
             });
 
             it(`Test ${helper.testNumber++}: Checks on match on any positions`, function (done) {
-
                 // Initialize a Gibbon with ArrayBuffer (size = 1 bytes)
                 const gibbon = Gibbon.create(1);
 
                 // Pre set all bits positions for the test:
-                gibbon.setPosition(1)
+                gibbon
+                    .setPosition(1)
                     .setPosition(3)
                     .setPosition(5)
                     .setPosition(7);
@@ -370,17 +345,15 @@ describe('Gibbon: Bit masking tests', function () {
 
                 expect(result).to.be.equal(true);
                 done();
-
             });
 
-
             it(`Test ${helper.testNumber++}: Checks on match on any positions (alternative)`, function (done) {
-
                 // Initialize a Gibbon with ArrayBuffer (size = 1 bytes)
                 const gibbon = Gibbon.create(1);
 
                 // Pre set all bits positions for the test:
-                gibbon.setPosition(1)
+                gibbon
+                    .setPosition(1)
                     .setPosition(3)
                     .setPosition(5)
                     .setPosition(7);
@@ -393,16 +366,15 @@ describe('Gibbon: Bit masking tests', function () {
 
                 expect(result).to.be.equal(true);
                 done();
-
             });
 
             it(`Test ${helper.testNumber++}: Checks on match on any positions (no criteria given)`, function (done) {
-
                 // Initialize a Gibbon with ArrayBuffer (size = 1 bytes)
                 const gibbon = Gibbon.create(1);
 
                 // Pre set all bits positions for the test:
-                gibbon.setPosition(1)
+                gibbon
+                    .setPosition(1)
                     .setPosition(3)
                     .setPosition(5)
                     .setPosition(7);
@@ -412,11 +384,9 @@ describe('Gibbon: Bit masking tests', function () {
 
                 expect(result).to.be.equal(false);
                 done();
-
             });
 
             it(`Test ${helper.testNumber++}: Set positions without giving positions`, function (done) {
-
                 // Initialize a Gibbon with ArrayBuffer (size = 1 bytes)
                 const gibbon = Gibbon.create(1);
                 gibbon.setAllFromPositions();
@@ -426,23 +396,17 @@ describe('Gibbon: Bit masking tests', function () {
                 expect(positions.length).to.equal(0);
                 done();
             });
-
         });
-
     });
 
     describe('Unhappy flows ', function () {
-
-
         it(`Test ${helper.testNumber++}: Bit position \'0\' is not allowed (positions are allowed from 1 and up)`, function (done) {
-
             var throwError = function () {
                 // Initialize a Gibbon with ArrayBuffer (size = 256 bytes)
                 const gibbon = Gibbon.create(256);
 
                 // Pre set bit position 0 for the test:
                 gibbon.setPosition(0);
-
             };
 
             expect(throwError).to.throw(Error);
@@ -450,7 +414,6 @@ describe('Gibbon: Bit masking tests', function () {
         });
 
         it(`Test ${helper.testNumber++}: Compare gibbon with gibbon please)`, function (done) {
-
             function throwError() {
                 // Initialize a Gibbon with ArrayBuffer (size = 256 bytes)
                 const gibbon = Gibbon.create(256);
@@ -463,7 +426,6 @@ describe('Gibbon: Bit masking tests', function () {
         });
 
         it(`Test ${helper.testNumber++}: Class method expects string`, function (done) {
-
             function throwError() {
                 Gibbon.fromString(556);
             }
@@ -472,9 +434,7 @@ describe('Gibbon: Bit masking tests', function () {
             done();
         });
 
-
         it(`Test ${helper.testNumber++}: Bit position \'9\' is not allowed anymore (we only allocated 1 byte)`, function (done) {
-
             function throwError() {
                 // Initialize a Gibbon with ArrayBuffer (size = 1 bytes)
                 const gibbon = Gibbon.create(1);
@@ -496,12 +456,12 @@ describe('Gibbon: Bit masking tests', function () {
         });
 
         it(`Test ${helper.testNumber++}: Checks on positions outside the memory area, should just return false early`, function (done) {
-
             // Initialize a Gibbon with ArrayBuffer (size = 1 bytes)
             const gibbon = Gibbon.create(1);
 
             // Pre set all bits positions for the test:
-            gibbon.setPosition(1)
+            gibbon
+                .setPosition(1)
                 .setPosition(2)
                 .setPosition(3)
                 .setPosition(4)
@@ -518,11 +478,9 @@ describe('Gibbon: Bit masking tests', function () {
 
             expect(result).to.be.equal(false);
             done();
-
         });
 
         it(`Test ${helper.testNumber++}: force type strictness on hasAllFromPositions`, function (done) {
-
             function throwTypeError() {
                 // Initialize a Gibbon with ArrayBuffer (size = 1 bytes)
                 const gibbon = Gibbon.create(1);
@@ -536,11 +494,9 @@ describe('Gibbon: Bit masking tests', function () {
 
             expect(throwTypeError).to.throw(TypeError);
             done();
-
         });
 
         it(`Test ${helper.testNumber++}: Try to do things out of bounds`, function (done) {
-
             // Initialize a Gibbon with ArrayBuffer (size = 1 bytes)
             const gibbon = Gibbon.create(1);
 
@@ -556,7 +512,6 @@ describe('Gibbon: Bit masking tests', function () {
         });
 
         it(`Test ${helper.testNumber++}: Try to do have something other than array`, function (done) {
-
             // Initialize a Gibbon with ArrayBuffer (size = 1 bytes)
             const gibbon = Gibbon.create(1);
 
@@ -568,9 +523,7 @@ describe('Gibbon: Bit masking tests', function () {
             done();
         });
 
-
         it(`Test ${helper.testNumber++}: Try to do things out of bounds on anyPositions`, function (done) {
-
             // Initialize a Gibbon with ArrayBuffer (size = 1 bytes)
             const gibbon = Gibbon.create(1);
 
@@ -586,7 +539,6 @@ describe('Gibbon: Bit masking tests', function () {
         });
 
         it(`Test ${helper.testNumber++}: Try to do have something other than array on anyPositions`, function (done) {
-
             // Initialize a Gibbon with ArrayBuffer (size = 1 bytes)
             const gibbon = Gibbon.create(1);
 
@@ -598,7 +550,4 @@ describe('Gibbon: Bit masking tests', function () {
             done();
         });
     });
-
 });
-
-
