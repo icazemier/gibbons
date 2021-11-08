@@ -27,7 +27,7 @@ jobs:
             - run: npm test
 
 
-    publish-npm:
+    publish-github:
         needs: test
         runs-on: ubuntu-latest
         steps:
@@ -39,6 +39,25 @@ jobs:
               with:
                   node-version: 16
                   registry-url: https://npm.pkg.github.com
+                  scope: '@icazemier'
+            - run: npm ci
+            - name: Release
+              run: npx semantic-release --debug
+              env:
+                  GITHUB_TOKEN: ${{ secrets.SEMANTIC_RELEASE_GITHUB_TOKEN }}
+                  NPM_TOKEN: ${{ secrets.SEMANTIC_RELEASE_NPM_TOKEN }}
+    publish-npm:
+        needs: test
+        runs-on: ubuntu-latest
+        steps:
+            - uses: actions/checkout@v2
+              with:
+                fetch-depth: 0
+                persist-credentials: false
+            - uses: actions/setup-node@v1
+              with:
+                  node-version: 16
+                  registry-url: https://registry.npmjs.org/
                   scope: '@icazemier'
             - run: npm ci
             - name: Release
