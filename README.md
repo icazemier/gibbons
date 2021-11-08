@@ -29,7 +29,7 @@ See: [Gibbons Docs](https://icazemier.github.io/gibbons/)
 * [API documentation and tutorial](https://icazemier.github.io/gibbons/)
 
 
-[![npm version](https://badge.fury.io/js/gibbons.svg)](https://www.npmjs.com/package/gibbons)
+[![npm version](https://badge.fury.io/js/@icazemier%2Fgibbons.svg)](https://badge.fury.io/js/@icazemier%2Fgibbons)
 
 
 
