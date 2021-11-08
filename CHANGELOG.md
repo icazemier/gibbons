@@ -1,11 +1,25 @@
-# [4.1.0](https://github.com/icazemier/gibbons/compare/v4.0.1...v4.1.0) (2020-08-03)
+# Change Log
 
+#### [v5.0.0](https://github.com/icazemier/gibbons/compare/4.1.0...5.0.0)
+> 29 August 2021
+
+### Features
+
+**Contains BREAKING CHANGES**
+
+* ⚠️ Breaking: Intrusive abstract class removed in favor of separate modules implementing Gibbons
+* Migrated to cjs and esm (https://nodejs.org/api/esm.html#esm_modules_ecmascript_modules)
+* Converted source to TypeScript (to easily serve the TypeScript fans 🦄)
+* Implemented [AVA](https://github.com/avajs/ava) for unit testing
+* Additional functions to "encode" and "decode" depending on a Environment variable: `process.env.GIBBONS_ENCODE_FROM_TO_STRING`
+
+#### [4.1.0](https://github.com/icazemier/gibbons/compare/v4.0.1...v4.1.0)
+> 08 August 2020
 
 ### Features
 
 * GitHub workflows ([6c50237](https://github.com/icazemier/gibbons/commit/6c50237d2c31601a2cd004a900383f04046ae0bf))
 
-# Change Log
 
 #### [v4.0.1](https://github.com/icazemier/gibbons/compare/3.0.0...4.0.1)
 > 23 April 2020
