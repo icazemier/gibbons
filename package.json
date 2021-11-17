@@ -39,7 +39,7 @@
     "test": "cross-env NODE_ENV=test c8 ava",
     "build:esm": "tsc -p tsconfig.json",
     "build:cjs": "tsc -p tsconfig-cjs.json",
-    "build": "rimraf build && npm run build:esm && npm run build:cjs && ./fixup",
+    "build": "rimraf build && npm run build:esm && npm run build:cjs && node ./fixup.js",
     "lint": "eslint . --ext .ts",
     "lint:fix": "eslint . --ext .ts --fix",
     "prepublishOnly": "npm run lint",
