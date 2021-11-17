@@ -1,6 +1,14 @@
 # Change Log
 
-#### [v5.0.0](https://github.com/icazemier/gibbons/compare/4.1.0...5.0.0)
+#### [v5.0.1](https://github.com/icazemier/gibbons/compare/v4.1.0...v5.0.0)
+> 17 November 2021
+
+### Fix
+
+- Ensured CommonJS ways works again (sorry for that)
+- 
+
+#### [v5.0.0](https://github.com/icazemier/gibbons/compare/v4.1.0...v5.0.0)
 > 29 August 2021
 
 ### Features
