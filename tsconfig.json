@@ -1,12 +1,14 @@
 {
   "compilerOptions": {
-    "lib": ["es2021"],
-    "target": "es2021",
+    "lib": [
+      "ESNext"
+    ],
+    "target": "ESNext",
     "strict": true,
     "esModuleInterop": true,
     "skipLibCheck": true,
     "forceConsistentCasingInFileNames": true,
-    "module": "ES2020",
+    "module": "ESNext",
     "moduleResolution": "node",
     "outDir": "./build/esm",
     "noImplicitReturns": true,
@@ -20,6 +22,10 @@
     "baseUrl": "./src",
     "rootDir": "./src"
   },
-  "include": ["src/**/*"],
-  "exclude": ["src/**/*.spec.ts"]
+  "include": [
+    "src/**/*"
+  ],
+  "exclude": [
+    "src/**/*.spec.ts"
+  ]
 }
