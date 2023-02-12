@@ -4,7 +4,6 @@
   "lines": 99,
   "extension": [".ts"],
   "include": ["src/**/*.ts"],
-  "exclude": ["src/index.ts", "**/*.spec.*"],
   "sourceMap": true,
   "reporter": ["html", "text", "text-summary"],
   "report-dir": "./coverage",
