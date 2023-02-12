@@ -1,31 +1,24 @@
 {
   "compilerOptions": {
-    "lib": [
-      "ESNext"
-    ],
+    "module": "NodeNext",
+    "lib": ["ESNext"],
     "target": "ESNext",
     "strict": true,
     "esModuleInterop": true,
     "skipLibCheck": true,
     "forceConsistentCasingInFileNames": true,
-    "module": "ESNext",
-    "moduleResolution": "node",
+    "moduleResolution": "nodenext",
     "outDir": "./build/esm",
     "noImplicitReturns": true,
     "noUnusedLocals": true,
     "declaration": true,
-    "declarationMap": true,
-    "sourceMap": true,
+    "declarationMap": false,
+    "sourceMap": false,
     "allowJs": true,
-    "experimentalDecorators": true,
     "allowSyntheticDefaultImports": true,
     "baseUrl": "./src",
     "rootDir": "./src"
   },
-  "include": [
-    "src/**/*"
-  ],
-  "exclude": [
-    "src/**/*.spec.ts"
-  ]
+  "include": ["src/**/*"],
+  "exclude": ["src/**/*.spec.ts"]
 }

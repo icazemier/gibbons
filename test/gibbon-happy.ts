@@ -1,5 +1,5 @@
 import test from "ava";
-import { Gibbon } from "../src/gibbon.js";
+import { Gibbon } from "../src/index.js";
 import { helper } from "./_helper.js";
 
 // Compare Gibbons

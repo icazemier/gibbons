@@ -1,7 +1,8 @@
 {
   "name": "@icazemier/gibbons",
+  "type": "module",
   "private": false,
-  "version": "5.0.1",
+  "version": "5.0.2",
   "description": "Gibbons is a Node.js module which helps in managing user groups and user permissions with `bitwise` effiency.",
   "contributors": [
     {
@@ -39,7 +40,7 @@
     "test": "cross-env NODE_ENV=test c8 ava",
     "build:esm": "tsc -p tsconfig.json",
     "build:cjs": "tsc -p tsconfig-cjs.json",
-    "build": "rimraf build && npm run build:esm && npm run build:cjs && node ./fixup.js",
+    "build": "rimraf build && npm run build:esm && npm run build:cjs && node ./fixup.mjs",
     "lint": "eslint . --ext .ts",
     "lint:fix": "eslint . --ext .ts --fix",
     "prepublishOnly": "npm run lint",
@@ -53,29 +54,16 @@
   "homepage": "https://icazemier.github.io/gibbons/",
   "license": "MIT",
   "devDependencies": {
-    "@types/node": "^16.11.6",
-    "@typescript-eslint/eslint-plugin": "^5.3.0",
-    "@typescript-eslint/parser": "^5.3.0",
-    "ava": "^3.15.0",
-    "c8": "^7.10.0",
+    "@types/node": "^18.13.0",
+    "@typescript-eslint/eslint-plugin": "^5.51.0",
+    "@typescript-eslint/parser": "^5.51.0",
+    "ava": "^5.2.0",
+    "c8": "^7.12.0",
     "cross-env": "^7.0.3",
-    "eslint": "^8.2.0",
-    "rimraf": "^3.0.2",
-    "ts-node": "^10.4.0",
-    "typedoc": "^0.22.7",
-    "typescript": "^4.4.4"
-  },
-  "ava": {
-    "extensions": {
-      "ts": "module"
-    },
-    "nodeArguments": [
-      "--loader=ts-node/esm",
-      "--experimental-specifier-resolution=node"
-    ],
-    "nonSemVerExperiments": {
-      "configurableModuleFormat": true
-    },
-    "verbose": true
+    "eslint": "^8.34.0",
+    "rimraf": "^4.1.2",
+    "ts-node": "^10.9.1",
+    "typedoc": "^0.23.25",
+    "typescript": "^4.9.5"
   }
 }
