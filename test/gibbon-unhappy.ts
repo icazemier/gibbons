@@ -1,5 +1,5 @@
 import test from "ava";
-import { Gibbon } from "../src/gibbon.js";
+import { Gibbon } from "../src/index.js";
 import { helper } from "./_helper.js";
 
 test(`Test ${helper.testNumber++}: Bit position '0' is not allowed (positions are allowed from 1 and up)`, (t) => {
@@ -13,7 +13,7 @@ test(`Test ${helper.testNumber++}: Bit position '0' is not allowed (positions ar
 
     const err = t.throws(throwsError);
     t.assert(err instanceof Error);
-    t.is(err.message, "Illegal position");
+    t.is(err?.message, "Illegal position");
 });
 
 test(`Test ${helper.testNumber++}: Bit position '9' is not allowed anymore (we only allocated 1 byte)`, (t) => {
@@ -35,7 +35,7 @@ test(`Test ${helper.testNumber++}: Bit position '9' is not allowed anymore (we o
 
     const error = t.throws(throwsError);
     t.assert(error instanceof Error);
-    t.is(error.message, "Illegal position");
+    t.is(error?.message, "Illegal position");
 });
 
 test(`Test ${helper.testNumber++}: Checks on positions outside the memory area, should just return false early`, (t) => {
@@ -62,7 +62,7 @@ test(`Test ${helper.testNumber++}: Checks on positions outside the memory area, 
 
     const error = t.throws(throwsError);
     t.assert(error instanceof Error);
-    t.is(error.message, "Illegal position");
+    t.is(error?.message, "Illegal position");
 });
 
 test(`Test ${helper.testNumber++}: Try to do things out of bounds`, (t) => {
@@ -78,7 +78,7 @@ test(`Test ${helper.testNumber++}: Try to do things out of bounds`, (t) => {
 
     const error = t.throws(throwsError);
     t.assert(error instanceof Error);
-    t.is(error.message, "Illegal position");
+    t.is(error?.message, "Illegal position");
 });
 
 test(`Test ${helper.testNumber++}: Try to do things out of bounds on anyPositions`, (t) => {
@@ -93,7 +93,7 @@ test(`Test ${helper.testNumber++}: Try to do things out of bounds on anyPosition
 
     const error = t.throws(throwsError);
     t.assert(error instanceof Error);
-    t.is(error.message, "Illegal position");
+    t.is(error?.message, "Illegal position");
 });
 
 test(`Test ${helper.testNumber++}: Merge gibbon with other one, but is too big`, (t) => {
@@ -107,5 +107,5 @@ test(`Test ${helper.testNumber++}: Merge gibbon with other one, but is too big`,
 
     const error = t.throws(throwsError);
     t.assert(error instanceof Error);
-    t.is(error.message, "Incoming Gibbon is too big");
+    t.is(error?.message, "Incoming Gibbon is too big");
 });

@@ -1,5 +1,5 @@
 import test from "ava";
-import { GibbonProcessor } from "../src/gibbon-processor.js";
+import { GibbonProcessor } from "../src/index.js";
 import { helper } from "./_helper.js";
 
 // Calculate bits and bytes"
