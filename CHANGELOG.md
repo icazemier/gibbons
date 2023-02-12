@@ -1,12 +1,21 @@
 # Change Log
 
-#### [v5.0.1](https://github.com/icazemier/gibbons/compare/v4.1.0...v5.0.0)
+#### [v5.0.2](https://github.com/icazemier/gibbons/compare/v5.0.1...v5.0.2)
+> 12 Februari 2023
+
+### Features
+
+- Updated dependencies
+- Some minor changes to satisfy linter and test suite
+
+
+#### [v5.0.1](https://github.com/icazemier/gibbons/compare/v5.0.0...v5.0.1)
 > 17 November 2021
 
 ### Fix
 
 - Ensured CommonJS ways works again (sorry for that)
-- 
+
 
 #### [v5.0.0](https://github.com/icazemier/gibbons/compare/v4.1.0...v5.0.0)
 > 29 August 2021
