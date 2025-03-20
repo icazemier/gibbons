@@ -431,7 +431,10 @@ export class Gibbon {
         if (data instanceof Buffer) {
             return Gibbon.fromBuffer(data);
         }
-        return Gibbon.fromString(data);
+        if (typeof data === "string") {
+            return Gibbon.fromString(data);
+        }
+        throw new TypeError(`Expected a string or Buffer for decoding, but received a: ${typeof data}`);
     }
 
     /**
