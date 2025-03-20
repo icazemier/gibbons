@@ -1,5 +1,15 @@
 # Change Log
 
+#### [v5.0.3](https://github.com/icazemier/gibbons/compare/v5.0.1...v5.0.3)
+> 03 May 2025
+
+### Features
+
+- Updated dependencies
+- Change test suite to vitest
+- Minor tweaks
+
+
 #### [v5.0.2](https://github.com/icazemier/gibbons/compare/v5.0.1...v5.0.2)
 > 12 Februari 2023
 
