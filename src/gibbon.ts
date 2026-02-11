@@ -489,7 +489,7 @@ export class Gibbon {
      */
     toString(): string {
         const view = new Uint16Array(this.arrayBuffer);
-        let result = '';
+        let result = "";
         for (let i = 0; i < view.length; i++) {
             result += String.fromCharCode(view[i]);
         }
