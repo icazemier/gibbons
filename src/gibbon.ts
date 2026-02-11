@@ -96,7 +96,7 @@ export class Gibbon {
      * Set bit: true according to integer position in the Gibbon <br>
      * <i>Note: Starting from 1</i>
      * @throws {Error} Position can't exceed data view bounds.
-     * @param {Number} position - unsigned integer value
+     * @param {number} position - unsigned integer value
      * @returns {Gibbon} - For chaining purposes
      */
     setPosition(position: number): Gibbon {
@@ -117,11 +117,15 @@ export class Gibbon {
     /**
      * Set bit: false according to integer position
      * Note: Starting from 1
-     * @param {Number} position - unsigned integer value
+     * @param {number} position - unsigned integer value
      * @returns {Gibbon}
+     * @throws {Error} Position can't exceed data view bounds.
      */
     clearPosition(position: number): Gibbon {
         const bitBytePosition = GibbonProcessor.getByteNoAndBitPos(position);
+        if (bitBytePosition.byteNo >= this.dataView.byteLength) {
+            throw new Error("Illegal position");
+        }
         let byte = this.dataView.getUint8(bitBytePosition.byteNo);
         byte = GibbonProcessor.clearBit(byte, bitBytePosition.bitPos);
         this.dataView.setUint8(bitBytePosition.byteNo, byte);
@@ -137,11 +141,14 @@ export class Gibbon {
      *
      * gibbon.isPosition(1); // true
      * ```
-     * @param {Number} position - unsigned integer value
+     * @param {number} position - unsigned integer value
      * @returns {Gibbon}
      */
     togglePosition(position: number): Gibbon {
         const bitBytePosition = GibbonProcessor.getByteNoAndBitPos(position);
+        if (bitBytePosition.byteNo >= this.dataView.byteLength) {
+            throw new Error("Illegal position");
+        }
         let byte = this.dataView.getUint8(bitBytePosition.byteNo);
         byte = GibbonProcessor.toggleBit(byte, bitBytePosition.bitPos);
         this.dataView.setUint8(bitBytePosition.byteNo, byte);
@@ -159,12 +166,15 @@ export class Gibbon {
      * gibbon.isPosition(1); // returns true
      * ```
      *
-     * @param {Number} position - unsigned integer value
+     * @param {number} position - unsigned integer value
      * @param {boolean} [on] - Optional set true or false (default : false)
      * @returns {Gibbon} - Return itself for chaining purposes
      */
     changePosition(position: number, on = false): Gibbon {
         const bitBytePosition = GibbonProcessor.getByteNoAndBitPos(position);
+        if (bitBytePosition.byteNo >= this.dataView.byteLength) {
+            throw new Error("Illegal position");
+        }
         let byte = this.dataView.getUint8(bitBytePosition.byteNo);
         byte = GibbonProcessor.changeBit(byte, bitBytePosition.bitPos, on);
         this.dataView.setUint8(bitBytePosition.byteNo, byte);
@@ -182,11 +192,14 @@ export class Gibbon {
      *
      * gibbon.isPosition(1); // returns true
      * ```
-     * @param {Number} position - unsigned integer value
+     * @param {number} position - unsigned integer value
      * @returns {boolean} if membership is set
      */
     isPosition(position: number): boolean {
         const bitBytePosition = GibbonProcessor.getByteNoAndBitPos(position);
+        if (bitBytePosition.byteNo >= this.dataView.byteLength) {
+            throw new Error("Illegal position");
+        }
         const byte = this.dataView.getUint8(bitBytePosition.byteNo);
         return GibbonProcessor.isTrue(byte, bitBytePosition.bitPos);
     }
@@ -266,7 +279,7 @@ export class Gibbon {
      *  gibbon.hasAllFromPositions([-1, 2]); // true
      * ```
      *
-     * @param {Array<Number>} positionArray - containing signed integer values (representing bit positions)
+     * @param {Array<number>} positionArray - containing signed integer values (representing bit positions)
      * @return {boolean} true when all positions correspondent to the given indexes
      * @throws {TypeError} if positionArray is not an instance of array
      *
@@ -330,7 +343,7 @@ export class Gibbon {
      *
      *  gibbon.hasAllFromPositions([-1, 100]); // true
      * ```
-     * @param {Array<Number>} positionArray - containing signed integer values (representing bit positions)
+     * @param {Array<number>} positionArray - containing signed integer values (representing bit positions)
      * @return {boolean} true when one of these positions correspond
      * @throws {TypeError} if positionArray is not an instance of array
      */
@@ -363,7 +376,7 @@ export class Gibbon {
      *  gibbon.setAllFromPositions([1, -2]);
      *  gibbon.hasAllFromPositions([1]); // returns true
      * ```
-     * @param {Array<Number>} positionArray - Array with integer values starting from 1.
+     * @param {Array<number>} positionArray - Array with integer values starting from 1.
      * @returns {Gibbon} - For chaining purposes
      * @throws {Error} When out of bounds
      */
@@ -413,7 +426,7 @@ export class Gibbon {
      *  gibbon.setAllFromPositions([1, -2]);
      *  gibbon.hasAllFromPositions([2]); // returns true
      * ```
-     * @param {Array<Number>} positionArray - Array with integer values starting from 1.
+     * @param {Array<number>} positionArray - Array with integer values starting from 1.
      * @returns {Gibbon} - For chaining purposes
      * @throws {TypeError} if positionArray is not an instance of array
      */
@@ -475,11 +488,12 @@ export class Gibbon {
      * @override
      */
     toString(): string {
-        return String.fromCharCode.apply(
-            null,
-            // eslint-disable-next-line @typescript-eslint/no-explicit-any
-            new Uint16Array(this.arrayBuffer) as any
-        );
+        const view = new Uint16Array(this.arrayBuffer);
+        let result = '';
+        for (let i = 0; i < view.length; i++) {
+            result += String.fromCharCode(view[i]);
+        }
+        return result;
     }
 
     /**
@@ -500,10 +514,13 @@ export class Gibbon {
 
     /**
      * Creates a new empty Gibbon from a given byte size
-     * @param {Number} byteSize - Allocate this Gibbon with a unsigned integer value (size in bytes)
+     * @param {number} byteSize - Allocate this Gibbon with a unsigned integer value (size in bytes)
      * @returns {Gibbon} - new instance of a Gibbon
      */
     static create(byteSize: number): Gibbon {
+        if (!Number.isInteger(byteSize) || byteSize <= 0) {
+            throw new Error("byteSize must be a positive integer");
+        }
         const arrayBuffer = new ArrayBuffer(byteSize);
         return new Gibbon(arrayBuffer);
     }

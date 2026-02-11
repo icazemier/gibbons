@@ -3,7 +3,7 @@
   "type": "module",
   "private": false,
   "version": "5.0.3",
-  "description": "Gibbons is a Node.js module which helps in managing user groups and user permissions with `bitwise` effiency.",
+  "description": "Gibbons is a Node.js module which helps in managing user groups and user permissions with `bitwise` efficiency.",
   "contributors": [
     {
       "name": "Ivo Cazemier",
@@ -42,7 +42,8 @@
     "test": "cross-env NODE_ENV=test vitest run --coverage",
     "build:esm": "tsc -p tsconfig-build-esm.json",
     "build:cjs": "tsc -p tsconfig-build-cjs.json",
-    "build": "rimraf build && npm run build:esm && npm run build:cjs && node ./fixup.mjs",
+    "build": "rimraf build && npm run build:esm && npm run build:cjs && npm run fixup",
+    "fixup": "node ./fixup.mjs",
     "lint": "eslint . --ext .ts",
     "lint:fix": "eslint . --ext .ts --fix",
     "prepublishOnly": "npm run lint",

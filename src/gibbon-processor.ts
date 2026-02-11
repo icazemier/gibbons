@@ -1,8 +1,8 @@
 /**
  * Just a class to carry byte position and bit position around
  *
- * @param {Number} byteNo - unsigned integer value (0..n)
- * @param {Number} bitPos - unsigned integer value (0..n)
+ * @param {number} byteNo - unsigned integer value (0..n)
+ * @param {number} bitPos - unsigned integer value (0..n)
  */
 export class BitByte {
     byteNo: number;
@@ -27,12 +27,12 @@ export class GibbonProcessor {
      *
      * getByteNoAndBitPos(256); // returns { byteNo: 31, bitPos: 7}
      * ```
-     * @param {Number} position - Unsigned integer value (1..n)
+     * @param {number} position - Unsigned integer value (1..n)
      * @returns {BitByte} - A new a BitByte instance
      * @throws {Error} when position is <= 0
      */
     static getByteNoAndBitPos(position = 0): BitByte {
-        if (position <= 0) {
+        if (!Number.isInteger(position) || position <= 0) {
             throw new Error("Illegal position");
         }
         const index = position - 1;
@@ -118,8 +118,8 @@ export class GibbonProcessor {
      * // 0000 0001 === 0000 0001 (true)
      * //
      * ```
-     * @param {Number} data - Unsigned integer value
-     * @param {Number} index - Unsigned integer value (0..7)
+     * @param {number} data - Unsigned integer value
+     * @param {number} index - Unsigned integer value (0..7)
      * @returns {boolean}
      */
     static isTrue(data = 0x0, index = 0): boolean {
@@ -142,8 +142,8 @@ export class GibbonProcessor {
      * // 0000 0001 === 0000 0000 (false)
      * //
      * ```
-     * @param {Number} data - Unsigned integer value
-     * @param {Number} index - Unsigned integer value (0..7)
+     * @param {number} data - Unsigned integer value
+     * @param {number} index - Unsigned integer value (0..7)
      * @returns {boolean}
      */
     static isFalse(data = 0x0, index = 0): boolean {
@@ -163,9 +163,9 @@ export class GibbonProcessor {
      * // ---------------- OR
      * // 0000 0001 result
      * ```
-     * @param {Number} data - Unsigned integer value
-     * @param {Number} index - Unsigned integer value (0..7)
-     * @returns {Number}
+     * @param {number} data - Unsigned integer value
+     * @param {number} index - Unsigned integer value (0..7)
+     * @returns {number}
      */
     static setBit(data = 0x0, index = 0): number {
         const mask = 1 << index;
@@ -186,9 +186,9 @@ export class GibbonProcessor {
      * // ---------------- AND
      * // 0000 0000 result
      * ```
-     * @param {Number} data - Unsigned integer value
-     * @param {Number} index - Unsigned integer value (0..7)
-     * @returns {Number}
+     * @param {number} data - Unsigned integer value
+     * @param {number} index - Unsigned integer value (0..7)
+     * @returns {number}
      */
     static clearBit(data = 0x0, index = 0): number {
         const mask = 1 << index;
@@ -217,10 +217,10 @@ export class GibbonProcessor {
      * // ---------------- OR
      * // 0000 0000 result
      * ```
-     * @param {Number} data - Unsigned integer value
-     * @param {Number} index - Unsigned integer value (0..7)
+     * @param {number} data - Unsigned integer value
+     * @param {number} index - Unsigned integer value (0..7)
      * @param {boolean} value
-     * @returns {Number}
+     * @returns {number}
      */
     static changeBit(data = 0x0, index = 0, value: boolean): number {
         const mask = 1 << index;
@@ -240,9 +240,9 @@ export class GibbonProcessor {
      * // --------------- XOR
      * // 0000 0000 result
      * ```
-     * @param {Number} data - Unsigned integer value
-     * @param {Number} index - Unsigned integer value (0..7)
-     * @returns {Number}
+     * @param {number} data - Unsigned integer value
+     * @param {number} index - Unsigned integer value (0..7)
+     * @returns {number}
      */
     static toggleBit(data = 0x0, index = 0): number {
         const mask = 1 << index;
