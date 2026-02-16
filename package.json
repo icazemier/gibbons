@@ -42,7 +42,7 @@
     "test": "cross-env NODE_ENV=test vitest run --coverage",
     "build:esm": "tsc -p tsconfig-build-esm.json",
     "build:cjs": "tsc -p tsconfig-build-cjs.json",
-    "build": "rimraf build && npm run build:esm && npm run build:cjs && npm run fixup",
+    "build": "rimraf build && npm run build:esm && npm run build:cjs && npm run fixup && npm run docs",
     "fixup": "node ./fixup.mjs",
     "lint": "eslint . --ext .ts",
     "lint:fix": "eslint . --ext .ts --fix",
