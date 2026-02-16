@@ -1,7 +1,7 @@
 import { describe, expect, test } from "vitest";
 import { Gibbon } from "../src/index.js";
 import { helper } from "../test/_helper.js";
-import { fail } from "assert";
+import { fail } from "node:assert";
 
 describe("Gibbon happy flows", () => {
     // Compare Gibbons
