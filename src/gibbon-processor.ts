@@ -60,7 +60,7 @@ export class GibbonProcessor {
      * @param {number} param0.byte2
      * @returns {boolean}
      */
-    static hasAnyBits({ byte1 = 0x0, byte2 = 0x0 }): boolean {
+    static hasAnyBits({ byte1 = 0x0, byte2 = 0x0 }: { byte1?: number; byte2?: number }): boolean {
         return (byte1 & byte2) !== 0x0;
     }
 
@@ -99,7 +99,7 @@ export class GibbonProcessor {
      * @param {number} param0.byte2
      * @returns {boolean}
      */
-    static hasAllBits({ byte1 = 0x0, byte2 = 0x0 }): boolean {
+    static hasAllBits({ byte1 = 0x0, byte2 = 0x0 }: { byte1?: number; byte2?: number }): boolean {
         return (byte1 & byte2) === byte2;
     }
 

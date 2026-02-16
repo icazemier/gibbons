@@ -24,4 +24,11 @@ Temporary Items
 .directory
 .Trash-*
 
+# Claude
+.claude/
+.claude-flow/
+.agentdb/
+.mcp.json
+CLAUDE.md
+
 
