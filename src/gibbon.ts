@@ -205,7 +205,7 @@ export class Gibbon {
     }
 
     /**
-     * Merge with incomming bytes
+     * Merge with incoming bytes
      * @param {Gibbon} gibbon
      * @returns {Gibbon} - Return itself for chaining purposes
      */
@@ -225,8 +225,8 @@ export class Gibbon {
 
         for (let i = 0; i < byteLength; i++) {
             const thisByte = thisDataView.getUint8(i);
-            const incommingByte = incomingDataView.getUint8(i);
-            thisDataView.setUint8(i, thisByte | incommingByte);
+            const incomingByte = incomingDataView.getUint8(i);
+            thisDataView.setUint8(i, thisByte | incomingByte);
         }
         return this;
     }
@@ -257,7 +257,7 @@ export class Gibbon {
      * - A negative position means this position should be set logical '0'
      *
      *  When one wants to check on bit positions outside the memory bounds (dataViewBounds), <br>
-     *  method wil return early with `false`.
+     *  method will return early with `false`.
      *
      *
      * @example
@@ -323,7 +323,7 @@ export class Gibbon {
      *  When any of the positions conforms to logical '1' (true), we return `true` early.<br><br>
      *
      *  When one wants to check on bit positions outside the memory bounds (dataViewBounds), <br>
-     *  method wil return early with `false`.
+     *  method will return early with `false`.
      *
      *
      * @example
@@ -339,7 +339,7 @@ export class Gibbon {
      * ```
      *  // Set 2 bit positions to logical '1' then the first bit position back to '0'
      *  const gibbon = Gibbon.create(2);
-     *  gibbon.setPosition(1).setPosition(2),togglePosition(1);
+     *  gibbon.setPosition(1).setPosition(2).togglePosition(1);
      *
      *  gibbon.hasAllFromPositions([-1, 100]); // true
      * ```
@@ -451,7 +451,7 @@ export class Gibbon {
     }
 
     /**
-     * Depending on the GIBBONS_ENCODE_FROM_TO_STRING environment variable if converts this
+     * Depending on the GIBBONS_ENCODE_FROM_TO_STRING environment variable it converts this
      * Gibbon to a `string` or `Buffer`
      *
      * @returns {Buffer|string}
