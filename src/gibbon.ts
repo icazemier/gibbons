@@ -21,34 +21,31 @@ export class Gibbon {
      * @returns {boolean} if instance (or contents) are the same
      */
     equals(gibbon: Gibbon): boolean {
-        let same = false;
         const arrayBuffer = gibbon.arrayBuffer;
         const thisArrayBuffer = this.arrayBuffer;
 
         if (thisArrayBuffer === arrayBuffer) {
-            same = true;
-        } else {
-            const thisDataView = this.dataView;
-            const dataView = gibbon.dataView;
-            const byteLength = Math.max(
-                thisArrayBuffer.byteLength,
-                arrayBuffer.byteLength
-            );
-            let result = true;
-            for (let i = 0; i < byteLength && result; i++) {
-                const value1 =
-                    i < thisDataView.byteLength
-                        ? thisDataView.getUint8(i)
-                        : 0x0;
-                const value2 =
-                    i < dataView.byteLength ? dataView.getUint8(i) : 0x0;
-                if (value1 !== value2) {
-                    result = false;
-                }
-            }
-            same = result;
+            return true;
         }
-        return same;
+
+        const thisDataView = this.dataView;
+        const dataView = gibbon.dataView;
+        const byteLength = Math.max(
+            thisArrayBuffer.byteLength,
+            arrayBuffer.byteLength
+        );
+        for (let i = 0; i < byteLength; i++) {
+            const value1 =
+                i < thisDataView.byteLength
+                    ? thisDataView.getUint8(i)
+                    : 0x0;
+            const value2 =
+                i < dataView.byteLength ? dataView.getUint8(i) : 0x0;
+            if (value1 !== value2) {
+                return false;
+            }
+        }
+        return true;
     }
 
     /**
