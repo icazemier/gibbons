@@ -7,23 +7,23 @@ on:
       - develop
 
 permissions:
-  contents: write
-  issues: write
-  pull-requests: write
-  id-token: write
-  packages: write
+  contents: read
 
 jobs:
   test:
     name: Test on Node ${{ matrix.node-version }}
     runs-on: ubuntu-latest
     if: "!contains(github.event.head_commit.message, 'skip ci') && !contains(github.event.head_commit.message, 'skip release')"
+    permissions:
+      contents: read
     strategy:
       matrix:
         node-version: [20.x, 22.x, 24.x]
     steps:
       - name: Checkout
         uses: actions/checkout@v6
+        with:
+          persist-credentials: false
 
       - name: Setup Node.js ${{ matrix.node-version }}
         uses: actions/setup-node@v6
@@ -48,6 +48,11 @@ jobs:
     needs: test
     runs-on: ubuntu-latest
     if: "!contains(github.event.head_commit.message, 'skip ci') && !contains(github.event.head_commit.message, 'skip release')"
+    permissions:
+      contents: write
+      issues: write
+      pull-requests: write
+      id-token: write
     steps:
       - name: Checkout
         uses: actions/checkout@v6
@@ -90,6 +95,8 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v6
+        with:
+          persist-credentials: false
 
       - name: Setup Node.js
         uses: actions/setup-node@v6
@@ -120,13 +127,15 @@ jobs:
 
       - name: Update jsr.json version
         if: steps.version.outputs.skip != 'true'
+        env:
+          JSR_VERSION: ${{ steps.version.outputs.version }}
         run: |
-          node -e "
-            const fs = require('fs');
-            const jsr = JSON.parse(fs.readFileSync('jsr.json', 'utf8'));
-            jsr.version = '${{ steps.version.outputs.version }}';
-            fs.writeFileSync('jsr.json', JSON.stringify(jsr, null, 2) + '\n');
-          "
+          node -e '
+            const fs = require("fs");
+            const jsr = JSON.parse(fs.readFileSync("jsr.json", "utf8"));
+            jsr.version = process.env.JSR_VERSION;
+            fs.writeFileSync("jsr.json", JSON.stringify(jsr, null, 2) + "\n");
+          '
 
       - name: Publish to JSR
         if: steps.version.outputs.skip != 'true'
