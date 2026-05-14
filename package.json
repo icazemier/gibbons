@@ -57,7 +57,9 @@
   "homepage": "https://icazemier.github.io/gibbons/",
   "license": "MIT",
   "overrides": {
-    "minimatch": "^10.2.3"
+    "minimatch": "^10.2.3",
+    "postcss": "^8.5.10",
+    "npm": "^11.14.1"
   },
   "devDependencies": {
     "@eslint/js": "^10.0.0",
