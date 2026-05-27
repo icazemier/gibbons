@@ -1,7 +1,7 @@
 import eslint from "@eslint/js";
 import tsEslint from "typescript-eslint";
 
-const ignores = ["build/**/*", "node_modules/**/*", "coverage/**/*", "docs/**/*", ".claude/**/*", ".claude-flow/**/*"];
+const ignores = ["build/**/*", "node_modules/**/*", "coverage/**/*", "docs/**/*", ".claude/**/*", ".claude-flow/**/*", "compat/**/*"];
 
 const stylisticConfig = {
   rules: {
