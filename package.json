@@ -52,7 +52,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/icazemier/gibbons"
+    "url": "git+https://github.com/icazemier/gibbons.git"
   },
   "homepage": "https://icazemier.github.io/gibbons/",
   "license": "MIT",
@@ -63,7 +63,6 @@
   },
   "devDependencies": {
     "@eslint/js": "^10.0.0",
-    "@semantic-release/changelog": "^6.0.3",
     "@semantic-release/commit-analyzer": "^13.0.1",
     "@semantic-release/github": "^12.0.6",
     "@semantic-release/npm": "^13.1.4",
