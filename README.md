@@ -15,12 +15,33 @@ In applying [ArrayBuffers](https://developer.mozilla.org/nl/docs/Web/JavaScript/
 
 See: [Gibbons Docs](https://icazemier.github.io/gibbons/)
 
+## Runtime Compatibility
+
+| Runtime | Support | Install |
+|---------|---------|---------|
+| Node.js 20+ | ✅ Native | `npm install @icazemier/gibbons` |
+| Bun | ✅ Native | `bun add @icazemier/gibbons` |
+| Deno | ✅ via `npm:` | See below |
+
+### Deno
+
+```typescript
+import { Gibbon, GibbonProcessor } from "npm:@icazemier/gibbons";
+```
+
+Run with the required permissions:
+
+```bash
+deno run --allow-env --allow-net --allow-read --allow-sys your-script.ts
+```
+
 ## How do I get set up? ##
 
 `npm install @icazemier/gibbons`
 
 # Changes
-[See: Changelog](https://github.com/icazemier/gibbons/blob/master/CHANGELOG.md)
+
+See: [GitHub Releases](https://github.com/icazemier/gibbons/releases)
 
 # Meta data #
 
