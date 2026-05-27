@@ -17,5 +17,5 @@
     "allowSyntheticDefaultImports": true,
   },
   "include": ["src/**/*", "test/**/*", "vite.config.ts"],
-  "exclude": ["node_modules", "build", "coverage"]
+  "exclude": ["node_modules", "build", "coverage", "compat"]
 }
