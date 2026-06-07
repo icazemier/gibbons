@@ -2,6 +2,7 @@
   "compilerOptions": {
     "module": "NodeNext",
     "lib": ["ESNext"],
+    "types": ["node"],
     "target": "ESNext",
     "strict": true,
     "esModuleInterop": true,
@@ -16,7 +17,6 @@
     "sourceMap": false,
     "allowJs": true,
     "allowSyntheticDefaultImports": true,
-    "baseUrl": "./src",
     "rootDir": "./src"
   },
   "include": ["src/**/*.ts"],
