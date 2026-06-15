@@ -1,5 +1,5 @@
 
-<img src="https://raw.githubusercontent.com/icazemier/gibbons/master/gibbons.png" width="200" />
+<img src="https://raw.githubusercontent.com/icazemier/gibbons/main/gibbons.png" width="200" />
 
 
 
