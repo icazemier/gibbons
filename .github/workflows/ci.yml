@@ -3,11 +3,11 @@ name: Node.js CI
 on:
   push:
     branches:
-      - develop
+      - development
       - feature/*
   pull_request:
     branches:
-      - develop
+      - development
       - main
 
 permissions:
