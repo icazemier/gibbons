@@ -3,7 +3,7 @@ name: Release
 on:
   push:
     branches:
-      - master
+      - main
       - develop
 
 permissions:
@@ -111,7 +111,7 @@ jobs:
         id: version
         run: |
           BRANCH="${GITHUB_REF##*/}"
-          if [ "$BRANCH" = "main" ] || [ "$BRANCH" = "master" ]; then
+          if [ "$BRANCH" = "main" ]; then
             TAG="latest"
           else
             TAG="$BRANCH"
