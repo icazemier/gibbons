@@ -57,7 +57,7 @@
   "homepage": "https://icazemier.github.io/gibbons/",
   "license": "MIT",
   "overrides": {
-    "brace-expansion": "^5.0.6",
+    "brace-expansion": "^5.0.7",
     "npm": "^11.16.0"
   },
   "devDependencies": {
