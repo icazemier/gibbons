@@ -1,0 +1,38 @@
+version: 2
+
+updates:
+  # Every advisory this repo has carried has come from a dev-tooling transitive:
+  # the published package has no runtime dependencies at all. They still matter,
+  # because CI holds an OIDC token that can publish to npm.
+  - package-ecosystem: npm
+    directory: /
+    # Dependency work integrates on development and reaches main through a
+    # release. Without this, Dependabot targets the default branch, where a
+    # merge publishes.
+    target-branch: development
+    schedule:
+      interval: weekly
+    open-pull-requests-limit: 10
+    versioning-strategy: increase-if-necessary
+    commit-message:
+      prefix: chore
+      prefix-development: chore
+      include: scope
+    groups:
+      # Tooling churn is noisy and never reaches consumers — land it in one PR
+      # rather than paying for a pipeline run per bump.
+      dev-dependencies:
+        dependency-type: development
+        update-types:
+          - minor
+          - patch
+
+  # Actions are pinned by commit SHA, which without this would leave them
+  # pinned and frozen — trading supply-chain risk for unpatched actions.
+  - package-ecosystem: github-actions
+    directory: /
+    target-branch: development
+    schedule:
+      interval: weekly
+    commit-message:
+      prefix: ci
