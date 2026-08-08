@@ -43,28 +43,36 @@ jobs:
       - name: Test
         run: npm test
 
+      # Loads the built artifacts the way consumers do; the unit tests import
+      # TypeScript sources and cannot catch a wrong module format.
+      - name: Smoke test built package
+        run: npm run smoke
+
   release:
-    name: Semantic Release
+    name: Release
     needs: test
     runs-on: ubuntu-latest
     if: "!contains(github.event.head_commit.message, 'skip ci') && !contains(github.event.head_commit.message, 'skip release')"
     permissions:
       contents: write
-      issues: write
-      pull-requests: write
       id-token: write
+    outputs:
+      published: ${{ steps.changesets.outputs.published }}
+      publishedPackages: ${{ steps.changesets.outputs.publishedPackages }}
     steps:
+      # Credentials are deliberately persisted here: this job commits the
+      # version bump back to the release branch.
       - name: Checkout
         uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
         with:
           fetch-depth: 0
-          persist-credentials: false
 
       - name: Setup Node.js
         uses: actions/setup-node@820762786026740c76f36085b0efc47a31fe5020 # v7.0.0
         with:
           node-version: 24
           cache: 'npm'
+          registry-url: 'https://registry.npmjs.org'
 
       - name: Install dependencies
         run: npm ci --ignore-scripts
@@ -72,30 +80,48 @@ jobs:
       - name: Build
         run: npm run build
 
-      - name: Upgrade npm for trusted publishing
-        run: npm install -g npm@12.0.2
+      # Versioning happens in place rather than through a release PR, so merging
+      # into a release branch publishes directly. Consumes any pending changesets
+      # into the version, changelog and lockfile.
+      - name: Apply pending changesets
+        run: npm run release:version
 
-      - name: Release
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          GIT_AUTHOR_NAME: github-actions[bot]
-          GIT_AUTHOR_EMAIL: github-actions[bot]@users.noreply.github.com
-          GIT_COMMITTER_NAME: github-actions[bot]
-          GIT_COMMITTER_EMAIL: github-actions[bot]@users.noreply.github.com
-        run: npx semantic-release
+      - name: Commit the version bump
+        run: |
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git add -A
+          git diff --staged --quiet || git commit -m 'chore: version packages'
+          git push origin HEAD:"$GITHUB_REF_NAME"
+
+      # Publishes whatever is now unpublished and creates the git tag and GitHub
+      # release. Publishing goes through the runner's own npm, so it uses OIDC
+      # trusted publishing and needs no long-lived token; provenance comes from
+      # publishConfig.
+      - name: Publish
+        id: changesets
+        uses: changesets/action@a45c4d594aa4e2c509dc14a9f2b3b67ba3780d0d # v1.9.0
+        with:
+          publish: npm run release
 
   jsr:
     name: Publish to JSR
     needs: release
     runs-on: ubuntu-latest
-    if: "!contains(github.event.head_commit.message, 'skip ci') && !contains(github.event.head_commit.message, 'skip release')"
+    # Deliberately not gated on "did npm publish this run". Both publishes are
+    # idempotent, so running every time lets a registry that fell behind catch
+    # up on its own instead of needing someone to push it by hand.
     permissions:
       contents: read
       id-token: write
     steps:
+      # The release job commits the version bump during this run, so the
+      # triggering commit still carries the previous version. Check out the
+      # branch tip instead, or JSR republishes the version already released.
       - name: Checkout
         uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
         with:
+          ref: ${{ github.ref_name }}
           persist-credentials: false
 
       - name: Setup Node.js
@@ -107,36 +133,23 @@ jobs:
       - name: Install dependencies
         run: npm ci --ignore-scripts
 
-      - name: Get latest version from npm
-        id: version
+      # package.json is the version source of truth under changesets, so the
+      # version is read locally rather than polled back from the registry.
+      - name: Sync jsr.json version
         run: |
-          BRANCH="${GITHUB_REF##*/}"
-          if [ "$BRANCH" = "main" ]; then
-            TAG="latest"
-          else
-            TAG="$BRANCH"
-          fi
-          VERSION=$(npm view @icazemier/gibbons@"$TAG" version 2>/dev/null || echo "")
-          if [ -z "$VERSION" ]; then
-            echo "No version found on npm for dist-tag '$TAG', skipping JSR publish"
-            echo "skip=true" >> "$GITHUB_OUTPUT"
-          else
-            echo "version=$VERSION" >> "$GITHUB_OUTPUT"
-            echo "skip=false" >> "$GITHUB_OUTPUT"
-          fi
-
-      - name: Update jsr.json version
-        if: steps.version.outputs.skip != 'true'
-        env:
-          JSR_VERSION: ${{ steps.version.outputs.version }}
-        run: |
-          node -e '
-            const fs = require("fs");
-            const jsr = JSON.parse(fs.readFileSync("jsr.json", "utf8"));
-            jsr.version = process.env.JSR_VERSION;
-            fs.writeFileSync("jsr.json", JSON.stringify(jsr, null, 2) + "\n");
-          '
+          node -e "
+            const fs = require('fs');
+            const { version } = JSON.parse(fs.readFileSync('package.json', 'utf8'));
+            const jsr = JSON.parse(fs.readFileSync('jsr.json', 'utf8'));
+            jsr.version = version;
+            fs.writeFileSync('jsr.json', JSON.stringify(jsr, null, 2) + '\n');
+          "
 
       - name: Publish to JSR
-        if: steps.version.outputs.skip != 'true'
-        run: npx --yes jsr@0.14.3 publish --allow-dirty
+        run: npm run publish:jsr
+
+      # `jsr publish` exits 0 when it skips an already-published version, so a
+      # green step never proved anything shipped. Both registries are asserted
+      # to actually serve this version before the run is called a success.
+      - name: Verify both registries serve this version
+        run: npm run verify:published

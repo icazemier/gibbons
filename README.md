@@ -41,7 +41,21 @@ deno run --allow-env --allow-net --allow-read --allow-sys your-script.ts
 
 # Changes
 
-See: [GitHub Releases](https://github.com/icazemier/gibbons/releases)
+See: [CHANGELOG.md](CHANGELOG.md) and [GitHub Releases](https://github.com/icazemier/gibbons/releases)
+
+# Releasing
+
+Releases run on [changesets](https://github.com/changesets/changesets). Any change that should reach users ships with a changeset describing it:
+
+```bash
+npm run changeset
+```
+
+Pick the bump type, write a one-line summary, and commit the generated file in `.changeset/` alongside your change. Merging into a release branch applies every pending changeset, commits the version bump and changelog, and publishes to npm and JSR.
+
+Prerelease mode follows the branch automatically, so there is nothing to remember: releases from `main` are stable versions on the `latest` dist-tag, and releases from `development` land on `beta`. The release scripts run `scripts/pre-mode.mjs` first, which enters or leaves changesets' prerelease mode to match.
+
+Publishing uses the runner's own npm with OIDC trusted publishing, so no npm token is stored in the repository. Both registries are then asserted to actually serve the released version, because publishing is idempotent and a green publish step on its own proves nothing.
 
 # Meta data #
 
