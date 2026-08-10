@@ -45,6 +45,7 @@
     "build": "rimraf build && npm run build:esm && npm run build:cjs && npm run fixup && npm run docs",
     "fixup": "node ./scripts/fixup.mjs",
     "smoke": "node ./scripts/smoke.mjs",
+    "verify:pack": "node ./scripts/verify-pack.mjs",
     "verify:published": "node ./scripts/verify-published.mjs",
     "lint": "eslint . --ext .ts",
     "lint:fix": "eslint . --ext .ts --fix",
