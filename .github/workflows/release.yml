@@ -48,9 +48,29 @@ jobs:
       - name: Smoke test built package
         run: npm run smoke
 
+  # The smoke test above loads the built artifacts, but from inside the
+  # repository, where local resolution hides anything the tarball gets wrong.
+  # This installs the packed tarball in a clean directory instead, which is the
+  # only path a consumer actually takes.
+  pack:
+    name: Verify the package installs as a consumer
+    if: "!contains(github.event.head_commit.message, 'skip ci') && !contains(github.event.head_commit.message, 'skip release')"
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+      - name: Setup Node.js
+        uses: actions/setup-node@820762786026740c76f36085b0efc47a31fe5020 # v7.0.0
+        with:
+          node-version: 24.x
+          cache: 'npm'
+      - run: npm ci --ignore-scripts
+      - run: npm run build
+      - run: npm run verify:pack
+
   release:
     name: Release
-    needs: test
+    needs: [test, pack]
     runs-on: ubuntu-latest
     if: "!contains(github.event.head_commit.message, 'skip ci') && !contains(github.event.head_commit.message, 'skip release')"
     permissions:
