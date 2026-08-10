@@ -1,10 +1,15 @@
 name: Node.js CI
 
 on:
+  # Every working branch gets CI on push, whatever it is called: listing prefixes
+  # meant a typo or an unlisted type silently got nothing. `main` is excluded
+  # because Release runs the same jobs there. `chore/backmerge-main` is the
+  # Release workflow's own bot branch — it carries only commits that already
+  # passed CI on the branch they came from, and building it left an
+  # `action_required` run behind every release, because CI on a
+  # github-actions[bot] branch waits for approval.
   push:
-    branches:
-      - development
-      - feature/*
+    branches-ignore: [main, master, chore/backmerge-main]
   pull_request:
     branches:
       - development
@@ -17,7 +22,7 @@ jobs:
   test:
     name: Test on Node ${{ matrix.node-version }}
     runs-on: ubuntu-latest
-    if: "!contains(github.event.head_commit.message, 'skip ci')"
+    if: "!contains(github.event.head_commit.message, 'skip ci') && github.head_ref != 'chore/backmerge-main'"
     permissions:
       contents: read
     strategy:
@@ -58,7 +63,7 @@ jobs:
   # only path a consumer actually takes.
   pack:
     name: Verify the package installs as a consumer
-    if: "!contains(github.event.head_commit.message, 'skip ci')"
+    if: "!contains(github.event.head_commit.message, 'skip ci') && github.head_ref != 'chore/backmerge-main'"
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
@@ -74,7 +79,7 @@ jobs:
 
   bun:
     name: Test on Bun
-    if: "!contains(github.event.head_commit.message, 'skip ci')"
+    if: "!contains(github.event.head_commit.message, 'skip ci') && github.head_ref != 'chore/backmerge-main'"
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
@@ -90,7 +95,7 @@ jobs:
 
   deno:
     name: Import check on Deno
-    if: "!contains(github.event.head_commit.message, 'skip ci')"
+    if: "!contains(github.event.head_commit.message, 'skip ci') && github.head_ref != 'chore/backmerge-main'"
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
