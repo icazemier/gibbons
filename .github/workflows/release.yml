@@ -153,3 +153,49 @@ jobs:
       # to actually serve this version before the run is called a success.
       - name: Verify both registries serve this version
         run: npm run verify:published
+
+  # A release cut from main is tagged on main's own commit, and nothing brings
+  # that commit back. development then still believes the old version is current
+  # and computes its next beta from it, re-deriving a version that has already
+  # shipped. GitFlow's answer is the back-merge, so it happens here rather than
+  # by remembering — development requires a pull request, so this opens one and
+  # merges it instead of leaving one waiting.
+  backmerge:
+    name: Keep development in step with main
+    needs: release
+    if: "github.ref == 'refs/heads/main' && !contains(github.event.head_commit.message, 'skip ci') && !contains(github.event.head_commit.message, 'skip release')"
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+      pull-requests: write
+    steps:
+      - name: Checkout
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          fetch-depth: 0
+      - name: Merge main into development when it is behind
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          BRANCH: chore/backmerge-main
+        run: |
+          set -euo pipefail
+          git fetch origin main development
+          if git merge-base --is-ancestor origin/main origin/development; then
+            echo "development already contains main; nothing to back-merge"
+            exit 0
+          fi
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git checkout -B "$BRANCH" origin/development
+          if ! git merge --no-ff origin/main -m 'chore: back-merge main into development'; then
+            echo "::error::main does not merge cleanly into development. Resolve it by hand; until then every release cut on main stays invisible to the beta channel."
+            exit 1
+          fi
+          # Plain --force: nothing fetched this branch, so a lease would have no
+          # remote-tracking ref to compare against and would reject the push the
+          # moment the branch survived an earlier release. Only this job writes it.
+          git push --force origin "$BRANCH"
+          gh pr create --base development --head "$BRANCH" \
+            --title 'chore: back-merge main into development' \
+            --body 'Carries the release commits from main back to development, so the beta channel computes its next version from what has actually shipped. Opened and merged by the Release workflow.'
+          gh pr merge "$BRANCH" --merge --delete-branch
