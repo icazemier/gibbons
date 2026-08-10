@@ -1,0 +1,8 @@
+{
+  "mode": "pre",
+  "tag": "beta",
+  "initialVersions": {
+    "@icazemier/gibbons": "6.0.11"
+  },
+  "changesets": []
+}
