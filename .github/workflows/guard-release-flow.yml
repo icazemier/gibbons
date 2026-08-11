@@ -16,7 +16,12 @@ jobs:
     name: main accepts development only
     runs-on: ubuntu-latest
     steps:
+      # The release workflow opens its own pull requests into main — the version
+      # bump, and changesets' release pull request — and those come from a bot
+      # branch rather than development. Blocking them would deadlock the release
+      # this check exists to protect, so the rule applies to humans only.
       - name: Reject any other source branch
+        if: github.event.pull_request.user.login != 'github-actions[bot]'
         env:
           HEAD_REF: ${{ github.head_ref }}
         run: |
