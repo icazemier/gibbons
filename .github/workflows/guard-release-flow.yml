@@ -1,0 +1,28 @@
+name: Guard the release flow
+
+# Merging into main publishes. GitHub can require a pull request, but it has no
+# rule for which branch that pull request may come from, so the constraint is
+# expressed as a check instead: make this a required status check on main and a
+# release can only ever be cut from development.
+on:
+  pull_request:
+    branches: [main]
+
+permissions:
+  contents: read
+
+jobs:
+  source-branch:
+    name: main accepts development only
+    runs-on: ubuntu-latest
+    steps:
+      - name: Reject any other source branch
+        env:
+          HEAD_REF: ${{ github.head_ref }}
+        run: |
+          set -euo pipefail
+          if [ "$HEAD_REF" != 'development' ]; then
+            echo "::error::main is entered from development only, and '$HEAD_REF' is not it. Merge this into development first; promoting development to main is what cuts the release."
+            exit 1
+          fi
+          echo "source branch is development, promotion may proceed"
