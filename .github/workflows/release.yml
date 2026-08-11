@@ -81,6 +81,7 @@ jobs:
     permissions:
       contents: write
       id-token: write
+      pull-requests: write
     outputs:
       published: ${{ steps.changesets.outputs.published }}
       publishedPackages: ${{ steps.changesets.outputs.publishedPackages }}
@@ -105,19 +106,41 @@ jobs:
       - name: Build
         run: npm run build
 
-      # Versioning happens in place rather than through a release PR, so merging
-      # into a release branch publishes directly. Consumes any pending changesets
-      # into the version, changelog and lockfile.
+      # Consumes any pending changesets into the version, changelog and
+      # lockfile. Merging into a release branch publishes; the bump itself is
+      # landed by the step below.
       - name: Apply pending changesets
         run: npm run release:version
 
-      - name: Commit the version bump
+      # The bump reaches the branch through a pull request rather than a direct
+      # push, because the branch requires one and GitHub does not let a personal
+      # repository grant Actions a ruleset bypass. The guard on main lets
+      # bot-authored pull requests through for exactly this reason.
+      #
+      # The local checkout is moved onto the merge commit afterwards, so the tag
+      # changesets creates during publish points at a commit that is actually on
+      # the release branch.
+      - name: Land the version bump through a pull request
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          BRANCH: chore/version-packages-${{ github.run_id }}
         run: |
+          set -euo pipefail
           git config user.name 'github-actions[bot]'
           git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
           git add -A
-          git diff --staged --quiet || git commit -m 'chore: version packages'
-          git push origin HEAD:"$GITHUB_REF_NAME"
+          if git diff --staged --quiet; then
+            echo "nothing to version, leaving $GITHUB_REF_NAME untouched"
+            exit 0
+          fi
+          git commit -m 'chore: version packages'
+          git push origin "HEAD:refs/heads/$BRANCH"
+          gh pr create --base "$GITHUB_REF_NAME" --head "$BRANCH" \
+            --title 'chore: version packages' \
+            --body 'Lands the version, changelog and lockfile that changesets computed for this release. Opened and merged by the Release workflow, which is held to the same pull request rule as everyone else.'
+          gh pr merge "$BRANCH" --merge --delete-branch
+          git fetch origin "$GITHUB_REF_NAME"
+          git reset --hard "origin/$GITHUB_REF_NAME"
 
       # Publishes whatever is now unpublished and creates the git tag and GitHub
       # release. Publishing goes through the runner's own npm, so it uses OIDC
